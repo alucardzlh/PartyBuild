@@ -14,7 +14,7 @@ import com.yolanda.nohttp.rest.OnResponseListener;
 import com.yolanda.nohttp.rest.Request;
 import com.yolanda.nohttp.rest.Response;
 
-import Dialogs.WaitDialog;
+import com.example.a25908.partybuild.Dialogs.WaitDialog;
 
 /**
  * Created by alucard on 2016/5/14.

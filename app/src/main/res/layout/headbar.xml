@@ -5,8 +5,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/qred" >
+        android:layout_height="40dp"
+        android:background="@color/red" >
         <ImageView
             android:id="@+id/returnT"
             android:layout_width="30dp"
@@ -28,11 +28,11 @@
                 android:text="新建县"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="13sp"
                 android:textStyle="bold" />
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"
                 android:background="@mipmap/xxt"/>
@@ -46,12 +46,26 @@
             android:text="PartyBuild"
             android:textColor="@color/white"
             android:textSize="18sp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:textStyle="bold" />
+        <com.example.a25908.partybuild.Contacts.SearchEditText
+            android:id="@+id/txt_filter_edit"
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:drawableLeft="@mipmap/search_drawable_left"
+            android:background="@drawable/maintop_shape"
+            android:hint="请输入关键字"
+            android:textColorHint="@color/white"
+            android:paddingLeft="5dp"
+            android:textSize="12dip" />
         <ImageView
             android:id="@+id/ewm"
             android:layout_alignParentRight="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
             android:visibility="gone"

@@ -12,13 +12,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        android:layout_weight="1.3"
+        android:layout_weight="1.5"
         android:background="@color/white"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
             android:text="党的建设"
@@ -34,7 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:verticalSpacing="1dp"
-            android:background="@color/huise"
             android:horizontalSpacing="1dp"
             android:numColumns="4"
             />

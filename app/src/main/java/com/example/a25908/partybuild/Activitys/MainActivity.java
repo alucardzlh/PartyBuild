@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.a25908.partybuild.Contacts.SearchEditText;
 import com.example.a25908.partybuild.Fragments.Fragment1;
 import com.example.a25908.partybuild.Fragments.Fragment2;
 import com.example.a25908.partybuild.Fragments.Fragment3;
@@ -35,10 +36,11 @@ import java.util.List;
  */
 public class MainActivity extends FragmentActivity {
     @ViewInject(R.id.address)
-    private LinearLayout address;
+    public static LinearLayout address;
     @ViewInject(R.id.ewm)
-    private ImageView ewm;
-
+    public static ImageView ewm;
+    @ViewInject(R.id.txt_filter_edit)
+    public static SearchEditText mSearchEditText;
     @ViewInject(R.id.groups)
     RadioGroup rg;
     @ViewInject(R.id.content)
@@ -68,8 +70,10 @@ public class MainActivity extends FragmentActivity {
     }
 
     private void initView() {
-        address.setVisibility(View.VISIBLE);
-        ewm.setVisibility(View.VISIBLE);
+        MainActivity.address.setVisibility(View.VISIBLE);
+        MainActivity.ewm.setVisibility(View.VISIBLE);
+        MainActivity.mSearchEditText.setHint("请输入关键字");
+        MainActivity.mSearchEditText.setVisibility(View.VISIBLE);
 
         mFragment = new ArrayList<Fragment>();
         Fragment rb1Fragment = new Fragment1();
@@ -100,6 +104,10 @@ public class MainActivity extends FragmentActivity {
                 int current = mViewPager.getCurrentItem();
                 switch (current) {
                     case 0:
+                        MainActivity.address.setVisibility(View.VISIBLE);
+                        MainActivity.ewm.setVisibility(View.VISIBLE);
+                        MainActivity.mSearchEditText.setHint("请输入关键字");
+
                         rb1.setChecked(true);
                         rb1.setTextColor(getResources().getColor(R.color.yellow));
                         rb2.setTextColor(getResources().getColor(R.color.huiwhite));
@@ -107,6 +115,10 @@ public class MainActivity extends FragmentActivity {
                         rb4.setTextColor(getResources().getColor(R.color.huiwhite));
                         break;
                     case 1:
+                        MainActivity.mSearchEditText.setHint("模糊检索");
+                        MainActivity.address.setVisibility(View.GONE);
+                        MainActivity.ewm.setVisibility(View.GONE);
+
                         rb2.setChecked(true);
                         rb1.setTextColor(getResources().getColor(R.color.huiwhite));
                         rb2.setTextColor(getResources().getColor(R.color.yellow));
@@ -160,18 +172,18 @@ public class MainActivity extends FragmentActivity {
                 break;
         }
     }
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus && Build.VERSION.SDK_INT >= 19) {
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        }
-    }
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+//        if (hasFocus && Build.VERSION.SDK_INT >= 19) {
+//            View decorView = getWindow().getDecorView();
+//            decorView.setSystemUiVisibility(
+//                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+//                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+//        }
+//    }
 }

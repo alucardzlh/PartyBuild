@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package Dialogs;
+package com.example.a25908.partybuild.Dialogs;
 
 import android.app.ProgressDialog;
 import android.content.Context;
