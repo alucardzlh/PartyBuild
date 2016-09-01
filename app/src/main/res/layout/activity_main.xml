@@ -16,14 +16,16 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"></android.support.v4.view.ViewPager>
+        android:layout_weight="1"/>
 
     <RadioGroup
         android:id="@+id/groups"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/red"
         android:gravity="center_vertical"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
         android:orientation="horizontal">
         <RadioButton
             android:id="@+id/rtns1"
@@ -32,10 +34,10 @@
             android:layout_weight="1"
             android:button="@null"
             android:checked="true"
-            android:drawablePadding="5dp"
             android:drawableTop="@drawable/r1"
             android:gravity="center"
             android:text="党建首页"
+            android:drawablePadding="2dp"
             android:textColor="@drawable/textcolor"
             android:textSize="12sp" />
 
@@ -49,6 +51,7 @@
             android:drawableTop="@drawable/r2"
             android:gravity="center"
             android:text="党员名册"
+            android:drawablePadding="2dp"
             android:textColor="@drawable/textcolor"
             android:textSize="12sp" />1
 
@@ -59,7 +62,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:drawablePadding="2dp"
-            android:drawableTop="@drawable/r4"
+            android:drawableTop="@drawable/r3"
             android:gravity="center"
             android:text="党群动态"
             android:textColor="@drawable/textcolor"
@@ -72,7 +75,7 @@
             android:layout_weight="1"
             android:button="@null"
             android:drawablePadding="2dp"
-            android:drawableTop="@drawable/r5"
+            android:drawableTop="@drawable/r4"
             android:gravity="center"
             android:text="个人中心"
             android:textColor="@drawable/textcolor"

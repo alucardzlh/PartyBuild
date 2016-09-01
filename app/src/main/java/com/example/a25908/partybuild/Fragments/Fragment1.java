@@ -1,6 +1,8 @@
 package com.example.a25908.partybuild.Fragments;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,9 +15,15 @@ import android.widget.ImageView;
 import com.example.a25908.partybuild.Activitys.PartyCommitteeActivity;
 import com.example.a25908.partybuild.Activitys.StudyActivity;
 import com.example.a25908.partybuild.Adapters.MyGridAdapter;
+import com.example.a25908.partybuild.Http.GsonCallBack;
+import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.R;
+import com.example.a25908.partybuild.Services.CallServer;
+import com.example.a25908.partybuild.Utils.MD5;
+import com.example.a25908.partybuild.Utils.URLconstant;
 import com.example.a25908.partybuild.Views.ImageCycleView;
 import com.lidroid.xutils.ViewUtils;
+import com.yolanda.nohttp.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,17 +39,26 @@ public class Fragment1 extends Fragment {
     //    @ViewInject(R.id.gridview)
 //    GridView gridView;
     View v;
-    int[] imgs={R.mipmap.book,R.mipmap.book,R.mipmap.book,R.mipmap.book,
-            R.mipmap.book,R.mipmap.book,R.mipmap.book,R.mipmap.book,
-            R.mipmap.book};
-    String[] text1={"开发中","开发中","开发中","开发中",
-            "开发中","开发中","开发中","开发中",
-            "开发中"};
+    int[] imgs={R.mipmap.item1,R.mipmap.item2,R.mipmap.jiaofei,R.mipmap.item4,
+            R.mipmap.item5,R.mipmap.item6,R.mipmap.item7,R.mipmap.item8,
+            R.mipmap.item9};
+    String[] text1={"党委通知","掌上党校","党费缴纳","党建视频",
+            "学习园地","在线答疑","党员扶持","文档中心",
+            "问卷调查"};
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_fragment1, container, false);
         ViewUtils.inject(getActivity());
+        GsonRequest NewsRequest=new GsonRequest(URLconstant.URLINSER+URLconstant.NEWSURL, RequestMethod.GET);//新闻数据
+        NewsRequest.setConnectTimeout(10000);
+        NewsRequest.setReadTimeout(10000);
+        NewsRequest.add("token", MD5.MD5s("" + new Build().MODEL));
+        NewsRequest.add("KeyNo","");
+        NewsRequest.add("deviceId",(new Build()).MODEL);
+        NewsRequest.add("pageIndex",1);
+        NewsRequest.add("pageSize",5);
+        CallServer.getInstance().add(getActivity(),NewsRequest, GsonCallBack.getInstance(),0x111,true,false,true);
         /**
          * 轮播
          */

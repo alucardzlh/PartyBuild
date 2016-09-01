@@ -6,4 +6,8 @@ package com.example.a25908.partybuild.Utils;
  */
 
 public class URLconstant {
+
+    public static final String URLINSER = "http://101.201.211.27:8282/zhirong.creditcard/Interface/";//所有接口前缀
+
+    public static final String NEWSURL ="newsController/getNewslistPage";//新闻URLObeyed
 }

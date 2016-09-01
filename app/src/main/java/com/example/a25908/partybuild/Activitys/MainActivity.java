@@ -1,21 +1,19 @@
 package com.example.a25908.partybuild.Activitys;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.example.a25908.partybuild.Contacts.SearchEditText;
 import com.example.a25908.partybuild.Fragments.Fragment1;
@@ -39,6 +37,8 @@ public class MainActivity extends FragmentActivity {
     public static LinearLayout address;
     @ViewInject(R.id.ewm)
     public static ImageView ewm;
+    @ViewInject(R.id.title)
+    public static TextView title;
     @ViewInject(R.id.txt_filter_edit)
     public static SearchEditText mSearchEditText;
     @ViewInject(R.id.groups)
@@ -107,6 +107,8 @@ public class MainActivity extends FragmentActivity {
                         MainActivity.address.setVisibility(View.VISIBLE);
                         MainActivity.ewm.setVisibility(View.VISIBLE);
                         MainActivity.mSearchEditText.setHint("请输入关键字");
+                        MainActivity.mSearchEditText.setVisibility(View.VISIBLE);
+                        MainActivity.title.setVisibility(View.GONE);
 
                         rb1.setChecked(true);
                         rb1.setTextColor(getResources().getColor(R.color.yellow));
@@ -118,6 +120,8 @@ public class MainActivity extends FragmentActivity {
                         MainActivity.mSearchEditText.setHint("模糊检索");
                         MainActivity.address.setVisibility(View.GONE);
                         MainActivity.ewm.setVisibility(View.GONE);
+                        MainActivity.mSearchEditText.setVisibility(View.VISIBLE);
+                        MainActivity.title.setVisibility(View.GONE);
 
                         rb2.setChecked(true);
                         rb1.setTextColor(getResources().getColor(R.color.huiwhite));
@@ -126,6 +130,13 @@ public class MainActivity extends FragmentActivity {
                         rb4.setTextColor(getResources().getColor(R.color.huiwhite));
                         break;
                     case 2:
+                        MainActivity.title.setVisibility(View.VISIBLE);
+                        MainActivity.title.setText("党群动态");
+                        MainActivity.address.setVisibility(View.GONE);
+                        MainActivity.ewm.setVisibility(View.GONE);
+                        MainActivity.mSearchEditText.setVisibility(View.GONE);
+
+
                         rb3.setChecked(true);
                         rb1.setTextColor(getResources().getColor(R.color.huiwhite));
                         rb2.setTextColor(getResources().getColor(R.color.huiwhite));
@@ -133,6 +144,13 @@ public class MainActivity extends FragmentActivity {
                         rb4.setTextColor(getResources().getColor(R.color.huiwhite));
                         break;
                     case 3:
+                        MainActivity.address.setVisibility(View.GONE);
+                        MainActivity.ewm.setVisibility(View.GONE);
+                        MainActivity.mSearchEditText.setVisibility(View.GONE);
+                        MainActivity.ewm.setVisibility(View.GONE);
+                        MainActivity.title.setText("个人中心");
+                        MainActivity.title.setVisibility(View.VISIBLE);
+
                         rb4.setChecked(true);
                         rb1.setTextColor(getResources().getColor(R.color.huiwhite));
                         rb2.setTextColor(getResources().getColor(R.color.huiwhite));

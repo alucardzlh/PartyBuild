@@ -77,12 +77,7 @@
             android:layout_height="0dp"
             android:orientation="horizontal"
             android:layout_weight="1">
-            <!--时间图片-->
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_history_record"
-                android:id="@+id/imageView" />
+
             <!--赞-->
             <TextView
                 android:layout_width="wrap_content"
@@ -118,15 +113,30 @@
                 android:layout_toStartOf="@+id/item_huifu"
                 android:layout_marginEnd="13dp" />
             <!--时间-->
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:textSize="13sp"
-                android:text="08-27 17:56"
-                android:id="@+id/item_time"
+                android:gravity="center"
+                android:orientation="horizontal"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/imageView" />
+                android:layout_alignParentStart="true">
+                <!--时间图片-->
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_history_record"
+                    android:id="@+id/imageView" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textSize="13sp"
+                    android:text="08-27 17:56"
+                    android:id="@+id/item_time"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/imageView" />
+            </LinearLayout>
+
         </RelativeLayout>
 
     </LinearLayout>

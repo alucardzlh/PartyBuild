@@ -29,6 +29,8 @@ public class PartyCommitteeActivity extends BaseActivity {
     @ViewInject(R.id.title)
     private TextView title;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

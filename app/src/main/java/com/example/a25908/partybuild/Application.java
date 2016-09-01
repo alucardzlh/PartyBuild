@@ -1,5 +1,7 @@
 package com.example.a25908.partybuild;
 
+import android.content.Context;
+
 import com.yolanda.nohttp.Logger;
 import com.yolanda.nohttp.NoHttp;
 
@@ -10,7 +12,7 @@ import com.yolanda.nohttp.NoHttp;
 
 public class Application extends android.app.Application {
     private static Application instance;
-
+    private static Context mContext;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -29,6 +31,10 @@ public class Application extends android.app.Application {
      */
     public static Application getInstance() {
         return instance;
+    }
+
+    public static Context getContext(){
+        return mContext;
     }
 
 }

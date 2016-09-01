@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * 党委通知的adapter
- * Created by Minus K on 2016/8/29.
+ * Created by WEIXUAN on 2016/8/29.
  */
 
 public class PartyCommitteeAdpter extends BaseAdapter {

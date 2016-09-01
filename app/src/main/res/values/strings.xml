@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">党建</string>
+
+    <!--Fragment4 界面-->
+    <string name="my_gerenziliao">个人资料</string>
+    <string name="my_wendang">我的文档</string>
+    <string name="my_danfei">我的党费</string>
+    <string name="my_about">关于我们</string>
+    <string name="my_fankui">意见反馈</string>
+
+    <!--关于我们 界面-->
+    <string name="about_banben">版本信息</string>
+    <string name="about_lianxi">联系方式</string>
+    <string name="about_guanwan">官网</string>
+    <string name="about_emails">邮箱</string>
+
+    <!--意见反馈 界面-->
+    <string name="op_conhint">请输入遇到的问题或建议......</string>
+    <string name="op_num">500字</string>
+    <string name="op_phone">联系电话</string>
+    <string name="op_phonehint">请输入您的联系电话 (选填)</string>
+    <string name="op_btn">提交</string>
 </resources>

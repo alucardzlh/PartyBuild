@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,12 +56,13 @@ public class Fragment2 extends Fragment  {
     private SortAdapter adapter;
 
     List<SortModel> sortModelList=new ArrayList<>();
+    LinearLayout zzjg;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_fragment2, container, false);
         ViewUtils.inject(getActivity());
-
+        zzjg= (LinearLayout) v.findViewById(R.id.zzjg);
         userListNumTxt= (TextView) v.findViewById(R.id.txt_user_list_user_num);
         sideBar= (SideBar) v.findViewById(R.id.sild_bar);
         sortListView= (ListView) v.findViewById(R.id.list_view_user_list);
@@ -124,19 +126,19 @@ public class Fragment2 extends Fragment  {
 
             public void onTextChanged(CharSequence str, int arg1, int arg2, int arg3)
             {
-                try
-                {
+                try{
                     filerData(str.toString());
-                }
-                catch (BadHanyuPinyinOutputFormatCombination e)
-                {
+                    if(MainActivity.mSearchEditText.getText().toString().equals("")){
+                        zzjg.setVisibility(View.VISIBLE);
+                    }else{
+                        zzjg.setVisibility(View.GONE);
+                    }
+                } catch (BadHanyuPinyinOutputFormatCombination e) {
                     e.printStackTrace();
                 }
             }
-
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                                          int arg3)
-            {
+                                          int arg3) {
             }
 
             public void afterTextChanged(Editable arg0)
