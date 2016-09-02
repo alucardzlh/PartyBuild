@@ -1,6 +1,5 @@
 package com.example.a25908.partybuild.Fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,8 +11,13 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.example.a25908.partybuild.Activitys.AnswerActivity;
+import com.example.a25908.partybuild.Activitys.FilesActivity;
+import com.example.a25908.partybuild.Activitys.PalmPartySchoolActivity;
 import com.example.a25908.partybuild.Activitys.PartyCommitteeActivity;
+import com.example.a25908.partybuild.Activitys.QuestionSurveyActivity;
 import com.example.a25908.partybuild.Activitys.StudyActivity;
+import com.example.a25908.partybuild.Activitys.SupportActivity;
 import com.example.a25908.partybuild.Adapters.MyGridAdapter;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
@@ -39,7 +43,7 @@ public class Fragment1 extends Fragment {
     //    @ViewInject(R.id.gridview)
 //    GridView gridView;
     View v;
-    int[] imgs={R.mipmap.item1,R.mipmap.item2,R.mipmap.jiaofei,R.mipmap.item4,
+    int[] imgs={R.mipmap.item1,R.mipmap.item2,R.mipmap.item3,R.mipmap.item4,
             R.mipmap.item5,R.mipmap.item6,R.mipmap.item7,R.mipmap.item8,
             R.mipmap.item9};
     String[] text1={"党委通知","掌上党校","党费缴纳","党建视频",
@@ -90,24 +94,31 @@ public class Fragment1 extends Fragment {
                         startActivity(new Intent(getActivity(), PartyCommitteeActivity.class));
                         break;
                     case 1://掌上党校
+                        startActivity(new Intent(getActivity(), PalmPartySchoolActivity.class));
                         break;
                     case 2:
                         break;
                     case 3:
                         break;
-                    case 4:
+                    case 4://学习园地
                         startActivity(new Intent(getActivity(), StudyActivity.class));
                         break;
                     case 5:
+                        //在线答疑
+                        startActivity(new Intent(getActivity(), AnswerActivity.class));
                         break;
                     case 6:
+                        //党员扶持
+                        startActivity(new Intent(getActivity(), SupportActivity.class));
                         break;
-                    case 7:
+                    case 7://文档中心
+                        startActivity(new Intent(getActivity(), FilesActivity.class));
                         break;
                     case 8:
+                        //问卷调查
+                        startActivity(new Intent(getActivity(), QuestionSurveyActivity.class));
                         break;
-                    case 9:
-                        break;
+
                 }
             }
         });

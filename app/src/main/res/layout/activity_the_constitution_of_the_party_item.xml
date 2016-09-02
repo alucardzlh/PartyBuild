@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.a25908.partybuild.Activitys.TheConstitutionOfThePartyActivity">
+    <TextView
+        android:id="@+id/tcop_tname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="总纲"/>
+    <TextView
+        android:id="@+id/tcop_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:lines="2"
+        android:ellipsize="end"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="20dp"
+        android:text="总纲总纲总纲总纲总总纲总纲纲总纲总纲总纲总纲总纲总纲总纲总纲总纲总纲总纲总纲总纲总纲总纲总纲"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/huise"/>
+</LinearLayout>

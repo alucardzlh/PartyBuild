@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.a25908.partybuild.Activitys.AboutsActivity;
+import com.example.a25908.partybuild.Activitys.MyFilesActivity;
+import com.example.a25908.partybuild.Activitys.MydataActivity;
 import com.example.a25908.partybuild.Activitys.OpinionActivity;
 import com.example.a25908.partybuild.R;
 /**
@@ -41,8 +43,10 @@ public class Fragment4 extends Fragment {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.my1:
+                    startActivity(new Intent(getActivity(), MydataActivity.class));
                     break;
                 case R.id.my2:
+                    startActivity(new Intent(getActivity(), MyFilesActivity.class));
                     break;
                 case R.id.my3:
                     break;

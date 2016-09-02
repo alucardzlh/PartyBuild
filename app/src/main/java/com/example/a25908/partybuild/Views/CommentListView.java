@@ -26,6 +26,7 @@ import java.util.List;
 
 
 /**
+ * 评论
  * Created by weixaun on 16/7/9.
  */
 public class CommentListView extends LinearLayout {

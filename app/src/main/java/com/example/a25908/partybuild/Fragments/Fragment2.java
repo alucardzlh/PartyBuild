@@ -1,5 +1,6 @@
 package com.example.a25908.partybuild.Fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a25908.partybuild.Activitys.MainActivity;
+import com.example.a25908.partybuild.Activitys.PartymembersdetailsActivity;
 import com.example.a25908.partybuild.Contacts.PinYinKit;
 import com.example.a25908.partybuild.Contacts.PinyinComparator;
 import com.example.a25908.partybuild.Contacts.SearchEditText;
@@ -82,7 +84,11 @@ public class Fragment2 extends Fragment  {
                     sortListView.setSelection(position);
             }
         });
-
+        final String [] str= getResources().getStringArray(R.array.date);
+        int [] img=new int[str.length];
+        for(int i=0;i<str.length;i++){
+            img[i]=R.mipmap.banner;
+        }
         sortListView.setSelector(new ColorDrawable(Color.TRANSPARENT));
         sortListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -91,16 +97,12 @@ public class Fragment2 extends Fragment  {
                                     long id)
             {
                 Toast.makeText(getActivity(), ((SortModel)adapter.getItem(position)).name, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), PartymembersdetailsActivity.class).putExtra("name",str[position]));
             }
         });
 
 
         // call filledData to get datas
-        String [] str= getResources().getStringArray(R.array.date);
-        int [] img=new int[str.length];
-        for(int i=0;i<str.length;i++){
-            img[i]=R.mipmap.banner;
-        }
         try
         {
 

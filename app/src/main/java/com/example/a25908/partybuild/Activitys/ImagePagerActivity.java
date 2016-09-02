@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 党群动态item的图片查看
  * Created by weixuan on 2016/1/6.
  */
 public class ImagePagerActivity extends Activity{

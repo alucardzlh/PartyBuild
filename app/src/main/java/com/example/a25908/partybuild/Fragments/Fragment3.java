@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.example.a25908.partybuild.Adapters.DynamicAdapters;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
@@ -44,45 +43,7 @@ public class Fragment3 extends Fragment {
     private void recyclerViewInit(){
         list = new ArrayList<>();
         addlist();
-        layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);//创建默认的线性LayoutManager
-        recyclerView.getMoreProgressView().getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
-        adapters = new DynamicAdapters(getActivity(),list);
-        recyclerView.setAdapter(adapters);
-        //下拉刷新
-        recyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapters.notifyDataSetChanged();
-                        recyclerView.setRefreshing(false);
-                    }
-                }, 2000);
-            }
-        });
-        //自动加载
-        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-//                int lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
-//                int totalItemCount = layoutManager.getItemCount();
 
-
-
-                }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if(newState != RecyclerView.SCROLL_STATE_IDLE){
-                    Glide.with(getActivity()).pauseRequests();
-                }
-
-            }
-        });
 
     }
 
@@ -169,6 +130,45 @@ public class Fragment3 extends Fragment {
         dynamic5.photos.add(R.mipmap.banner);
         dynamic5.photos.add(R.mipmap.banner);
         list.add(dynamic5);
+
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);//创建默认的线性LayoutManager
+        recyclerView.getMoreProgressView().getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+        adapters = new DynamicAdapters(getActivity(),list);
+        recyclerView.setAdapter(adapters);
+        //下拉刷新
+        recyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView.setRefreshing(false);
+                    }
+                }, 2000);
+            }
+        });
+        //自动加载
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+//                int lastVisibleItem = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+//                int totalItemCount = layoutManager.getItemCount();
+
+
+
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+//                if(newState != RecyclerView.SCROLL_STATE_IDLE){
+//                    Glide.with(getActivity()).pauseRequests();
+//                }
+
+            }
+        });
 
     }
 

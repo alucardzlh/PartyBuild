@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/huiwhite"
     tools:context=".Fragments.Fragment3">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,6 +30,8 @@
             android:layout_height="30dp"
             android:layout_gravity="bottom"
             android:gravity="center"
+            android:background="#a0000000"
+            android:textStyle="bold"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:textColor="@color/white"
@@ -51,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:background="@mipmap/geren"/>
+                android:background="@mipmap/m1"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_centerVertical="true"
-                android:background="@mipmap/wendang"/>
+                android:background="@mipmap/m2"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -115,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_centerVertical="true"
-                android:background="@mipmap/jiaofei"/>
+                android:background="@mipmap/m3"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -147,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:background="@mipmap/about"/>
+                android:background="@mipmap/m4"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -179,7 +182,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_centerVertical="true"
-                android:background="@mipmap/fankui"/>
+                android:background="@mipmap/m5"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

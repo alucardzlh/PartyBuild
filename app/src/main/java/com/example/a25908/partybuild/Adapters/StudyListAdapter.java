@@ -15,7 +15,10 @@ import com.example.a25908.partybuild.R;
 
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @author yusi
+ * 学习园地界面Adapter
+ */
 public class StudyListAdapter extends BaseAdapter {
     private Context context;
     private List<Map<String,Object>> list;
@@ -26,7 +29,6 @@ public class StudyListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        Log.e("ssss", "getCount-------------" + list.size());
         return list.size();
     }
 

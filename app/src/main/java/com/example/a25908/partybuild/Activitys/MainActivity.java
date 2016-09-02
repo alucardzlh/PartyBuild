@@ -71,9 +71,7 @@ public class MainActivity extends FragmentActivity {
 
     private void initView() {
         MainActivity.address.setVisibility(View.VISIBLE);
-        MainActivity.ewm.setVisibility(View.VISIBLE);
-        MainActivity.mSearchEditText.setHint("请输入关键字");
-        MainActivity.mSearchEditText.setVisibility(View.VISIBLE);
+        MainActivity.mSearchEditText.setVisibility(View.GONE);
 
         mFragment = new ArrayList<Fragment>();
         Fragment rb1Fragment = new Fragment1();
@@ -105,11 +103,9 @@ public class MainActivity extends FragmentActivity {
                 switch (current) {
                     case 0:
                         MainActivity.address.setVisibility(View.VISIBLE);
-                        MainActivity.ewm.setVisibility(View.VISIBLE);
-                        MainActivity.mSearchEditText.setHint("请输入关键字");
-                        MainActivity.mSearchEditText.setVisibility(View.VISIBLE);
-                        MainActivity.title.setVisibility(View.GONE);
-
+                        MainActivity.mSearchEditText.setVisibility(View.GONE);
+                        MainActivity.title.setVisibility(View.VISIBLE);
+                        MainActivity.title.setText("移动党建");
                         rb1.setChecked(true);
                         rb1.setTextColor(getResources().getColor(R.color.yellow));
                         rb2.setTextColor(getResources().getColor(R.color.huiwhite));
@@ -119,7 +115,6 @@ public class MainActivity extends FragmentActivity {
                     case 1:
                         MainActivity.mSearchEditText.setHint("模糊检索");
                         MainActivity.address.setVisibility(View.GONE);
-                        MainActivity.ewm.setVisibility(View.GONE);
                         MainActivity.mSearchEditText.setVisibility(View.VISIBLE);
                         MainActivity.title.setVisibility(View.GONE);
 
@@ -133,7 +128,6 @@ public class MainActivity extends FragmentActivity {
                         MainActivity.title.setVisibility(View.VISIBLE);
                         MainActivity.title.setText("党群动态");
                         MainActivity.address.setVisibility(View.GONE);
-                        MainActivity.ewm.setVisibility(View.GONE);
                         MainActivity.mSearchEditText.setVisibility(View.GONE);
 
 

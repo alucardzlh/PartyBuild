@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:background="@color/white"
+    android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/imgLayou"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@mipmap/banner">
+
+                <TextView
+                    android:id="@+id/imgtxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="center_vertical"
+                    android:layout_gravity="bottom"
+                    android:background="#a0000000"
+                    android:maxLines="1"
+                    android:paddingLeft="20dp"
+                    android:textStyle="bold"
+                    android:text="上见大家都说"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+        </LinearLayout>
+
+</LinearLayout>

@@ -108,6 +108,7 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
                     public void onItemClick(View view, int position) {
                         //imagesize是作为loading时的图片size
                        ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(view.getMeasuredWidth(), view.getMeasuredHeight());
+
                        ImagePagerActivity.startImagePagerActivity(context, photos, position, imageSize);
                     }
                 });

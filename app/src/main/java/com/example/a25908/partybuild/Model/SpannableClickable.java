@@ -8,6 +8,7 @@ import com.example.a25908.partybuild.Application;
 import com.example.a25908.partybuild.R;
 
 /**
+ * Spannable点击变色
  * @author weixuan
  * @Description:
  * @date 16/1/2 16:32
@@ -31,7 +32,6 @@ public abstract class SpannableClickable extends ClickableSpan implements View.O
     @Override
     public void updateDrawState(TextPaint ds) {
         super.updateDrawState(ds);
-
         ds.setColor(textColor);
         ds.setUnderlineText(false);
         ds.clearShadowLayer();

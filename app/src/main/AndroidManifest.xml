@@ -8,7 +8,7 @@
         android:icon="@mipmap/item2"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.Material.Light.NoActionBar.Fullscreen">
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         <activity
             android:name=".Activitys.MainActivity"
             android:label="@string/app_name"
@@ -24,11 +24,27 @@
 
         <activity android:name=".Activitys.StudyActivity" />
         <activity android:name=".Activitys.AboutsActivity" />
-        <activity android:name=".Activitys.OpinionActivity"></activity>
-        <activity android:name=".Activitys.ImagePagerActivity"
+        <activity android:name=".Activitys.OpinionActivity" />
+        <activity
+            android:name=".Activitys.ImagePagerActivity"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Black.NoTitleBar"
-            ></activity>
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
+        <activity android:name=".Activitys.DetailsPageActivity" />
+        <activity android:name=".Activitys.SupportActivity" />
+        <activity android:name=".Activitys.AnswerActivity" />
+        <activity android:name=".Activitys.AnswerDetailsActivity" />
+        <activity android:name=".Activitys.QuestionsActivity" />
+        <activity android:name=".Activitys.QuestionSurveyActivity"/>
+
+        <activity android:name=".Activitys.MydataActivity" />
+        <activity android:name=".Activitys.PartymembersdetailsActivity" />
+        <activity android:name=".Activitys.PalmPartySchoolActivity" />
+        <activity android:name=".Activitys.PartydisciplineActivity" />
+        <activity android:name=".Activitys.TheConstitutionOfThePartyActivity" />
+        <activity android:name=".Activitys.PeopleGalleryActivity" />
+        <activity android:name=".Activitys.FilesActivity" />
+        <activity android:name=".Activitys.PbVideoActivity" />
+        <activity android:name=".Activitys.MyFilesActivity"></activity>
     </application>
 
 </manifest>
