@@ -26,7 +26,7 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:23.4.0'
     testCompile 'junit:junit:4.12'
-    compile 'com.yolanda.nohttp:nohttp:+'
+    compile 'com.yolanda.nohttp:nohttp:1.0.5'
     compile 'com.google.code.gson:gson:+'
     compile 'com.belerweb:pinyin4j:2.5.1'
     compile 'com.jiechic.library:xUtils:2.6.14'

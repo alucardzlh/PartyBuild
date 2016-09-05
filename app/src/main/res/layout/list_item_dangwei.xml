@@ -11,6 +11,7 @@
         android:paddingLeft="5dp"
         android:background="#fff">
         <TextView
+            android:id="@+id/item_bt"
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -31,7 +32,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/ceshi_item1"
+                android:src="@drawable/ceshi_item2"
                 />
             <LinearLayout
                 android:layout_width="0dp"
@@ -60,7 +61,6 @@
                     android:layout_marginTop="5dp"
                     android:lines="2"
                     android:maxLines="2"
-                    android:maxEms="21"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:lineSpacingExtra="2dp"

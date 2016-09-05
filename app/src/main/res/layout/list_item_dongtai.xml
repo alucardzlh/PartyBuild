@@ -164,7 +164,7 @@
             android:layout_marginRight="7dp"
             android:layout_marginBottom="10dp"
             android:id="@+id/commentList"
-            android:background="#e0e0e0"
+            android:background="@drawable/pinglun_bg"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical"/>

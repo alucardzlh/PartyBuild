@@ -10,10 +10,11 @@ import java.util.List;
 
 public class DataManager {
     /**
-     * 党务通知list的信息类
+     * 党委通知和党建视频list的信息类
      */
     public static class PartyCommittee{
-        public int imageView;//右边图片
+        public int imageView233;//右边图片
+        public String item_bt;
         public String title;//标题
         public String context;//内容
         public String  browse;//浏览数

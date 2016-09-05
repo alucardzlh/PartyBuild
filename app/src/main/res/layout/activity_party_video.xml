@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_party_video"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/huiwhite"
+    android:orientation="vertical">
+
+    <include layout="@layout/headbar"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="10dp"
+        android:divider="@color/huiwhite"
+        android:id="@+id/list_pv"
+        ></ListView>
+
+</LinearLayout>

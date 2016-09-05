@@ -15,7 +15,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.example.a25908.partybuild.Contacts.SearchEditText;
 import com.example.a25908.partybuild.Fragments.Fragment1;
 import com.example.a25908.partybuild.Fragments.Fragment2;
 import com.example.a25908.partybuild.Fragments.Fragment3;
@@ -39,8 +38,7 @@ public class MainActivity extends FragmentActivity {
     public static ImageView ewm;
     @ViewInject(R.id.title)
     public static TextView title;
-    @ViewInject(R.id.txt_filter_edit)
-    public static SearchEditText mSearchEditText;
+//    33
     @ViewInject(R.id.groups)
     RadioGroup rg;
     @ViewInject(R.id.content)
@@ -71,7 +69,7 @@ public class MainActivity extends FragmentActivity {
 
     private void initView() {
         MainActivity.address.setVisibility(View.VISIBLE);
-        MainActivity.mSearchEditText.setVisibility(View.GONE);
+//        MainActivity.mSearchEditText.setVisibility(View.GONE);
 
         mFragment = new ArrayList<Fragment>();
         Fragment rb1Fragment = new Fragment1();
@@ -103,7 +101,7 @@ public class MainActivity extends FragmentActivity {
                 switch (current) {
                     case 0:
                         MainActivity.address.setVisibility(View.VISIBLE);
-                        MainActivity.mSearchEditText.setVisibility(View.GONE);
+//                        MainActivity.mSearchEditText.setVisibility(View.GONE);
                         MainActivity.title.setVisibility(View.VISIBLE);
                         MainActivity.title.setText("移动党建");
                         rb1.setChecked(true);
@@ -113,10 +111,11 @@ public class MainActivity extends FragmentActivity {
                         rb4.setTextColor(getResources().getColor(R.color.huiwhite));
                         break;
                     case 1:
-                        MainActivity.mSearchEditText.setHint("模糊检索");
+                        MainActivity.title.setText("党员名册");
+//                        MainActivity.mSearchEditText.setHint("模糊检索");
                         MainActivity.address.setVisibility(View.GONE);
-                        MainActivity.mSearchEditText.setVisibility(View.VISIBLE);
-                        MainActivity.title.setVisibility(View.GONE);
+//                        MainActivity.mSearchEditText.setVisibility(View.GONE);
+                        MainActivity.title.setVisibility(View.VISIBLE);
 
                         rb2.setChecked(true);
                         rb1.setTextColor(getResources().getColor(R.color.huiwhite));
@@ -128,7 +127,7 @@ public class MainActivity extends FragmentActivity {
                         MainActivity.title.setVisibility(View.VISIBLE);
                         MainActivity.title.setText("党群动态");
                         MainActivity.address.setVisibility(View.GONE);
-                        MainActivity.mSearchEditText.setVisibility(View.GONE);
+//                        MainActivity.mSearchEditText.setVisibility(View.GONE);
 
 
                         rb3.setChecked(true);
@@ -140,7 +139,7 @@ public class MainActivity extends FragmentActivity {
                     case 3:
                         MainActivity.address.setVisibility(View.GONE);
                         MainActivity.ewm.setVisibility(View.GONE);
-                        MainActivity.mSearchEditText.setVisibility(View.GONE);
+//                        MainActivity.mSearchEditText.setVisibility(View.GONE);
                         MainActivity.ewm.setVisibility(View.GONE);
                         MainActivity.title.setText("个人中心");
                         MainActivity.title.setVisibility(View.VISIBLE);
@@ -184,18 +183,4 @@ public class MainActivity extends FragmentActivity {
                 break;
         }
     }
-//    @Override
-//    public void onWindowFocusChanged(boolean hasFocus) {
-//        super.onWindowFocusChanged(hasFocus);
-//        if (hasFocus && Build.VERSION.SDK_INT >= 19) {
-//            View decorView = getWindow().getDecorView();
-//            decorView.setSystemUiVisibility(
-//                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-//                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-//        }
-//    }
 }

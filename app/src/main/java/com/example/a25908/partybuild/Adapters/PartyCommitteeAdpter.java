@@ -14,7 +14,7 @@ import com.example.a25908.partybuild.R;
 import java.util.List;
 
 /**
- * 党委通知的adapter
+ * 党委通知 和 党建视频 的adapter
  * Created by WEIXUAN on 2016/8/29.
  */
 
@@ -46,7 +46,8 @@ public class PartyCommitteeAdpter extends BaseAdapter {
         if (view == null){
             view = LayoutInflater.from(mContext).inflate(R.layout.list_item_dangwei,null);
             viewHolder = new ViewHolder();
-            viewHolder.imageView = (ImageView) view.findViewById(R.id.item_pc_iv);
+            viewHolder.imageView12 = (ImageView) view.findViewById(R.id.item_pc_iv);
+            viewHolder.item_bt = (TextView) view.findViewById(R.id.item_bt);
             viewHolder.title = (TextView) view.findViewById(R.id.item_pc_title);
             viewHolder.context = (TextView) view.findViewById(R.id.item_pc_context);
             viewHolder.browse = (TextView) view.findViewById(R.id.item_liulan);
@@ -58,7 +59,8 @@ public class PartyCommitteeAdpter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.imageView.setBackgroundResource(R.drawable.ceshi_item1);
+        viewHolder.imageView12.setImageResource(list.get(i).imageView233);
+        viewHolder.item_bt.setText(list.get(i).item_bt);
         viewHolder.title.setText(list.get(i).title);
         viewHolder.context.setText(list.get(i).context);
         viewHolder.browse.setText(list.get(i).browse);
@@ -67,7 +69,8 @@ public class PartyCommitteeAdpter extends BaseAdapter {
     }
 
     class ViewHolder{
-        public ImageView imageView;//右边图片
+        private ImageView imageView12;//右边图片
+        private TextView item_bt;//item标题
         private TextView title;//标题
         private TextView context;//内容
         private TextView  browse;//浏览数

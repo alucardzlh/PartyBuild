@@ -17,7 +17,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.a25908.partybuild.Activitys.MainActivity;
 import com.example.a25908.partybuild.Activitys.PartymembersdetailsActivity;
 import com.example.a25908.partybuild.Contacts.PinYinKit;
 import com.example.a25908.partybuild.Contacts.PinyinComparator;
@@ -57,6 +56,9 @@ public class Fragment2 extends Fragment  {
     //    private SearchEditText mSearchEditText;
     private SortAdapter adapter;
 
+
+    public static SearchEditText mSearchEditText;
+
     List<SortModel> sortModelList=new ArrayList<>();
     LinearLayout zzjg;
     @Override
@@ -64,6 +66,7 @@ public class Fragment2 extends Fragment  {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_fragment2, container, false);
         ViewUtils.inject(getActivity());
+        mSearchEditText = (SearchEditText) v.findViewById(R.id.txt_filter_edit);
         zzjg= (LinearLayout) v.findViewById(R.id.zzjg);
         userListNumTxt= (TextView) v.findViewById(R.id.txt_user_list_user_num);
         sideBar= (SideBar) v.findViewById(R.id.sild_bar);
@@ -97,7 +100,7 @@ public class Fragment2 extends Fragment  {
                                     long id)
             {
                 Toast.makeText(getActivity(), ((SortModel)adapter.getItem(position)).name, Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getActivity(), PartymembersdetailsActivity.class).putExtra("name",str[position]));
+                startActivity(new Intent(getActivity(), PartymembersdetailsActivity.class).putExtra("name",((SortModel)adapter.getItem(position)).name));
             }
         });
 
@@ -123,14 +126,14 @@ public class Fragment2 extends Fragment  {
         // search
 //        mSearchEditText = (SearchEditText) .findViewById(R.id.txt_filter_edit);
         // filter
-        MainActivity.mSearchEditText.addTextChangedListener(new TextWatcher()
+        mSearchEditText.addTextChangedListener(new TextWatcher()
         {
 
             public void onTextChanged(CharSequence str, int arg1, int arg2, int arg3)
             {
                 try{
                     filerData(str.toString());
-                    if(MainActivity.mSearchEditText.getText().toString().equals("")){
+                    if(mSearchEditText.getText().toString().equals("")){
                         zzjg.setVisibility(View.VISIBLE);
                     }else{
                         zzjg.setVisibility(View.GONE);

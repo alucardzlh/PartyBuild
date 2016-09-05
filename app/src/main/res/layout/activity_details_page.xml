@@ -4,7 +4,7 @@
     android:id="@+id/activity_details_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/huiwhite"
+    android:background="#F6F6F6"
     android:orientation="vertical"
     tools:context="com.example.a25908.partybuild.Activitys.DetailsPageActivity">
     <include layout="@layout/headbar"/>
@@ -51,6 +51,7 @@
 
             </LinearLayout>
             <ImageView
+                android:id="@+id/imageView_dp"
                 android:layout_margin="10dp"
                 android:src="@mipmap/banner"
                 android:layout_width="match_parent"

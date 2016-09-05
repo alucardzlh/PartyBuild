@@ -67,7 +67,7 @@ public class SideBar extends View
 			paint.setColor(Color.rgb(33, 65, 98));
 			paint.setTypeface(Typeface.DEFAULT_BOLD);
 			paint.setAntiAlias(true);
-			paint.setTextSize(20);
+			paint.setTextSize(24);
 			
 			// if choosed 
 			if(i == choose)
@@ -75,15 +75,13 @@ public class SideBar extends View
 				paint.setColor(Color.parseColor("#3399ff"));
 				paint.setFakeBoldText(true);
 			}
-			
+
 			// draw text
 			float x = width / 2 - paint.measureText(b[i]) / 2;
 			float y = singleHeight * i + singleHeight;
 			canvas.drawText(b[i], x, y, paint);
 			paint.reset();
 		}
-		
-		
 	}
 	
 	

@@ -85,12 +85,18 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
             @Override
             public void onClick(View view) {
                 String pinlun = viewHolder.item_dt_pinglun.getText().toString();
-                DataManager.Dynamic.CommentItem commentItem1 = new DataManager.Dynamic.CommentItem();
-                commentItem1.setContent(pinlun);
-                commentItem1.setUser("自己");
-                list.get(position).pinlun.add(commentItem1);
-                viewHolder.commentList.setDatas(list.get(position).pinlun);
-                Toast.makeText(context,pinlun+"评论成功",Toast.LENGTH_SHORT).show();
+                if (!pinlun.equals("")){
+                    DataManager.Dynamic.CommentItem commentItem1 = new DataManager.Dynamic.CommentItem();
+                    commentItem1.setContent(pinlun);
+                    commentItem1.setUser("自己");
+                    list.get(position).pinlun.add(commentItem1);
+                    viewHolder.commentList.setDatas(list.get(position).pinlun);
+                    Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(context,"请输入内容",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

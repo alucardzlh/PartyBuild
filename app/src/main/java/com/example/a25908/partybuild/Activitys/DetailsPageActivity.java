@@ -1,5 +1,6 @@
 package com.example.a25908.partybuild.Activitys;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +18,8 @@ public class DetailsPageActivity extends BaseActivity {
     private ImageView returnT;
     @ViewInject(R.id.title)
     private TextView title;
+    @ViewInject(R.id.imageView_dp)
+    private ImageView imageView_dp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,13 @@ public class DetailsPageActivity extends BaseActivity {
                 finish();
             }
         });
-
+        Intent intent = getIntent();
+        int flag = intent.getIntExtra("flag",0);
+        if (flag==1){
+            imageView_dp.setImageResource(R.mipmap.banner2);
+        }
+        else {
+            imageView_dp.setImageResource(R.mipmap.banner);
+        }
     }
 }

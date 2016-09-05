@@ -15,6 +15,8 @@ import com.example.a25908.partybuild.Activitys.AnswerActivity;
 import com.example.a25908.partybuild.Activitys.FilesActivity;
 import com.example.a25908.partybuild.Activitys.PalmPartySchoolActivity;
 import com.example.a25908.partybuild.Activitys.PartyCommitteeActivity;
+import com.example.a25908.partybuild.Activitys.PartyPayActivity;
+import com.example.a25908.partybuild.Activitys.PartyVideoActivity;
 import com.example.a25908.partybuild.Activitys.QuestionSurveyActivity;
 import com.example.a25908.partybuild.Activitys.StudyActivity;
 import com.example.a25908.partybuild.Activitys.SupportActivity;
@@ -97,8 +99,12 @@ public class Fragment1 extends Fragment {
                         startActivity(new Intent(getActivity(), PalmPartySchoolActivity.class));
                         break;
                     case 2:
+                        //党费缴纳
+                        startActivity(new Intent(getActivity(), PartyPayActivity.class));
                         break;
                     case 3:
+                        //党建视频
+                        startActivity(new Intent(getActivity(), PartyVideoActivity.class));
                         break;
                     case 4://学习园地
                         startActivity(new Intent(getActivity(), StudyActivity.class));
