@@ -8,6 +8,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.a25908.partybuild.Application;
+import com.example.a25908.partybuild.Model.CircleMovementMethod;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.Model.SpannableClickable;
 import com.example.a25908.partybuild.R;
@@ -117,23 +119,24 @@ public class CommentListView extends LinearLayout {
         View convertView = layoutInflater.inflate(R.layout.item_comment, null, false);
 
         TextView commentTv = (TextView) convertView.findViewById(R.id.commentTv);
-//        final CircleMovementMethod circleMovementMethod = new CircleMovementMethod(itemSelectorColor, itemSelectorColor);
+        final CircleMovementMethod circleMovementMethod = new CircleMovementMethod(itemSelectorColor, itemSelectorColor);
 
         final DataManager.Dynamic.CommentItem bean = mDatas.get(position);
-        String name = bean.getUser();
-        String id = bean.getId();
+        Log.e("aass",bean+"");
+        String name = bean.getUser().getUsername();
+//        String id = bean.getId();
         String toReplyName = "";
         if (bean.getToReplyUser() != null) {
-            toReplyName = bean.getToReplyUser();
+            toReplyName = bean.getToReplyUser().getUsername();
         }
 
         SpannableStringBuilder builder = new SpannableStringBuilder();
-        builder.append(setClickableSpan(name, bean.getUser()));
+        builder.append(setClickableSpan(name, bean.getUser().getUserid()));
 
         if (!TextUtils.isEmpty(toReplyName)) {
 
             builder.append(" 回复 ");
-            builder.append(setClickableSpan(toReplyName, bean.getToReplyUserid()));
+            builder.append(setClickableSpan(toReplyName, bean.getToReplyUserid().getUserid()));
         }
         builder.append(": ");
         //转换表情字符
@@ -141,29 +144,29 @@ public class CommentListView extends LinearLayout {
         builder.append(UrlUtils.formatUrlString(contentBodyStr));
         commentTv.setText(builder);
 
-//        commentTv.setMovementMethod(circleMovementMethod);
-//        commentTv.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (circleMovementMethod.isPassToTv()) {
-//                    if(onItemClickListener!=null){
-//                        onItemClickListener.onItemClick(position);
-//                    }
-//                }
-//            }
-//        });
-//        commentTv.setOnLongClickListener(new OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                if (circleMovementMethod.isPassToTv()) {
-//                    if(onItemLongClickListener!=null){
-//                        onItemLongClickListener.onItemLongClick(position);
-//                    }
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
+        commentTv.setMovementMethod(circleMovementMethod);
+        commentTv.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (circleMovementMethod.isPassToTv()) {
+                    if(onItemClickListener!=null){
+                        onItemClickListener.onItemClick(position);
+                    }
+                }
+            }
+        });
+        commentTv.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (circleMovementMethod.isPassToTv()) {
+                    if(onItemLongClickListener!=null){
+                        onItemLongClickListener.onItemLongClick(position);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
 
         return convertView;
     }
@@ -174,7 +177,7 @@ public class CommentListView extends LinearLayout {
         subjectSpanText.setSpan(new SpannableClickable(itemColor){
                                     @Override
                                     public void onClick(View widget) {
-                                        Toast.makeText(Application.getContext(), textStr + " &id = " + id, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Application.getContext(), textStr + " &id = " , Toast.LENGTH_SHORT).show();
                                     }
                                 }, 0, subjectSpanText.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

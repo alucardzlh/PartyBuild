@@ -24,7 +24,7 @@ public class MultiImageView extends LinearLayout {
 	public static int MAX_WIDTH = 0;
 
 	// 照片的Url列表
-	private List<Integer> imagesList;
+	private List<String> imagesList;
 
 	/** 长度 单位为Pixel **/
 	private int pxOneMaxWandH;  // 单张图最大允许宽高
@@ -50,7 +50,7 @@ public class MultiImageView extends LinearLayout {
 		super(context, attrs);
 	}
 
-	public void setList(List<Integer> lists) throws IllegalArgumentException{
+	public void setList(List<String> lists) throws IllegalArgumentException{
 		if(lists==null){
 			throw new IllegalArgumentException("imageList is null...");
 		}
@@ -171,7 +171,7 @@ public class MultiImageView extends LinearLayout {
 	}
 
 	private ImageView createImageView(int position, final boolean isMultiImage) {
-//		String url = imagesList.get(position);
+		String url = imagesList.get(position);
 		ImageView imageView = new ColorFilterImageView(getContext());
 		if(isMultiImage){
 			imageView.setScaleType(ScaleType.CENTER_CROP);
@@ -183,7 +183,7 @@ public class MultiImageView extends LinearLayout {
 			imageView.setLayoutParams(onePicPara);
 		}
 
-//		imageView.setId(url.hashCode());
+		imageView.setId(url.hashCode());
 		imageView.setOnClickListener(new ImageOnClickListener(position));
 		Glide.with(getContext()).load(imagesList.get(position)).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
 		return imageView;

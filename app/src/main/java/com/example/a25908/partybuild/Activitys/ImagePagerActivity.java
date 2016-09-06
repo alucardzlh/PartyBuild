@@ -42,13 +42,13 @@ public class ImagePagerActivity extends Activity{
     private LinearLayout guideGroup;
     public ImageSize imageSize;
     private int startPos;
-    private ArrayList<Integer> imgUrls;
+    private ArrayList<String> imgUrls;
 
 
-    public static void startImagePagerActivity(Context context, List<Integer> imgUrls, int position, ImageSize imageSize){
+    public static void startImagePagerActivity(Context context, List<String> imgUrls, int position, ImageSize imageSize){
         Intent intent = new Intent(context, ImagePagerActivity.class);
-//        intent.putStringArrayListExtra(INTENT_IMGURLS, new ArrayList<Integer>(imgUrls));
-        intent.putIntegerArrayListExtra(INTENT_IMGURLS,new ArrayList<Integer>(imgUrls));
+        intent.putStringArrayListExtra(INTENT_IMGURLS, new ArrayList<String>(imgUrls));
+//        intent.putIntegerArrayListExtra(INTENT_IMGURLS,new ArrayList<Integer>(imgUrls));
         intent.putExtra(INTENT_POSITION, position);
         intent.putExtra(INTENT_IMAGESIZE, imageSize);
         context.startActivity(intent);
@@ -95,12 +95,12 @@ public class ImagePagerActivity extends Activity{
 
     private void getIntentData() {
         startPos = getIntent().getIntExtra(INTENT_POSITION, 0);
-//        imgUrls = getIntent().getStringArrayListExtra(INTENT_IMGURLS);
-        imgUrls = getIntent().getIntegerArrayListExtra(INTENT_IMGURLS);
+        imgUrls = getIntent().getStringArrayListExtra(INTENT_IMGURLS);
+//        imgUrls = getIntent().getIntegerArrayListExtra(INTENT_IMGURLS);
         imageSize = (ImageSize) getIntent().getSerializableExtra(INTENT_IMAGESIZE);
     }
 
-    private void addGuideView(LinearLayout guideGroup, int startPos, ArrayList<Integer> imgUrls) {
+    private void addGuideView(LinearLayout guideGroup, int startPos, ArrayList<String> imgUrls) {
         if(imgUrls!=null && imgUrls.size()>0){
             guideViewList.clear();
             for (int i=0; i<imgUrls.size(); i++){
@@ -130,13 +130,13 @@ public class ImagePagerActivity extends Activity{
     private static class ImageAdapter extends PagerAdapter {
 
 //        private List<String> datas = new ArrayList<String>();
-        private List<Integer> datas = new ArrayList<Integer>();
+        private List<String> datas = new ArrayList<String>();
         private LayoutInflater inflater;
         private Context context;
         private ImageSize imageSize;
         private ImageView smallImageView = null;
 
-        public void setDatas(List<Integer> datas) {
+        public void setDatas(List<String> datas) {
             if(datas != null )
                 this.datas = datas;
         }
@@ -180,7 +180,7 @@ public class ImagePagerActivity extends Activity{
                 loading.setLayoutParams(loadingLayoutParams);
                 ((FrameLayout)view).addView(loading);
 
-                final Integer imgurl = datas.get(position);
+                final String imgurl = datas.get(position);
 
                 Glide.with(context)
                         .load(imgurl)

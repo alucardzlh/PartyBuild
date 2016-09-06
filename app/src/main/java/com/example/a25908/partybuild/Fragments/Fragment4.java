@@ -7,12 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.a25908.partybuild.Activitys.AboutsActivity;
+import com.example.a25908.partybuild.Activitys.LoginActivity;
 import com.example.a25908.partybuild.Activitys.MyFilesActivity;
 import com.example.a25908.partybuild.Activitys.MydataActivity;
 import com.example.a25908.partybuild.Activitys.OpinionActivity;
+import com.example.a25908.partybuild.Activitys.PartyPayActivity;
+import com.example.a25908.partybuild.Activitys.TestWebActivity;
+import com.example.a25908.partybuild.Activitys.tsteActivity;
 import com.example.a25908.partybuild.R;
+import com.example.a25908.partybuild.Views.RoundImageView;
+
 /**
  * @author yusi
  * 个人中心
@@ -27,11 +34,17 @@ public class Fragment4 extends Fragment {
         return v;
     }
     public void show(){
+
+
+        RoundImageView userimg= (RoundImageView) v.findViewById(R.id.userimg);
+        TextView username= (TextView) v.findViewById(R.id.username);
         RelativeLayout my1= (RelativeLayout) v.findViewById(R.id.my1);
         RelativeLayout my2= (RelativeLayout) v.findViewById(R.id.my2);
         RelativeLayout my3= (RelativeLayout) v.findViewById(R.id.my3);
         RelativeLayout my4= (RelativeLayout) v.findViewById(R.id.my4);
         RelativeLayout my5= (RelativeLayout) v.findViewById(R.id.my5);
+        userimg.setOnClickListener(listener);
+        username.setOnClickListener(listener);
         my1.setOnClickListener(listener);
         my2.setOnClickListener(listener);
         my3.setOnClickListener(listener);
@@ -42,6 +55,12 @@ public class Fragment4 extends Fragment {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
+                case R.id.userimg:
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                    break;
+                case R.id.username:
+                    startActivity(new Intent(getActivity(), TestWebActivity.class));
+                    break;
                 case R.id.my1:
                     startActivity(new Intent(getActivity(), MydataActivity.class));
                     break;
@@ -49,6 +68,7 @@ public class Fragment4 extends Fragment {
                     startActivity(new Intent(getActivity(), MyFilesActivity.class));
                     break;
                 case R.id.my3:
+                    startActivity(new Intent(getActivity(), PartyPayActivity.class));
                     break;
                 case R.id.my4:
                     startActivity(new Intent(getActivity(), AboutsActivity.class));

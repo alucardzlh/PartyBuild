@@ -2,21 +2,24 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.a25908.partybuild">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".Application"
         android:allowBackup="true"
         android:icon="@mipmap/item2"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@android:style/Theme.NoTitleBar"
-        >
+        android:theme="@android:style/Theme.NoTitleBar">
         <activity
             android:name=".Activitys.MainActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action
+                    android:name="android.intent.action.MAIN"
+                    android:screenOrientation="portrait" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -24,29 +27,80 @@
         <activity android:name=".Activitys.PartyCommitteeActivity" />
         <!-- <activity android:name=".Activitys.BaseActivity"></activity> -->
 
-        <activity android:name=".Activitys.StudyActivity" />
-        <activity android:name=".Activitys.AboutsActivity" />
-        <activity android:name=".Activitys.OpinionActivity" />
+        <activity
+            android:name=".Activitys.StudyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.AboutsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.OpinionActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activitys.ImagePagerActivity"
             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" />
-        <activity android:name=".Activitys.DetailsPageActivity" />
-        <activity android:name=".Activitys.SupportActivity" />
-        <activity android:name=".Activitys.AnswerActivity" />
-        <activity android:name=".Activitys.AnswerDetailsActivity" />
-        <activity android:name=".Activitys.QuestionsActivity" />
-        <activity android:name=".Activitys.QuestionSurveyActivity" />
-        <activity android:name=".Activitys.MydataActivity" />
-        <activity android:name=".Activitys.PartymembersdetailsActivity" />
-        <activity android:name=".Activitys.PalmPartySchoolActivity" />
-        <activity android:name=".Activitys.PartydisciplineActivity" />
-        <activity android:name=".Activitys.TheConstitutionOfThePartyActivity" />
-        <activity android:name=".Activitys.PeopleGalleryActivity" />
-        <activity android:name=".Activitys.FilesActivity" />
-        <activity android:name=".Activitys.MyFilesActivity" />
-        <activity android:name=".Activitys.PartyVideoActivity" />
-        <activity android:name=".Activitys.PartyPayActivity"></activity>
+        <activity
+            android:name=".Activitys.DetailsPageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.SupportActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.AnswerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.AnswerDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.QuestionsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.QuestionSurveyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.MydataActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.PartymembersdetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.PalmPartySchoolActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.PartydisciplineActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.TheConstitutionOfThePartyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.PeopleGalleryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.FilesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.MyFilesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.PartyVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.PartyPayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.tsteActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".Activitys.WebVedioActivity"
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activitys.LoginActivity" />
+        <activity android:name=".Activitys.TestWebActivity"></activity>
     </application>
 
 </manifest>

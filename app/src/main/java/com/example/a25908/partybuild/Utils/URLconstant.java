@@ -10,4 +10,7 @@ public class URLconstant {
     public static final String URLINSER = "http://101.201.211.27:8282/zhirong.creditcard/Interface/";//所有接口前缀
 
     public static final String NEWSURL ="newsController/getNewslistPage";//新闻URLObeyed
+
+    public static final String videourl ="https://sec.ch9.ms/ch9/82d9/de312353-af35-48b7-a20a-e648489f82d9/Win10UpdateForDevs_high.mp4";//视频
+
 }

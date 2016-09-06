@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,6 +17,7 @@ import com.example.a25908.partybuild.Activitys.ImagePagerActivity;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Views.CommentListView;
+import com.example.a25908.partybuild.Views.ExpandTextView;
 import com.example.a25908.partybuild.Views.MultiImageView;
 import com.example.a25908.partybuild.Views.RoundImageView;
 
@@ -59,6 +61,7 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
         viewHolder.item_dt_context.setText(list.get(position).context1);
         viewHolder.item_dt_time.setText(list.get(position).time1);
         viewHolder.item_dt_zanshu.setText(list.get(position).zanshu+"人觉的很赞");
+        //删除
         viewHolder.item_dt_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +83,7 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
 
             }
         });
+        //评论
         viewHolder.item_dt_huihu.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -88,7 +92,7 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
                 if (!pinlun.equals("")){
                     DataManager.Dynamic.CommentItem commentItem1 = new DataManager.Dynamic.CommentItem();
                     commentItem1.setContent(pinlun);
-                    commentItem1.setUser("自己");
+                    commentItem1.setUser(new DataManager.Dynamic.User("自己"));
                     list.get(position).pinlun.add(commentItem1);
                     viewHolder.commentList.setDatas(list.get(position).pinlun);
                     Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT).show();
@@ -100,12 +104,44 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
             }
         });
 
+        //处理评论列表
+        viewHolder.commentList.setOnItemClickListener(new CommentListView.OnItemClickListener() {
+            @Override
+            public void onItemClick(final int commentPosition) {
+                Toast.makeText(context,"点击了 "+list.get(position).pinlun.get(commentPosition).getUser(),Toast.LENGTH_SHORT).show();
+                viewHolder.item_dt_pinglun.requestFocus();//获取edittext焦点
+                //打开软键盘
+                InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                //回复评论
+                viewHolder.item_dt_huihu.setOnClickListener(new View.OnClickListener() {
 
+                    @Override
+                    public void onClick(View view) {
+                        String pinlun = viewHolder.item_dt_pinglun.getText().toString();
+                        if (!pinlun.equals("")){
+                            DataManager.Dynamic.CommentItem commentItem1 = new DataManager.Dynamic.CommentItem();
+                            commentItem1.setContent(pinlun);
+                            commentItem1.setUser(new DataManager.Dynamic.User("10","自己"));
+                            commentItem1.setToReplyUser(new DataManager.Dynamic.User(list.get(position).pinlun.get(commentPosition).getUser().getUsername()));
+                            list.get(position).pinlun.add(commentItem1);
+                            viewHolder.commentList.setDatas(list.get(position).pinlun);
+                            Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(context,"请输入内容",Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+            }
+        });
 
 
         //图片处理
         if (holder instanceof ImageViewHolder) {
-            final List<Integer> photos =list.get(position).photos;
+            final List<String> photos =list.get(position).photos;
             if (photos != null && photos.size() > 0) {
                 ((ImageViewHolder) holder).multiImageView.setVisibility(View.VISIBLE);
                 ((ImageViewHolder) holder).multiImageView.setList(photos);
@@ -114,7 +150,6 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
                     public void onItemClick(View view, int position) {
                         //imagesize是作为loading时的图片size
                        ImagePagerActivity.ImageSize imageSize = new ImagePagerActivity.ImageSize(view.getMeasuredWidth(), view.getMeasuredHeight());
-
                        ImagePagerActivity.startImagePagerActivity(context, photos, position, imageSize);
                     }
                 });
@@ -139,7 +174,7 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
         private RoundImageView item_dt_tx;//头像
         private TextView item_dt_name;//名字
         private TextView item_dt_time;//时间
-        private TextView item_dt_context; //内容
+        private ExpandTextView item_dt_context; //内容
         private TextView item_dt_zanshu;//点赞数
         private LinearLayout item_dt_zan;//点赞
         private LinearLayout item_dt_delete;//删除
@@ -157,7 +192,7 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
             item_dt_tx = (RoundImageView) itemView.findViewById(R.id.item_dt_tx);
             item_dt_name = (TextView) itemView.findViewById(R.id.item_dt_name);
             item_dt_time = (TextView) itemView.findViewById(R.id.item_dt_time);
-            item_dt_context = (TextView) itemView.findViewById(R.id.item_dt_context);
+            item_dt_context = (ExpandTextView) itemView.findViewById(R.id.item_dt_context);
             item_dt_zanshu = (TextView) itemView.findViewById(R.id.item_dt_zanshu);
             item_dt_zan = (LinearLayout) itemView.findViewById(R.id.item_dt_zan);
             item_dt_delete = (LinearLayout) itemView.findViewById(R.id.item_dt_delete);

@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.a25908.partybuild.R;
+import com.example.a25908.partybuild.Utils.URLconstant;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -38,6 +39,12 @@ public class DetailsPageActivity extends BaseActivity {
         int flag = intent.getIntExtra("flag",0);
         if (flag==1){
             imageView_dp.setImageResource(R.mipmap.banner2);
+            imageView_dp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(DetailsPageActivity.this, WebVedioActivity.class).putExtra("url", URLconstant.videourl));
+                }
+            });
         }
         else {
             imageView_dp.setImageResource(R.mipmap.banner);
