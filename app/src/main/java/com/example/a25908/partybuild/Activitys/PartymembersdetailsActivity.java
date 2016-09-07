@@ -15,7 +15,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
  * @author yusi
  * 党员详情
  */
-public class PartymembersdetailsActivity extends Activity {
+public class PartymembersdetailsActivity extends BaseActivity {
     @ViewInject(R.id.returnT)
     private ImageView back;
     @ViewInject(R.id.title)

@@ -20,7 +20,7 @@ import java.util.List;
  * @author yusi
  * 文档中心
  */
-public class FilesActivity extends Activity {
+public class FilesActivity extends BaseActivity {
     @ViewInject(R.id.returnT)
     private ImageView back;
     @ViewInject(R.id.title)

@@ -1,6 +1,9 @@
 package com.example.a25908.partybuild.Activitys;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,6 +13,7 @@ import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Utils.URLconstant;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+
 
 /**
  * 党委通知，学习园地，党员扶持的详情页
@@ -21,7 +25,6 @@ public class DetailsPageActivity extends BaseActivity {
     private TextView title;
     @ViewInject(R.id.imageView_dp)
     private ImageView imageView_dp;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

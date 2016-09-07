@@ -57,7 +57,7 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
         final DynamicViewHolder viewHolder = (DynamicViewHolder) holder;
         viewHolder.commentList.setDatas(list.get(position).pinlun);
         viewHolder.item_dt_tx.setImageResource(list.get(position).iv);
-        viewHolder.item_dt_name.setText(list.get(position).name);
+        viewHolder.item_dt_name.setText(list.get(position).Dtname);
         viewHolder.item_dt_context.setText(list.get(position).context1);
         viewHolder.item_dt_time.setText(list.get(position).time1);
         viewHolder.item_dt_zanshu.setText(list.get(position).zanshu+"人觉的很赞");
@@ -65,14 +65,17 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
         viewHolder.item_dt_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //删除
                 Toast.makeText(context,"点击了第"+position+"个item的删除",Toast.LENGTH_SHORT).show();
             }
         });
+
+        //点赞
+
         viewHolder.item_dt_zan.setOnClickListener(new View.OnClickListener() {
+            boolean is = true;
             @Override
             public void onClick(View view) {
-                boolean is = true;
+
                 if (is){
                     viewHolder.item_dt_zanshu.setText(list.get(position).zanshu+1+"人觉的很赞");
                     is =false;
@@ -83,6 +86,8 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
 
             }
         });
+
+
         //评论
         viewHolder.item_dt_huihu.setOnClickListener(new View.OnClickListener() {
 
@@ -91,11 +96,13 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
                 String pinlun = viewHolder.item_dt_pinglun.getText().toString();
                 if (!pinlun.equals("")){
                     DataManager.Dynamic.CommentItem commentItem1 = new DataManager.Dynamic.CommentItem();
-                    commentItem1.setContent(pinlun);
-                    commentItem1.setUser(new DataManager.Dynamic.User("自己"));
+                    commentItem1.context2 = pinlun;
+                    commentItem1.Userid ="10";
+                    commentItem1.Username = "自己";
                     list.get(position).pinlun.add(commentItem1);
                     viewHolder.commentList.setDatas(list.get(position).pinlun);
                     Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT).show();
+                    viewHolder.item_dt_pinglun.setText("");
                 }
                 else {
                     Toast.makeText(context,"请输入内容",Toast.LENGTH_SHORT).show();
@@ -106,37 +113,62 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
 
         //处理评论列表
         viewHolder.commentList.setOnItemClickListener(new CommentListView.OnItemClickListener() {
+
             @Override
             public void onItemClick(final int commentPosition) {
-                Toast.makeText(context,"点击了 "+list.get(position).pinlun.get(commentPosition).getUser(),Toast.LENGTH_SHORT).show();
-                viewHolder.item_dt_pinglun.requestFocus();//获取edittext焦点
-                //打开软键盘
-                InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                //回复评论
-                viewHolder.item_dt_huihu.setOnClickListener(new View.OnClickListener() {
+                final String name = list.get(position).pinlun.get(commentPosition).Username;//点击的名字
+                final String id = list.get(position).pinlun.get(commentPosition).Userid;//点击的名字 id
+                if (!id.equals("10")){
+                    viewHolder.item_dt_pinglun.requestFocus();//获取edittext焦点
+                    viewHolder.item_dt_pinglun.setText("");
+                    viewHolder.item_dt_pinglun.setHint("回复"+name+":");
+                    //打开软键盘
+                    final InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                    //回复评论
+                    viewHolder.item_dt_huihu.setOnClickListener(new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View view) {
-                        String pinlun = viewHolder.item_dt_pinglun.getText().toString();
-                        if (!pinlun.equals("")){
-                            DataManager.Dynamic.CommentItem commentItem1 = new DataManager.Dynamic.CommentItem();
-                            commentItem1.setContent(pinlun);
-                            commentItem1.setUser(new DataManager.Dynamic.User("10","自己"));
-                            commentItem1.setToReplyUser(new DataManager.Dynamic.User(list.get(position).pinlun.get(commentPosition).getUser().getUsername()));
-                            list.get(position).pinlun.add(commentItem1);
-                            viewHolder.commentList.setDatas(list.get(position).pinlun);
-                            Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            Toast.makeText(context,"请输入内容",Toast.LENGTH_SHORT).show();
-                        }
+                        @Override
+                        public void onClick(View view) {
+                            String pinlun1 = viewHolder.item_dt_pinglun.getText().toString();
+                            if (!pinlun1.equals("")){
+                                DataManager.Dynamic.CommentItem commentItem1 = new DataManager.Dynamic.CommentItem();
+                                commentItem1.context2 = pinlun1;
+                                commentItem1.Userid ="10";
+                                commentItem1.Username = "自己";
+                                commentItem1.ToReplyUserid = id;
+                                commentItem1.ToReplyUser = name;
+                                list.get(position).pinlun.add(commentItem1);
+                                viewHolder.commentList.setDatas(list.get(position).pinlun);
+                                Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT).show();
+                                viewHolder.item_dt_pinglun.clearFocus();//取消焦点
+                                //关闭软键盘
+                                imm.hideSoftInputFromWindow(viewHolder.item_dt_pinglun.getWindowToken(), 0);
+                                viewHolder.item_dt_pinglun.setText("");
+                                viewHolder.item_dt_pinglun.setHint("我也要评论");
 
-                    }
-                });
+                            }
+                            else {
+                                Toast.makeText(context,"请输入内容",Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });
+                }
+
 
             }
         });
+        //处理评论列表长按事件
+        viewHolder.commentList.setOnItemLongClickListener(new CommentListView.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(int position) {
+
+            }
+        });
+
+
+
 
 
         //图片处理

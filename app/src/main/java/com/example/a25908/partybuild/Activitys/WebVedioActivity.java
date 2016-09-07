@@ -9,7 +9,7 @@ import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Utils.URLconstant;
 import com.example.a25908.partybuild.Views.CommonVideoView;
 
-public class WebVedioActivity extends AppCompatActivity {
+public class WebVedioActivity extends BaseActivity {
     CommonVideoView videoView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -19,7 +19,7 @@ import java.util.List;
  * @author yusi
  *人物长廊
  */
-public class PeopleGalleryActivity extends Activity {
+public class PeopleGalleryActivity extends BaseActivity {
     @ViewInject(R.id.returnT)
     private ImageView back;
     @ViewInject(R.id.title)

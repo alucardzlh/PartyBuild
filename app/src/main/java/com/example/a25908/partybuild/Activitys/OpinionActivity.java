@@ -14,7 +14,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
  * @author yusi
  * 意见反馈
  */
-public class OpinionActivity extends Activity {
+public class OpinionActivity extends BaseActivity {
     @ViewInject(R.id.returnT)
     private ImageView back;
     @ViewInject(R.id.title)

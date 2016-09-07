@@ -14,7 +14,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
  * @author yusi
  * 个人资料
  */
-public class MydataActivity extends Activity {
+public class MydataActivity extends BaseActivity {
     @ViewInject(R.id.returnT)
     private ImageView back;
     @ViewInject(R.id.title)

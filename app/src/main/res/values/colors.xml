@@ -24,9 +24,9 @@
     <!--白色-->
     <color name="white">#ffffff</color>
     <color name="name_selector_color">#cccccc</color>
-    <color name="bg_no_photo">#EEEEEE</color>
+    <color name="bg_no_photo">#999999</color>
 
-    <color name="praise_item_default">#333333</color>
+    <color name="praise_item_default">#2567CC</color>
     <color name="praise_item_selector_default">#cccccc</color>
     <color name="praise_item">#8290AF</color>
 

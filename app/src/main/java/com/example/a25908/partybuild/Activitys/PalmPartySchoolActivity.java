@@ -16,7 +16,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
  * @author  yusi
  * 掌上党校
  */
-public class PalmPartySchoolActivity extends Activity {
+public class PalmPartySchoolActivity extends BaseActivity {
     @ViewInject(R.id.returnT)
     private ImageView back;
     @ViewInject(R.id.title)

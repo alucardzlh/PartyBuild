@@ -33,7 +33,7 @@ import java.util.List;
  * 党群动态item的图片查看
  * Created by weixuan on 2016/1/6.
  */
-public class ImagePagerActivity extends Activity{
+public class ImagePagerActivity extends BaseActivity{
     public static final String INTENT_IMGURLS = "imgurls";
     public static final String INTENT_POSITION = "position";
     public static final String INTENT_IMAGESIZE = "imagesize";
