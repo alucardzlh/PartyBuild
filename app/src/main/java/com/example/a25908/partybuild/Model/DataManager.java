@@ -11,6 +11,14 @@ import java.util.List;
 
 public class DataManager {
     /**
+     * 我的文档
+     */
+    public static class MyFilesModels{
+        public String FilesName;//名字
+        public String FilesSize;//大小
+        public String FilesPath;//下载地址
+    }
+    /**
      * 党委通知和党建视频list的信息类
      */
     public static class PartyCommittee{

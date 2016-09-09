@@ -4,6 +4,9 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
+/**
+ * 自定义listview
+ */
 public class MyListView extends ListView {
 
 	public MyListView(Context context, AttributeSet attrs, int defStyle) {

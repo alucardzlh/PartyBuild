@@ -30,7 +30,7 @@ public class tsteActivity extends BaseActivity {
         setSettings(setting);
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("http://www.youku.com/");
+        webView.loadUrl("http://v.youku.com/v_show/id_XMTcxNjc3NTA2MA==.html");
     }
 
     private void setSettings(WebSettings setting) {

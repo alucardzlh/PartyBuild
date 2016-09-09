@@ -34,6 +34,8 @@ import com.yolanda.nohttp.RequestMethod;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.a25908.partybuild.Utils.FileUtils.FileNewsExists;
+
 /**
  * @author yusi
  * 党建首页
@@ -56,6 +58,7 @@ public class Fragment1 extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_fragment1, container, false);
         ViewUtils.inject(getActivity());
+        FileNewsExists();
         GsonRequest NewsRequest=new GsonRequest(URLconstant.URLINSER+URLconstant.NEWSURL, RequestMethod.GET);//新闻数据
         NewsRequest.setConnectTimeout(10000);
         NewsRequest.setReadTimeout(10000);

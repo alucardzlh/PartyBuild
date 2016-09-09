@@ -1,10 +1,10 @@
 package com.example.a25908.partybuild.Activitys;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,7 +25,14 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.example.a25908.partybuild.R;
+import com.example.a25908.partybuild.Views.Toast;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.HttpHandler;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -127,6 +135,9 @@ public class ImagePagerActivity extends BaseActivity{
         return false;
     }
 
+    /**
+     * viewpage适配器
+     */
     private static class ImageAdapter extends PagerAdapter {
 
 //        private List<String> datas = new ArrayList<String>();
@@ -161,6 +172,7 @@ public class ImagePagerActivity extends BaseActivity{
             View view = inflater.inflate(R.layout.item_pager_image, container, false);
             if(view != null){
                 final ImageView imageView = (ImageView) view.findViewById(R.id.image);
+                final Button btn_img = (Button) view.findViewById(R.id.btn_img);
 
                 if(imageSize!=null){
                     //预览imageView
@@ -216,6 +228,34 @@ public class ImagePagerActivity extends BaseActivity{
                                 }*/
                             }
                         });
+                //图片保存
+                btn_img.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            String url2 = datas.get(position);
+                            int index = url2.lastIndexOf("/")+1;
+                            String picName = url2.substring(index);
+                            final String file = Environment.getExternalStorageDirectory() + "/PartyBuild/Picture/"+picName;
+                            HttpUtils http = new HttpUtils();
+                            HttpHandler httpHandler = http.download(url2,file,true ,true, new RequestCallBack<File>() {
+                                @Override
+                                public void onSuccess(ResponseInfo<File> responseInfo) {
+                                    Toast.show("图片已保存 位置:"+file);
+                                }
+
+                                @Override
+                                public void onFailure(HttpException error, String msg) {
+                                    Toast.show("图片已保存");
+                                }
+                            });
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
 
                 container.addView(view, 0);
             }

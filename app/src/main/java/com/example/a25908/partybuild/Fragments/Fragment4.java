@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.a25908.partybuild.Activitys.AboutsActivity;
 import com.example.a25908.partybuild.Activitys.LoginActivity;
 import com.example.a25908.partybuild.Activitys.MyFilesActivity;
+import com.example.a25908.partybuild.Activitys.MyPartyPayActivity;
 import com.example.a25908.partybuild.Activitys.MydataActivity;
 import com.example.a25908.partybuild.Activitys.OpinionActivity;
 import com.example.a25908.partybuild.Activitys.PartyPayActivity;
@@ -38,6 +39,7 @@ public class Fragment4 extends Fragment {
 
         RoundImageView userimg= (RoundImageView) v.findViewById(R.id.userimg);
         TextView username= (TextView) v.findViewById(R.id.username);
+        TextView mtime= (TextView) v.findViewById(R.id.mtime);
         RelativeLayout my1= (RelativeLayout) v.findViewById(R.id.my1);
         RelativeLayout my2= (RelativeLayout) v.findViewById(R.id.my2);
         RelativeLayout my3= (RelativeLayout) v.findViewById(R.id.my3);
@@ -45,6 +47,7 @@ public class Fragment4 extends Fragment {
         RelativeLayout my5= (RelativeLayout) v.findViewById(R.id.my5);
         userimg.setOnClickListener(listener);
         username.setOnClickListener(listener);
+        mtime.setOnClickListener(listener);
         my1.setOnClickListener(listener);
         my2.setOnClickListener(listener);
         my3.setOnClickListener(listener);
@@ -61,6 +64,9 @@ public class Fragment4 extends Fragment {
                 case R.id.username:
                     startActivity(new Intent(getActivity(), TestWebActivity.class));
                     break;
+                case R.id.mtime:
+                    startActivity(new Intent(getActivity(), tsteActivity.class));
+                    break;
                 case R.id.my1:
                     startActivity(new Intent(getActivity(), MydataActivity.class));
                     break;
@@ -68,7 +74,7 @@ public class Fragment4 extends Fragment {
                     startActivity(new Intent(getActivity(), MyFilesActivity.class));
                     break;
                 case R.id.my3:
-                    startActivity(new Intent(getActivity(), PartyPayActivity.class));
+                    startActivity(new Intent(getActivity(), MyPartyPayActivity.class));
                     break;
                 case R.id.my4:
                     startActivity(new Intent(getActivity(), AboutsActivity.class));

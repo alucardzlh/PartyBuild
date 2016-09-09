@@ -49,18 +49,6 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:textStyle="bold" />
-        <!--<com.example.a25908.partybuild.Contacts.SearchEditText
-            android:id="@+id/txt_filter_edit"
-            android:layout_width="200dp"
-            android:layout_height="20dp"
-            android:visibility="gone"
-            android:layout_centerInParent="true"
-            android:drawableLeft="@mipmap/search_drawable_left"
-            android:background="@drawable/maintop_shape"
-            android:hint="请输入关键字"
-            android:textColorHint="@color/white"
-            android:paddingLeft="5dp"
-            android:textSize="12dip" />-->
         <ImageView
             android:id="@+id/ewm"
             android:layout_alignParentRight="true"
@@ -70,6 +58,17 @@
             android:layout_centerVertical="true"
             android:visibility="gone"
             android:background="@mipmap/ewm"/>
+        <TextView
+            android:id="@+id/fileclear"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:text="清空"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
     </RelativeLayout>
 
 </RelativeLayout>

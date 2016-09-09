@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ScrollView;
 
-/*
+/**
  * 在onTouchEvent()方法中实现对滚动Y轴进行监听
  * ScrollView的滚动Y值进行监听
  */

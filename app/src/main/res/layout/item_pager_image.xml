@@ -11,4 +11,15 @@
 		android:layout_gravity="center"
 		android:adjustViewBounds="true" />
 
+	<Button
+		android:layout_margin="10dp"
+		android:id="@+id/btn_img"
+		android:layout_gravity="bottom|right"
+		android:text="保存"
+		android:textSize="18sp"
+		android:textColor="#fff"
+		android:background="#0000"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" />
+
 </FrameLayout>

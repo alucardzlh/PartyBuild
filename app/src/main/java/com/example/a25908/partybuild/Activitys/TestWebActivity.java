@@ -38,6 +38,7 @@ public class TestWebActivity extends BaseActivity {
     WebView mWebView;
     String KeyNo,devicetype,infoname,infotype;
     String Url="http://news.sina.com.cn/c/nd/2016-09-06/doc-ifxvqcts9638027.shtml";
+
     WaitDialog wd;
     @ViewInject(R.id.listweb)
     MyListView listStudy;

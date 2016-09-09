@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author yusi
  * 关于我们
  */
-public class AboutsActivity extends Activity {
+public class AboutsActivity extends BaseActivity {
     @ViewInject(R.id.returnT)
     private ImageView back;
     @ViewInject(R.id.title)
