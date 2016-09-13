@@ -4,12 +4,94 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by 25908 on 2016/8/29.
- * 实体类model
- */
 
 public class DataManager {
+
+    public static User userlist = new User();
+
+    /**
+     * 用户信息
+     * @author yusi
+     */
+    public static class User{
+        public String message;
+        public String status;
+        public DataBean data;
+        public String version;
+        public static class DataBean {
+            public String username;
+            public String email;
+            public String head_img;
+            public int userid;
+            public String join_party;
+            public String password;
+        }
+    }
+
+    public static MyData MyDataList = new MyData();
+
+    /**
+     * 个人资料
+     * @author yusi
+     */
+    public static class MyData {
+        public String message;
+        public String status;
+        public DataBean data;
+        public String version;
+        public static class DataBean {
+            public PartyMemberlistBean partyMemberlist;
+            public static class PartyMemberlistBean {
+                public String position;//职务
+                public String birth;//出生年月
+                public int sex;//性别(0男1女)
+                public String phone;//电话
+                public String id_number;//身份证号
+                public String department;//部门
+                public int userid;//用户id
+                public String home_address;//现家庭住址
+                public String unit;//单位
+                public String username;//用户名称
+                public String census_register;//户籍
+                public String email;//邮箱
+                public String age;//年龄
+                public String head_img;//头像(base64)
+                public String introduction;//简介
+                public String mobile;//手机号
+            }
+        }
+    }
+
+    public  static MyPartyPay myPartyPaylist = new MyPartyPay();
+    /**
+     * 我的党费
+     */
+    public static class MyPartyPay{
+        public String message;
+        public String status;
+        public String version;
+        public List<partyMemberlist> pmlist = new ArrayList<>();
+
+        public static class partyMemberlist{
+            public String message;
+            public String status;
+            public String party_membership_dues_id;
+            public String money;
+            public String period_of_time;
+            public int type;
+            public String add_time;
+            public String userid;
+            public String username;
+
+        }
+    }
+
+
+
+
+
+
+//    ============================================================================
     /**
      * 我的文档
      */

@@ -32,6 +32,7 @@
             android:layout_margin="5dp"
             android:background="@color/huise"/>
         <TextView
+            android:id="@+id/md_name"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:gravity="center_vertical"
@@ -40,6 +41,7 @@
             android:textSize="18sp"
             android:text="姓名：18173"/>
         <TextView
+            android:id="@+id/md_sex"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:gravity="center_vertical"
@@ -48,6 +50,7 @@
             android:textSize="18sp"
             android:text="性别：18173"/>
         <TextView
+            android:id="@+id/md_age"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:gravity="center_vertical"
@@ -56,6 +59,7 @@
             android:textSize="18sp"
             android:text="年龄：18173"/>
         <TextView
+            android:id="@+id/md_jianjie"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:gravity="center_vertical"
@@ -86,6 +90,7 @@
             android:layout_margin="5dp"
             android:background="@color/huise"/>
         <TextView
+            android:id="@+id/md_dangwie"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:gravity="center_vertical"
@@ -94,6 +99,7 @@
             android:textSize="18sp"
             android:text="单位："/>
         <TextView
+            android:id="@+id/md_bumeng"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:gravity="center_vertical"
@@ -102,6 +108,7 @@
             android:textSize="18sp"
             android:text="部门："/>
         <TextView
+            android:id="@+id/md_zhiweu"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:gravity="center_vertical"
@@ -110,6 +117,7 @@
             android:textSize="18sp"
             android:text="职务："/>
         <TextView
+            android:id="@+id/md_guxiang"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:gravity="center_vertical"
@@ -118,6 +126,7 @@
             android:textSize="18sp"
             android:text="故乡："/>
         <TextView
+            android:id="@+id/md_youxiang"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:gravity="center_vertical"
@@ -126,14 +135,7 @@
             android:textSize="18sp"
             android:text="邮箱："/>
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:paddingLeft="10dp"
-            android:textSize="18sp"
-            android:text="电话："/>
-        <TextView
+            android:id="@+id/md_sphone"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:gravity="center_vertical"

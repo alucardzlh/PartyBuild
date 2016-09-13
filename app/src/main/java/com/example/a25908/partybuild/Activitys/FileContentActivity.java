@@ -72,7 +72,6 @@ public class FileContentActivity extends BaseActivity {
                     }
                     break;
                 case FAILURE: // 下载失败
-
                     Toast.makeText(getApplicationContext(), "下载失败",
                             Toast.LENGTH_LONG).show();
                     break;

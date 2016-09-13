@@ -13,12 +13,12 @@
     <application
         android:name=".Application"
         android:allowBackup="true"
-        android:icon="@mipmap/item2"
+        android:icon="@mipmap/appicon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activitys.MainActivity"
+            android:name=".Activitys.WelcomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden">
@@ -32,7 +32,12 @@
         </activity>
         <activity android:name=".Activitys.PartyCommitteeActivity" />
         <!-- <activity android:name=".Activitys.BaseActivity"></activity> -->
-
+        <activity
+            android:name=".Activitys.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activitys.LoginActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activitys.StudyActivity"
             android:screenOrientation="portrait" />
@@ -105,7 +110,6 @@
             android:configChanges="orientation|screenSize|screenLayout"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activitys.LoginActivity" />
         <activity android:name=".Activitys.TestWebActivity" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -116,7 +120,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".Activitys.FileContentActivity" />
-        <activity android:name=".Activitys.MyPartyPayActivity"></activity>
+        <activity android:name=".Activitys.MyPartyPayActivity" />
     </application>
 
 </manifest>

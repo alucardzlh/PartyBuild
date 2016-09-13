@@ -59,6 +59,7 @@ public class Fragment1 extends Fragment {
         v = inflater.inflate(R.layout.activity_fragment1, container, false);
         ViewUtils.inject(getActivity());
         FileNewsExists();
+
         GsonRequest NewsRequest=new GsonRequest(URLconstant.URLINSER+URLconstant.NEWSURL, RequestMethod.GET);//新闻数据
         NewsRequest.setConnectTimeout(10000);
         NewsRequest.setReadTimeout(10000);
