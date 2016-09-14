@@ -3,6 +3,8 @@ package com.example.a25908.partybuild.Http;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import com.example.a25908.partybuild.Activitys.LoginActivity;
+import com.example.a25908.partybuild.Activitys.MainActivity;
 import com.example.a25908.partybuild.Views.Toast;
 import com.yolanda.nohttp.error.NetworkError;
 import com.yolanda.nohttp.error.NotFoundCacheError;
@@ -57,6 +59,9 @@ public class ResponseListener<T> implements OnResponseListener<T> {
             } else if (response.getException() instanceof NetworkError) {
                 Toast.show("请检查网络");
             } else if (response.getException() instanceof TimeoutError) {
+                if(LoginActivity.flag==true){
+                    LoginActivity.wd.dismiss();
+                }
                 Toast.show("请求超时，网络不好或服务器不稳定");
             } else if (response.getException() instanceof UnKnownHostError) {
                 Toast.show("未发现指定服务器");

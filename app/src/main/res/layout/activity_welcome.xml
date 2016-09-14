@@ -4,7 +4,7 @@
     android:id="@+id/activity_welcome"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/loginbg"
+    android:background="@mipmap/welcome"
     tools:context="com.example.a25908.partybuild.Activitys.WelcomeActivity">
 
 </RelativeLayout>

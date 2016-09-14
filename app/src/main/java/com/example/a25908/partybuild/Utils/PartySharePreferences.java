@@ -46,11 +46,11 @@ public class PartySharePreferences {
                 return;
             }
             Editor editor = sp.edit();
-            editor.putString("EMAIL", user.data.email);
-            editor.putString("PASSWORD", user.data.password);
-            editor.putString("USERNAME", user.data.username);
-            editor.putString("ICONSTEAM", user.data.head_img);
-            editor.putString("PARTYTIME", user.data.join_party);
+            editor.putString("EMAIL", user.data.email+"");
+            editor.putString("PASSWORD", user.data.password+"");
+            editor.putString("USERNAME", user.data.username+"");
+            editor.putString("ICONSTEAM", user.data.head_img+"");
+            editor.putString("PARTYTIME", user.data.join_party+"");
             editor.putString("USERID", user.data.userid+"");
             editor.commit();
         }

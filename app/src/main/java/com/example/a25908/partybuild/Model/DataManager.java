@@ -85,12 +85,38 @@ public class DataManager {
 
         }
     }
-
-
-
-
-
-
+    public  static Partyer PartyerList = new Partyer();
+    /**
+     * 党员名册
+     * @author yusi
+     */
+    public static class Partyer {
+        public DataBean data;
+        public String message;
+        public String version;
+        public String status;
+        public static class DataBean {
+            public PagingBean Paging;
+            public List<UserlistPageBean> UserlistPage;
+            public static class PagingBean {
+                public String ShowCount;
+                public String TotalPage;
+                public String CurrentPage;
+                public String CurrentResult;
+                public String TotalResult;
+            }
+            public static class UserlistPageBean {
+                public String POSITION;//职务
+                public String note;//备注（标签）
+                public String UNIT;//单位
+                public String USER_DATA_ID;//个人资料表的id
+                public String SEX;//性别(0男1女)
+                public String USERNAME;//用户名称
+                public String HEAD_IMG;//头像(base64)
+                public String AGE;//年龄
+            }
+        }
+    }
 //    ============================================================================
     /**
      * 我的文档

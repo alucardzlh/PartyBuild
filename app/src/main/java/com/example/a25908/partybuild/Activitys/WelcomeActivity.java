@@ -21,6 +21,7 @@ public class WelcomeActivity extends BaseActivity {
                 try {
                     sleep(3000);
                     startActivity(new Intent(WelcomeActivity.this,LoginActivity.class));
+                    finish();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

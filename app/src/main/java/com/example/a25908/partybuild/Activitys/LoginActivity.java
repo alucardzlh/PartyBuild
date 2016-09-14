@@ -30,6 +30,7 @@ import com.yolanda.nohttp.RequestMethod;
 import java.io.File;
 
 import static com.example.a25908.partybuild.Utils.URLconstant.LOGINURL;
+import static com.example.a25908.partybuild.Utils.URLconstant.PARTYRTLISTURL;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
 /**
@@ -50,11 +51,15 @@ public class LoginActivity extends BaseActivity {
     LinearLayout login;
     public static Handler handler;
     public static WaitDialog wd;
+    public static boolean flag;
+    PartySharePreferences psp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ViewUtils.inject(this);
+        psp=PartySharePreferences.getLifeSharedPreferences();
+        wd=new WaitDialog(this);
         init();
         regiest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,12 +73,12 @@ public class LoginActivity extends BaseActivity {
             public void onClick(View view) {
                 if (login_user.getText().length() == 0 || login_pwd.getText().length() == 0) {
                     Toast.show("账号密码不能为空...");
-
                 } else if (login_pwd.getText().length() < 6) {
                     Toast.show("密码长度至少6位...");
                 } else {
-//                    wd.show();
-                    GsonRequest LoginRequest = new GsonRequest(URLINSER +LOGINURL, RequestMethod.GET);
+                    wd.show();
+                    flag=true;
+                    GsonRequest LoginRequest = new GsonRequest(URLINSER +LOGINURL, RequestMethod.POST);
                     LoginRequest.add("token", MD5.MD5s(login_user.getText().toString() + new Build().MODEL));
                     LoginRequest.add("KeyNo", login_user.getText().toString());
                     LoginRequest.add("deviceId", new Build().MODEL);
@@ -86,11 +91,20 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
+                wd.dismiss();
+                flag=false;
                 Intent i;
                 switch (msg.what){
                     case 0:
+                        GsonRequest LoginRequest = new GsonRequest(URLINSER +PARTYRTLISTURL, RequestMethod.GET);
+                        LoginRequest.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                        LoginRequest.add("KeyNo", psp.getUSERID());
+                        LoginRequest.add("deviceId", new Build().MODEL);
+                        CallServer.getInstance().add(LoginActivity.this, LoginRequest, GsonCallBack.getInstance(), 0x003, true, false, true);
+
                         i=new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(i);
+                        finish();
                         break;
                     case 1:
                         Toast.show("登陆失败!");

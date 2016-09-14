@@ -1,6 +1,7 @@
 package com.example.a25908.partybuild.Http;
 
 import com.example.a25908.partybuild.Activitys.LoginActivity;
+import com.example.a25908.partybuild.Activitys.MydataActivity;
 import com.example.a25908.partybuild.Activitys.OpinionActivity;
 import com.example.a25908.partybuild.Fragments.Fragment4;
 import com.example.a25908.partybuild.Model.DataManager;
@@ -45,20 +46,37 @@ public class GsonCallBack implements HttpCallBack {
                     LoginActivity.handler.sendEmptyMessage(1);
                 }
                 break;
-            case 0x002:
+            case 0x002://请求个人资料
                 jsonString = (String) response.get();
                 DataManager.MyDataList=gson.fromJson(jsonString,DataManager.MyData.class);
                 Fragment4.handler.sendEmptyMessage(0);
                 break;
-           case 0x102://意见反馈提交
+            case 0x0021://修改个人资料
+                jsonString = (String) response.get();
+                DataManager.MyDataList=gson.fromJson(jsonString,DataManager.MyData.class);
+                if( DataManager.MyDataList.message.equals("success")){
+                    MydataActivity.handler.sendEmptyMessage(0);
+                }else{
+                    MydataActivity.handler.sendEmptyMessage(1);
+                }
+                break;
+            case 0x0022://修改头像
+                jsonString = (String) response.get();
+                DataManager.MyDataList=gson.fromJson(jsonString,DataManager.MyData.class);
+                break;
+            case 0x003://党员名册
+                jsonString = (String) response.get();
+                DataManager.PartyerList=gson.fromJson(jsonString,DataManager.Partyer.class);
+                break;
+            case 0x102://意见反馈提交
                 jsonString = (String) response.get();
                 map = gson.fromJson(jsonString,new TypeToken<Map<String, Object>>(){}.getType());
-               if (map.get("message").equals("success")){
-                   OpinionActivity.handler.sendEmptyMessage(0);
+                if (map.get("message").equals("success")){
+                    OpinionActivity.handler.sendEmptyMessage(0);
                 }
-               else {
-                   OpinionActivity.handler.sendEmptyMessage(1);
-               }
+                else {
+                    OpinionActivity.handler.sendEmptyMessage(1);
+                }
                 break;
             case 0x103://我的党费
                 jsonString = (String) response.get();

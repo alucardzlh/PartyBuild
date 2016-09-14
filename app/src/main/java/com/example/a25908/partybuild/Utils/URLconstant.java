@@ -9,15 +9,24 @@ package com.example.a25908.partybuild.Utils;
 
 public class URLconstant {
 
-    public static final String URLINSER = "http://192.168.10.128:8080/zhirong.partybuild/Interface/";//所有接口前缀
+    public static final String URLINSER = "http://192.168.10.40:7070/zhirong.partybuild/Interface/";//所有接口前缀
 
     public static final String LOGINURL = "loginController/findUser";//登陆
 
-    public static final String USERDATEURL = "userDataController/queryuserData";//登陆
+    public static final String USERDATEURL = "userDataController/queryuserData";//个人资料
+
+    public static final String UPDATEUSERDATEURL = "userDataController/updateuserData";//个人资料
+
+    public static final String PARTYRTLISTURL = "userDateListControllerInterface/queryuserDataList";//党员名册
 
     public static final String OPINION = "feedbackController/saveFeedback";//意见反馈
 
     public static final String PARTYPAY = "partyMembershipDuesController/querypartyMember";//我的党费
+
+
+
+
+//    ===================================测      试==============================================
 
     public static final String NEWSURL ="newsController/getNewslistPage";//新闻URLObeyed
 

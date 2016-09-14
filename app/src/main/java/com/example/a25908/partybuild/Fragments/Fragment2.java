@@ -87,11 +87,15 @@ public class Fragment2 extends Fragment  {
                     sortListView.setSelection(position);
             }
         });
+//        姓名集合
+
         final String [] str= getResources().getStringArray(R.array.date);
+//        头像集合
         int [] img=new int[str.length];
         for(int i=0;i<str.length;i++){
             img[i]=R.mipmap.banner;
         }
+
         sortListView.setSelector(new ColorDrawable(Color.TRANSPARENT));
         sortListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
