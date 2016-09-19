@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/viewBox"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="beforeDescendants">
+    <com.example.a25908.partybuild.Views.MyVideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#CC282828"
+        android:padding="3dip"
+        android:id="@+id/videoControllerLayout"
+        android:gravity="center"
+        android:layout_gravity="bottom">
+        <LinearLayout android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:id="@+id/videoPauseBtn"
+            android:paddingRight="10dip"
+            android:paddingLeft="10dp">
+            <ImageView android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:id="@+id/videoPauseImg" />
+        </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:paddingRight="0dip">
+
+            <SeekBar android:layout_width="fill_parent"
+                android:id="@+id/videoSeekBar"
+                android:layout_weight="1"
+                style="@android:style/Widget.Holo.SeekBar"
+                android:layout_height="wrap_content"/>
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="00:00"
+                android:textSize="12dp"
+                android:id="@+id/videoCurTime"
+                android:textColor="#FFF"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="12dp"
+                android:textColor="#FFF"
+                android:text="/"/>
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="00:00"
+                android:textSize="12dp"
+                android:id="@+id/videoTotalTime"
+                android:textColor="#FFF"
+                android:layout_marginRight="10dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/screen_status_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/screen_status_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/iconfont_enter_32"/>
+        </LinearLayout>
+    </LinearLayout>
+    <ProgressBar android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.Holo.ProgressBar.Small"/>
+    <ImageView android:layout_width="30dip"
+        android:layout_height="30dip"
+        android:id="@+id/videoPlayImg"
+        android:layout_gravity="center"
+        android:src="@mipmap/video_box_play"/>
+    <LinearLayout
+        android:id="@+id/touch_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="#000">
+        <ImageView android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:id="@+id/touchStatusImg"/>
+        <TextView
+            android:id="@+id/touch_time"
+            android:layout_width="wrap_content"
+            android:text="25:00/59:00"
+            android:textSize="12sp"
+            android:textColor="#fff"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_questions"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#f0f0f0">
+
+    <include layout="@layout/headbar"/>
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:background="#fff">
+
+        <EditText
+            android:id="@+id/wenti233"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:background="#fff"
+            android:paddingRight="10dp"
+            android:gravity="left|top"
+            android:hint="请写下您的问题......"
+            android:layout_width="match_parent"
+            android:maxEms="1000"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:textStyle="italic"
+            android:layout_marginRight="15dp"
+            android:gravity="center|right"
+            android:text="1000字"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/tijiao"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="提交"
+        android:textSize="18sp"
+        android:textColor="#fff"
+        android:background="@drawable/maintop_shape2"/>
+
+</LinearLayout>

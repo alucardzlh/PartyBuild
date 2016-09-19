@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+
+    <!--红色-->
+    <color name="red">#FF0000</color>
+    <!--粉红色-->
+    <color name="colorAccent">#FF4081</color>
+    <!--浅红色-->
+    <color name="qred">#eb4f38</color>
+    <!--蓝色-->
+    <color name="blue">#2BA8D8</color>
+    <!--黑色-->
+    <color name="black">#000000</color>
+    <!--透明色-->
+    <color name="touming">#00000000</color>
+    <!--灰色-->
+    <color name="huise">#a9b7b7</color>
+    <!--黄色-->
+    <color name="yellow">#f4c600</color>
+    <!--灰白色-->
+    <color name="huiwhite">#ecf0f1</color>
+    <!--白色-->
+    <color name="white">#ffffff</color>
+    <color name="name_selector_color">#cccccc</color>
+    <color name="bg_no_photo">#999999</color>
+
+    <color name="praise_item_default">#2567CC</color>
+    <color name="praise_item_selector_default">#cccccc</color>
+    <color name="praise_item">#8290AF</color>
+
+    <color name="default_clickable_color">#cccccc</color>
+    <color name="color_8290AF">#8290AF</color>
+
+    <color name="transparent">#00000000</color>
+</resources>

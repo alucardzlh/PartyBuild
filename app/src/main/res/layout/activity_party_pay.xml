@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/activity_party_pay"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F6F6F6"
+    >
+    <include layout="@layout/headbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:text="查询缴费"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:textColor="#878787"
+        android:text="请填写真实姓名和手机号 ，否则无法查询"/>
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:textSize="18sp"
+        android:textColor="#f00"
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="姓名"/>
+
+    <EditText
+        android:paddingLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/edtext_bg"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:textSize="18sp"
+        android:textColor="#f00"
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="手机号"/>
+
+    <EditText
+        android:paddingLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/edtext_bg"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:textSize="18sp"
+            android:id="@+id/jiaofei"
+            android:textColor="#fff"
+            android:text="缴费"
+            android:background="@drawable/button2_shape"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="58dp" />
+
+        <Button
+            android:textSize="18sp"
+            android:id="@+id/chaxun"
+            android:textColor="#fff"
+            android:text="查询"
+            android:background="@drawable/button_shape"
+            android:layout_width="100dp"
+            android:layout_height="45dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_weight="2"
+            android:background="#878787"/>
+        <TextView
+            android:textColor="#878787"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:text="推荐缴费方式"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_weight="2"
+            android:background="#878787"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/zhifubao"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@mipmap/zhifubao" />
+
+        <ImageView
+            android:id="@+id/weixinzhifu"
+            android:layout_marginLeft="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@mipmap/weixin"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
