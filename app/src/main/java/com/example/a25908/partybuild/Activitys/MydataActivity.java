@@ -26,6 +26,7 @@ import com.yolanda.nohttp.RequestMethod;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static com.example.a25908.partybuild.Utils.FileUtils.checkNameChese;
 import static com.example.a25908.partybuild.Utils.URLconstant.LOGINURL;
 import static com.example.a25908.partybuild.Utils.URLconstant.UPDATEUSERDATEURL;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
@@ -125,35 +126,35 @@ public class MydataActivity extends BaseActivity {
     public void init(){
         showEdit();
 
-        md_name.setText(DataManager.MyDataList.data.partyMemberlist.username+"");
+        md_name.setText(DataManager.MyDataList.data.partyMemberlist.USERNAME+"");
 
-        if(DataManager.MyDataList.data.partyMemberlist.sex == 0){
+        if(DataManager.MyDataList.data.partyMemberlist.SEX == 0){
             md_sex.setText("男");
         }else{
             md_sex.setText("女");
         }
 
-        md_age.setText(DataManager.MyDataList.data.partyMemberlist.age+"");
+        md_age.setText(DataManager.MyDataList.data.partyMemberlist.AGE+"");
 
-        md_birth.setText(DataManager.MyDataList.data.partyMemberlist.birth+"");
+        md_birth.setText(DataManager.MyDataList.data.partyMemberlist.BIRTH+"");
 
-        md_jianjie.setText( DataManager.MyDataList.data.partyMemberlist.introduction+"");
+        md_jianjie.setText( DataManager.MyDataList.data.partyMemberlist.INTRODUCTION+"");
 
-        md_dangwie.setText(DataManager.MyDataList.data.partyMemberlist.unit+"");
+        md_dangwie.setText(DataManager.MyDataList.data.partyMemberlist.UNIT+"");
 
-        md_bumeng.setText( DataManager.MyDataList.data.partyMemberlist.department+"");
+        md_bumeng.setText( DataManager.MyDataList.data.partyMemberlist.DEPARTMENT+"");
 
-        md_zhiweu.setText( DataManager.MyDataList.data.partyMemberlist.position+"");
+        md_zhiweu.setText( DataManager.MyDataList.data.partyMemberlist.POSITION+"");
 
-        md_address.setText( DataManager.MyDataList.data.partyMemberlist.home_address+"");
+        md_address.setText( DataManager.MyDataList.data.partyMemberlist.HOME_ADDRESS+"");
 
-        md_guxiang.setText( DataManager.MyDataList.data.partyMemberlist.census_register+"");
+        md_guxiang.setText( DataManager.MyDataList.data.partyMemberlist.CENSUS_REGISTER+"");
 
-        md_youxiang.setText(DataManager.MyDataList.data.partyMemberlist.email+"");
+        md_youxiang.setText(DataManager.MyDataList.data.partyMemberlist.EMAIL+"");
 
-        md_mphone.setText(DataManager.MyDataList.data.partyMemberlist.phone+"");
+        md_mphone.setText(DataManager.MyDataList.data.partyMemberlist.PHONE+"");
 
-        md_sphone.setText(DataManager.MyDataList.data.partyMemberlist.mobile+"");
+        md_sphone.setText(DataManager.MyDataList.data.partyMemberlist.MOBILE+"");
     }
     View.OnClickListener listener=new View.OnClickListener() {
         @Override
@@ -164,13 +165,19 @@ public class MydataActivity extends BaseActivity {
                         fileclear.setText("保存");
                         showEdit();
                     }else{
+
                         if(md_name.getText().toString().equals("")){
                             Toast.show("姓名不能为空!");
+                        }else if(!checkNameChese(md_name.getText().toString())){
+                            Toast.show("姓名只能填中文!");
                         }else if(md_sex.getText().toString().equals("")){
                             Toast.show("性别不能为空!");
+                        }else if(!md_sex.getText().toString().equals("男") && !md_sex.getText().toString().equals("女")){
+                            Toast.show("性别只能填'男'或者'女'!");
                         }else if(md_age.getText().toString().equals("")){
                             Toast.show("年龄不能为空!");
-                        }else{
+                        }
+                        else{
                             fileclear.setText("编辑");
                             showEdit();
                             GsonRequest Request = new GsonRequest(URLINSER +UPDATEUSERDATEURL, RequestMethod.GET);
@@ -179,7 +186,11 @@ public class MydataActivity extends BaseActivity {
                             Request.add("deviceId", new Build().MODEL);
 
                             Request.add("username", md_name.getText().toString());
-                            Request.add("sex",md_sex.getText().toString());
+                            if(md_sex.getText().toString().equals("男")){
+                                Request.add("sex",0);
+                            }else{
+                                Request.add("sex",1);
+                            }
                             Request.add("age", md_age.getText().toString());
                             Request.add("birth",md_birth.getText().toString());//出生年月
                             Request.add("introduction", md_jianjie.getText().toString());

@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.a25908.partybuild.Model.DataManager;
-import com.example.a25908.partybuild.Model.DataManager.PartyCommittee;
 import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Utils.FileUtils;
 
@@ -20,10 +19,10 @@ import java.util.List;
  * Created by WEIXUAN on 2016/8/29.
  */
 
-public class PartyCommitteeAdpter extends BaseAdapter {
+public class PartyVideoCAdpter extends BaseAdapter {
     private Context mContext;
-    private List<DataManager.paertyComm.DataBean.CommentListBean> list;
-    public PartyCommitteeAdpter(Context context, List<DataManager.paertyComm.DataBean.CommentListBean> list){
+    private List<DataManager.partyvideo.DataBean.VideolistPageBean> list;
+    public PartyVideoCAdpter(Context context, List<DataManager.partyvideo.DataBean.VideolistPageBean> list){
         this.mContext = context;
         this.list = list;
     }
@@ -46,10 +45,9 @@ public class PartyCommitteeAdpter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder = null;
         if (view == null){
-            view = LayoutInflater.from(mContext).inflate(R.layout.list_item_dangwei,null);
+            view = LayoutInflater.from(mContext).inflate(R.layout.list_item_partyvideo,null);
             viewHolder = new ViewHolder();
             viewHolder.imageView12 = (ImageView) view.findViewById(R.id.item_pc_iv);
-            viewHolder.item_bt = (TextView) view.findViewById(R.id.item_bt);
             viewHolder.title = (TextView) view.findViewById(R.id.item_pc_title);
             viewHolder.context = (TextView) view.findViewById(R.id.item_pc_context);
             viewHolder.browse = (TextView) view.findViewById(R.id.item_liulan);
@@ -61,18 +59,16 @@ public class PartyCommitteeAdpter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.imageView12.setImageBitmap(FileUtils.stringtoBitmap(list.get(i).title_img));
-        viewHolder.item_bt.setText(list.get(i).title);
-        viewHolder.title.setText(list.get(i).title_img_name);
+        viewHolder.imageView12.setImageBitmap(FileUtils.stringtoBitmap(list.get(i).img));
+        viewHolder.title.setText(list.get(i).title);
         viewHolder.context.setText(list.get(i).describes);
-        viewHolder.browse.setText(list.get(i).browse);
+        viewHolder.browse.setText(list.get(i).browe);
         viewHolder.time.setText(list.get(i).add_time);
         return view;
     }
 
     class ViewHolder{
         private ImageView imageView12;//右边图片
-        private TextView item_bt;//item标题
         private TextView title;//标题
         private TextView context;//内容
         private TextView  browse;//浏览数

@@ -1,6 +1,7 @@
 package com.example.a25908.partybuild.Activitys;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -38,6 +39,8 @@ public class MainActivity extends FragmentActivity {
     public static ImageView ewm;
     @ViewInject(R.id.title)
     public static TextView title;
+    @ViewInject(R.id.fileclear)
+    public static TextView adddt;
 //    33
     @ViewInject(R.id.groups)
     RadioGroup rg;
@@ -100,10 +103,12 @@ public class MainActivity extends FragmentActivity {
                 int current = mViewPager.getCurrentItem();
                 switch (current) {
                     case 0:
+                        MainActivity.ewm.setVisibility(View.GONE);
                         MainActivity.address.setVisibility(View.VISIBLE);
 //                        MainActivity.mSearchEditText.setVisibility(View.GONE);
                         MainActivity.title.setVisibility(View.VISIBLE);
                         MainActivity.title.setText("移动党建");
+                        MainActivity.adddt.setVisibility(View.GONE);
                         rb1.setChecked(true);
                         rb1.setTextColor(getResources().getColor(R.color.yellow));
                         rb2.setTextColor(getResources().getColor(R.color.huiwhite));
@@ -111,6 +116,8 @@ public class MainActivity extends FragmentActivity {
                         rb4.setTextColor(getResources().getColor(R.color.huiwhite));
                         break;
                     case 1:
+                        MainActivity.adddt.setVisibility(View.GONE);
+                        MainActivity.ewm.setVisibility(View.GONE);
                         MainActivity.title.setText("党员名册");
 //                        MainActivity.mSearchEditText.setHint("模糊检索");
                         MainActivity.address.setVisibility(View.GONE);
@@ -124,10 +131,20 @@ public class MainActivity extends FragmentActivity {
                         rb4.setTextColor(getResources().getColor(R.color.huiwhite));
                         break;
                     case 2:
+                        MainActivity.ewm.setVisibility(View.GONE);
+                        MainActivity.adddt.setText("");
+                        MainActivity.adddt.setVisibility(View.VISIBLE);
+                        MainActivity.adddt.setBackgroundResource(R.drawable.ic_add_black_24dp);
                         MainActivity.title.setVisibility(View.VISIBLE);
                         MainActivity.title.setText("党群动态");
                         MainActivity.address.setVisibility(View.GONE);
 //                        MainActivity.mSearchEditText.setVisibility(View.GONE);
+                        MainActivity.adddt.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                startActivity(new Intent(MainActivity.this,HairDynamicActivity.class));
+                            }
+                        });
 
 
                         rb3.setChecked(true);
@@ -137,6 +154,7 @@ public class MainActivity extends FragmentActivity {
                         rb4.setTextColor(getResources().getColor(R.color.huiwhite));
                         break;
                     case 3:
+                        MainActivity.adddt.setVisibility(View.GONE);
                         MainActivity.address.setVisibility(View.GONE);
                         MainActivity.ewm.setVisibility(View.GONE);
 //                        MainActivity.mSearchEditText.setVisibility(View.GONE);

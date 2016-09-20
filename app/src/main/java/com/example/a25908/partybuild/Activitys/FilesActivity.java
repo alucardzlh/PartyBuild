@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.a25908.partybuild.Adapters.FilesListAdapter;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
+import com.example.a25908.partybuild.Utils.FileUtils;
 import com.example.a25908.partybuild.Utils.URLconstant;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -38,9 +39,6 @@ public class FilesActivity extends BaseActivity {
 
     private static final String Path = "http://210.30.12.1:8080/mp3/DJ.mp3";
 
-
-    public static List<DataManager.MyFilesModels> MyFilesList = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,22 +55,12 @@ public class FilesActivity extends BaseActivity {
             }
         });
 
-        DataManager.MyFilesModels mf1 = new DataManager.MyFilesModels();
-        mf1.FilesName = "《中国共产党党建党规1.0》.dox";
-        mf1.FilesSize ="5.26 mb";
-        mf1.FilesPath = URLconstant.url1;
-        MyFilesList.add(mf1);
-        DataManager.MyFilesModels mf2 = new DataManager.MyFilesModels();
-        mf2.FilesName = "《中国共产党党建党规2.0》.dox";
-        mf2.FilesSize ="5.26 mb";
-        mf2.FilesPath = URLconstant.url2;
-        MyFilesList.add(mf2);
-        adapter = new FilesListAdapter(FilesActivity.this, MyFilesList);
+        adapter = new FilesListAdapter(FilesActivity.this,  DataManager.DucomentRoomList.data.commentList);
         files_list.setAdapter(adapter);
         files_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(FilesActivity.this,FileContentActivity.class).putExtra("name",MyFilesList.get(position).FilesName).putExtra("path",MyFilesList.get(position).FilesPath));
+                startActivity(new Intent(FilesActivity.this,FileContentActivity.class).putExtra("name",DataManager.DucomentRoomList.data.commentList.get(position).USERNAME).putExtra("path",DataManager.DucomentRoomList.data.commentList.get(position).PATH).putExtra("size", FileUtils.FormentFileSize(DataManager.DucomentRoomList.data.commentList.get(position).SIZE)));
             }
         });
 

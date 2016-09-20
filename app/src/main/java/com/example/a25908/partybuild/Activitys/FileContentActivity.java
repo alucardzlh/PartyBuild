@@ -64,7 +64,7 @@ public class FileContentActivity extends BaseActivity {
                     resultView.setText(result + "%");
                     if (progressBar.getProgress() == progressBar.getMax()) {
                         Toast.makeText(getApplicationContext(), "下载成功",
-                                Toast.LENGTH_LONG).show();
+                                Toast.LENGTH_SHORT).show();
                         resultView.setText("下载成功!");
                         downloadButton.setText("已下载");
                         downloadButton.setEnabled(false);
@@ -73,7 +73,9 @@ public class FileContentActivity extends BaseActivity {
                     break;
                 case FAILURE: // 下载失败
                     Toast.makeText(getApplicationContext(), "下载失败",
-                            Toast.LENGTH_LONG).show();
+                            Toast.LENGTH_SHORT).show();
+                    downloadButton.setEnabled(true);
+                    stopButton.setEnabled(false);
                     break;
             }
         }
@@ -98,8 +100,10 @@ public class FileContentActivity extends BaseActivity {
         Intent i=getIntent();
         String name=i.getStringExtra("name");
         String path=i.getStringExtra("path");
+        String size=i.getStringExtra("size");
         fname = (TextView) findViewById(R.id.fname);
         fsize = (TextView) findViewById(R.id.fsize);
+        fsize.setText(size);
         pathText = (TextView) findViewById(R.id.path);
         resultView = (TextView) findViewById(R.id.resultView);
         downloadButton = (Button) findViewById(R.id.downloadbutton);
@@ -172,17 +176,18 @@ public class FileContentActivity extends BaseActivity {
                         download(path, savDir);
                     } else {
                         Toast.makeText(getApplicationContext(),
-                                "SD卡不存在", Toast.LENGTH_LONG).show();
+                                "SD卡不存在", Toast.LENGTH_SHORT).show();
                     }
                     Toast.makeText(getApplicationContext(),
-                            "正在下载...", Toast.LENGTH_LONG).show();
+                            "正在下载...", Toast.LENGTH_SHORT).show();
                     downloadButton.setEnabled(false);
                     stopButton.setEnabled(true);
+
                     break;
                 case R.id.stopbutton: // 暂停下载
                     exit();
                     Toast.makeText(getApplicationContext(),
-                            "已停止下载!", Toast.LENGTH_LONG).show();
+                            "已停止下载!", Toast.LENGTH_SHORT).show();
                     downloadButton.setEnabled(true);
                     stopButton.setEnabled(false);
                     break;

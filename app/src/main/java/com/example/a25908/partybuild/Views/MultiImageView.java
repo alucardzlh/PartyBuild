@@ -1,6 +1,7 @@
 package com.example.a25908.partybuild.Views;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.a25908.partybuild.Utils.DensityUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -185,6 +187,7 @@ public class MultiImageView extends LinearLayout {
 
 		imageView.setId(url.hashCode());
 		imageView.setOnClickListener(new ImageOnClickListener(position));
+		List<Bitmap> bitmapList = new ArrayList<>();
 		Glide.with(getContext()).load(imagesList.get(position)).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
 		return imageView;
 	}

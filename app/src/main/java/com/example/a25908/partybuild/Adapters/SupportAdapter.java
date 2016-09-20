@@ -9,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
+import com.example.a25908.partybuild.Utils.FileUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -21,9 +23,9 @@ import java.util.Map;
 
 public class SupportAdapter extends BaseAdapter {
     private Context context;
-    private List<Map> list;
+    private List<DataManager.paertyComm.DataBean.CommentListBean> list;
 
-    public SupportAdapter(Context context,List<Map> list){
+    public SupportAdapter(Context context,List<DataManager.paertyComm.DataBean.CommentListBean> list){
         this.context = context;
         this.list = list;
     }
@@ -59,10 +61,10 @@ public class SupportAdapter extends BaseAdapter {
         else {
             viewHolder = (sViewHolder) view.getTag();
         }
-        viewHolder.imageView.setImageResource(R.drawable.ceshi_item1);
-        viewHolder.time.setText(list.get(i).get("time")+"");
-        viewHolder.title.setText(list.get(i).get("tx")+"");
-        viewHolder.context.setText(list.get(i).get("tx2")+"");
+        viewHolder.imageView.setImageBitmap(FileUtils.stringtoBitmap(list.get(i).title_img));
+        viewHolder.time.setText(list.get(i).add_time+"");
+        viewHolder.title.setText(list.get(i).title+"");
+        viewHolder.context.setText(list.get(i).describes+"");
 
         return view;
     }

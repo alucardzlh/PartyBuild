@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
 
 import java.util.List;
@@ -17,14 +18,10 @@ import java.util.List;
  */
 public class MyPartyPayListAdapter extends BaseAdapter {
     private Context context;
-    private List<String> list1;
-    private List<String> list2;
-    private List<String> list3;
-    public MyPartyPayListAdapter(Context context, List<String> list1, List<String> list2, List<String> list3) {
+    private List<DataManager.MyPartyPay.DataBean.PartyMemberlistBean> list1;
+    public MyPartyPayListAdapter(Context context, List<DataManager.MyPartyPay.DataBean.PartyMemberlistBean> list1) {
         this.context = context;
         this.list1 = list1;
-        this.list2 = list2;
-        this.list3 = list3;
     }
 
     @Override
@@ -55,9 +52,15 @@ public class MyPartyPayListAdapter extends BaseAdapter {
         } else {
             vh = (ViewHolder) view.getTag();
         }
-        vh.mpay_time.setText(list1.get(position));
-        vh.mpay_money.setText(list2.get(position));
-        vh.mpay_type.setText(list3.get(position));
+        vh.mpay_time.setText(list1.get(position).PERIOD_OF_TIME);
+        vh.mpay_money.setText(list1.get(position).MONEY);
+        if (list1.get(position).TYPE.equals("0")){
+            vh.mpay_type.setText("未缴费");
+        }
+        else {
+            vh.mpay_type.setText("已缴费");
+        }
+
         return view;
     }
 

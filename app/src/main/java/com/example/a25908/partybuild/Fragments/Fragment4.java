@@ -35,6 +35,7 @@ import com.example.a25908.partybuild.Activitys.TestWebActivity;
 import com.example.a25908.partybuild.Activitys.tsteActivity;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
+import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Services.CallServer;
 import com.example.a25908.partybuild.Utils.FileUtils;
@@ -125,7 +126,11 @@ public class Fragment4 extends Fragment {
         });
 
         userimg = (RoundImageView) v.findViewById(R.id.userimg);//头像
-        userimg.setImageBitmap(FileUtils.stringtoBitmap(psp.getICONSTEAM()));
+        if(!psp.getICONSTEAM().equals("null")){
+            userimg.setImageBitmap(FileUtils.stringtoBitmap(psp.getICONSTEAM()));
+        }else{
+            userimg.setImageDrawable(getResources().getDrawable(R.mipmap.appicon));
+        }
         TextView username = (TextView) v.findViewById(R.id.username);//名字
         TextView mtime = (TextView) v.findViewById(R.id.mtime);//入党时间
         username.setText(psp.getUSERNAME());
@@ -135,6 +140,9 @@ public class Fragment4 extends Fragment {
         RelativeLayout my3 = (RelativeLayout) v.findViewById(R.id.my3);
         RelativeLayout my4 = (RelativeLayout) v.findViewById(R.id.my4);
         RelativeLayout my5 = (RelativeLayout) v.findViewById(R.id.my5);
+
+        TextView Outlogin = (TextView) v.findViewById(R.id.Outlogin);
+
         userimg.setOnClickListener(listener);
         username.setOnClickListener(listener);
         mtime.setOnClickListener(listener);
@@ -143,23 +151,24 @@ public class Fragment4 extends Fragment {
         my3.setOnClickListener(listener);
         my4.setOnClickListener(listener);
         my5.setOnClickListener(listener);
+        Outlogin.setOnClickListener(listener);
     }
 
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.userimg:
+                case R.id.userimg://头像
                     AlertDialog dialog = builder.create();
                     dialog.show();
                     break;
-                case R.id.username:
+                case R.id.username://姓名
                     startActivity(new Intent(getActivity(), TestWebActivity.class));
                     break;
-                case R.id.mtime:
+                case R.id.mtime://入党时期
                     startActivity(new Intent(getActivity(), tsteActivity.class));
                     break;
-                case R.id.my1:
+                case R.id.my1://我的资料
 //                    ?KeyNo=1&deviceId=123&token=2cfd4560539f887a5e420412b370b361
                     GsonRequest LoginRequest = new GsonRequest(URLINSER + USERDATEURL, RequestMethod.GET);
                     LoginRequest.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
@@ -167,21 +176,28 @@ public class Fragment4 extends Fragment {
                     LoginRequest.add("deviceId", new Build().MODEL);
                     CallServer.getInstance().add(getActivity(), LoginRequest, GsonCallBack.getInstance(), 0x002, true, false, true);
                     break;
-                case R.id.my2:
+                case R.id.my2://我的文档
                     startActivity(new Intent(getActivity(), MyFilesActivity.class));
                     break;
-                case R.id.my3:
+                case R.id.my3://我的党费
                     GsonRequest PartyPayRequest = new GsonRequest(URLINSER + PARTYPAY, RequestMethod.GET);
                     PartyPayRequest.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
                     PartyPayRequest.add("deviceId", new Build().MODEL);
                     PartyPayRequest.add("KeyNo", psp.getUSERID());
                     CallServer.getInstance().add(getActivity(), PartyPayRequest, GsonCallBack.getInstance(), 0x103, true, false, true);
                     break;
-                case R.id.my4:
+                case R.id.my4://关于
                     startActivity(new Intent(getActivity(), AboutsActivity.class));
                     break;
-                case R.id.my5:
+                case R.id.my5://意见反馈
                     startActivity(new Intent(getActivity(), OpinionActivity.class));
+                    break;
+                case R.id.Outlogin://注销
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                    getActivity().finish();
+                    psp.putICONSTEAM("");
+                    psp.putLoginStatus(false);
+                    DataManager.PartyerList.data.UserlistPage.clear();
                     break;
             }
         }
@@ -254,13 +270,13 @@ public class Fragment4 extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            GsonRequest Request = new GsonRequest(URLINSER + UPDATEUSERDATEURL, RequestMethod.GET);
+            GsonRequest Request = new GsonRequest(URLINSER + UPDATEUSERDATEURL, RequestMethod.POST);
             Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
             Request.add("KeyNo", psp.getUSERID());
             Request.add("deviceId", new Build().MODEL);
             Request.add("head_img", pic);//头像(base64)
             CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x0022, true, false, true);
-
+            psp.putICONSTEAM(pic);
         }
     }
 }

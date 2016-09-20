@@ -53,6 +53,16 @@
                 android:layout_marginTop="5dp"
                 android:paddingLeft="20dp"
                 android:text="24KB"/>
+            />
+            <TextView
+                android:id="@+id/files_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="20dp"
+                android:text="2016-2-2"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

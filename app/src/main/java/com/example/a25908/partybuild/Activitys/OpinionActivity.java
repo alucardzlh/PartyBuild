@@ -62,6 +62,7 @@ public class OpinionActivity extends BaseActivity {
         oksend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                new WaitDialog(OpinionActivity.this).show();
                 GsonRequest OpinionRequest = new GsonRequest(URLINSER + OPINION, RequestMethod.GET);
                 OpinionRequest.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
                 OpinionRequest.add("deviceId",new Build().MODEL);
@@ -82,7 +83,7 @@ public class OpinionActivity extends BaseActivity {
                     finish();
                 }
                 else if (msg.what==1){
-                    Toast.show("系统错误");
+                    Toast.show("服务器出错");
                 }
             }
         };

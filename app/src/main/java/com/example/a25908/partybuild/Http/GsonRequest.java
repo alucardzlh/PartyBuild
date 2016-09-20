@@ -14,7 +14,7 @@ public class GsonRequest extends RestRequest {
         super(url);
     }
 
-    public GsonRequest(String url, RequestMethod requestMethod) {
+    public  GsonRequest(String url, RequestMethod requestMethod) {
         super(url, requestMethod);
     }
 

@@ -9,6 +9,7 @@
     tools:context="com.example.a25908.partybuild.Activitys.LoginActivity">
 
     <TextView
+        android:id="@+id/close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="关闭"

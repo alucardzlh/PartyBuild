@@ -33,7 +33,7 @@ public class CommentListView extends LinearLayout {
     private int itemSelectorColor;
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
-    private List<DataManager.Dynamic.CommentItem> mDatas;
+    private List<DataManager.Mydynamic.DataBean.DynamiclistPageBean.CommentslistBean> mDatas;
     private LayoutInflater layoutInflater ;
 
     public OnItemClickListener getOnItemClickListener() {
@@ -52,15 +52,15 @@ public class CommentListView extends LinearLayout {
         this.onItemLongClickListener = onItemLongClickListener;
     }
 
-    public void setDatas(List<DataManager.Dynamic.CommentItem> datas){
+    public void setDatas(List<DataManager.Mydynamic.DataBean.DynamiclistPageBean.CommentslistBean> datas){
         if(datas == null ){
-            datas = new ArrayList<DataManager.Dynamic.CommentItem>();
+            datas = new ArrayList<DataManager.Mydynamic.DataBean.DynamiclistPageBean.CommentslistBean>();
         }
         mDatas = datas;
         notifyDataSetChanged();
     }
 
-    public List<DataManager.Dynamic.CommentItem> getDatas(){
+    public List<DataManager.Mydynamic.DataBean.DynamiclistPageBean.CommentslistBean> getDatas(){
         return mDatas;
     }
 
@@ -118,25 +118,25 @@ public class CommentListView extends LinearLayout {
         TextView commentTv = (TextView) convertView.findViewById(R.id.commentTv);
         final CircleMovementMethod circleMovementMethod = new CircleMovementMethod(itemSelectorColor, itemSelectorColor);
 
-        final DataManager.Dynamic.CommentItem bean = mDatas.get(position);
-        String name = bean.Username;
-        String id = bean.Userid;
+        final DataManager.Mydynamic.DataBean.DynamiclistPageBean.CommentslistBean bean = mDatas.get(position);
+        String name = bean.username;
+        int id = bean.userid;
         String toReplyName = "";
-        if (bean.ToReplyUser != null) {
-            toReplyName = bean.ToReplyUser;
+        if (bean.to_username != null) {
+            toReplyName = (String) bean.to_username;
         }
 
         SpannableStringBuilder builder = new SpannableStringBuilder();
-        builder.append(setClickableSpan(name, bean.Userid));
+        builder.append(setClickableSpan(name, bean.userid));
 
         if (!TextUtils.isEmpty(toReplyName)) {
 
             builder.append(" 回复 ");
-            builder.append(setClickableSpan(toReplyName, bean.ToReplyUserid));
+            builder.append(setClickableSpan(toReplyName, (Integer) bean.to_userid));
         }
         builder.append(": ");
         //转换表情字符
-        String contentBodyStr = bean.context2;
+        String contentBodyStr = bean.content;
         builder.append(UrlUtils.formatUrlString(contentBodyStr));
         commentTv.setText(builder);
 
@@ -168,7 +168,7 @@ public class CommentListView extends LinearLayout {
     }
 
     @NonNull
-    private SpannableString setClickableSpan(final String textStr, final String id) {
+    private SpannableString setClickableSpan(final String textStr, final int id) {
         SpannableString subjectSpanText = new SpannableString(textStr);
         subjectSpanText.setSpan(new SpannableClickable(itemColor){
                                     @Override

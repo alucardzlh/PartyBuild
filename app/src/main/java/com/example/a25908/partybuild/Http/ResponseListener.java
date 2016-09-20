@@ -55,8 +55,14 @@ public class ResponseListener<T> implements OnResponseListener<T> {
                 Toast.show("客户端发生错误");
             } else*/
             if (response.getException() instanceof ServerError) {
+                if(LoginActivity.flag==true){
+                    LoginActivity.wd.dismiss();
+                }
                 Toast.show("服务器发生错误");
             } else if (response.getException() instanceof NetworkError) {
+                if(LoginActivity.flag==true){
+                    LoginActivity.wd.dismiss();
+                }
                 Toast.show("请检查网络");
             } else if (response.getException() instanceof TimeoutError) {
                 if(LoginActivity.flag==true){
@@ -70,6 +76,9 @@ public class ResponseListener<T> implements OnResponseListener<T> {
             } else if (response.getException() instanceof NotFoundCacheError) {
                 Toast.show("没有发现缓存");
             } else {
+                if(LoginActivity.flag==true){
+                    LoginActivity.wd.dismiss();
+                }
                 Toast.show("服务器连接失败");
             }
 
@@ -77,7 +86,7 @@ public class ResponseListener<T> implements OnResponseListener<T> {
 
 
         if(callback!=null){
-         callback.onFailed(what, response);
+            callback.onFailed(what, response);
 
         }
     }

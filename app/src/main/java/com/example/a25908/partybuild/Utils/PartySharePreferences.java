@@ -12,7 +12,7 @@ import com.example.a25908.partybuild.Model.DataManager;
 
 public class PartySharePreferences {
     private static final String SPNAME = "PartyBuild";
-    private PartySharePreferences() {
+    public PartySharePreferences() {
     }//私有构造方法
 
     private static PartySharePreferences psp;
@@ -67,7 +67,12 @@ public class PartySharePreferences {
             editor.putBoolean("LoginStatus", b);
             editor.commit();}
     }
-
+    public Boolean getLoginStatus(){
+        if(sp!=null) {
+            return sp.getBoolean("LoginStatus", false);
+        }
+        return false;
+    }
     /**
      * 获取头像base64位图
      * @return

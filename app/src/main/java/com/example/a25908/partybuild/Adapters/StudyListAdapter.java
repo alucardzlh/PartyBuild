@@ -11,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
+import com.example.a25908.partybuild.Utils.FileUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -21,8 +23,8 @@ import java.util.Map;
  */
 public class StudyListAdapter extends BaseAdapter {
     private Context context;
-    private List<Map<String,Object>> list;
-    public StudyListAdapter(Context context, List<Map<String,Object>> list1) {
+    private List<DataManager.paertyComm.DataBean.CommentListBean> list;
+    public StudyListAdapter(Context context, List<DataManager.paertyComm.DataBean.CommentListBean> list1) {
         this.context = context;
         this.list = list1;
     }
@@ -59,10 +61,10 @@ public class StudyListAdapter extends BaseAdapter {
         } else {
             vh = (ViewHolder) view.getTag();
         }
-        vh.study_img.setImageResource(R.mipmap.banner);
-        vh.study_txt1.setText(list.get(position).get("txt1")+"");
-        vh.study_txt2.setText(list.get(position).get("txt2")+"");
-        vh.study_time.setText(list.get(position).get("time")+"");
+        vh.study_img.setImageBitmap(FileUtils.stringtoBitmap(list.get(position).title_img));
+        vh.study_txt1.setText(list.get(position).title+"");
+        vh.study_txt2.setText(list.get(position).describes+"");
+        vh.study_time.setText(list.get(position).add_time+"");
         return view;
     }
 

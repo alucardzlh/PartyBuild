@@ -7,6 +7,7 @@
     android:background="#F6F6F6"
     android:orientation="vertical"
     tools:context="com.example.a25908.partybuild.Activitys.DetailsPageActivity">
+
     <include layout="@layout/headbar"/>
 
     <ScrollView
@@ -20,6 +21,7 @@
             android:orientation="vertical"
             >
             <TextView
+                android:id="@+id/ptitle"
                 android:background="@mipmap/title_xiangqin"
                 android:textColor="#000"
                 android:textSize="16sp"
@@ -29,53 +31,47 @@
                 android:layout_height="wrap_content"
                 android:text="新建区举行脱贫攻坚政策学习及业务培训工作会"
                 />
-                    <LinearLayout
-                        android:layout_marginLeft="13dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-                        <!--时间图片-->
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_history_record"
-                            android:id="@+id/imageView" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:textSize="13sp"
-                            android:text="08-27 17:56"
-                            android:id="@+id/item_time" />
+            <LinearLayout
+                android:layout_marginLeft="13dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <!--时间图片-->
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_history_record"
+                    android:id="@+id/imageView" />
+                <TextView
+                    android:id="@+id/ptime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textSize="13sp"
+                    android:text="08-27 17:56"
+                    />
 
             </LinearLayout>
             <ImageView
                 android:id="@+id/imageView_dp"
                 android:layout_margin="10dp"
                 android:src="@mipmap/banner"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
             <TextView
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
+                android:id="@+id/pcontent"
+                android:layout_marginTop="15dp"
                 android:layout_marginBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="“两学一做”学习教育，是继党的群众路线教育实践活动和“三严三实”专题教育之后，深化党内教育的又一次重要实践，对于提高广大党员的思想政治素质、保证党的集中统一、增强党的生机活力具有重要意义。
-　　严把“信念关”，始终一心向党
-　　“树无根不长，人无志不立”，历史经验表明，共产党员们正是依靠铁一般的理想信念战胜苦难经历、流血牺牲、威逼利诱，带领人民一步步走向中华民族伟大复兴。“星星之火可以燎原”，共产主义理想信念是党员的精神支柱、共同追求，任何一名党员要想做合格的党员，树牢理想信念关是“第一步”。根基不牢、地动山摇，唯有心中有党、真心向党、对党忠诚，方能担得起“合格党员”称号。
-　　严把“情怀关”，始终一心为民
-　　“些小吾曹州县吏，一枝一叶总关情”，全心全意为人民服务是党的根本宗旨，学党章、学讲话绝不能离开为民服务这个关键点与落脚点。党员干部要实事求是，脚踏实地，时时处处坚持重实际、讲实话、办实事，思群众之所思、急群众之所急、想群众之所想，把群众的问题解决好，用真情真心对待群众，不断密切党群干群关系，这样才对得起党员身份。
-　　严把“担当关”，始终一心干事
-　　“为官一任，造福一方”，党员是先锋队，干事创业要冲在前；是攻坚手，艰苦困难不皱头；是红旗手，榜样标杆要树好。党员干部就应该用实际行动带领群众激情创业、团结奋进，而不是斤斤计较、推诿扯皮。榜样需要敢于担当来支撑、党员需要一心干事来捍卫，党员要肯于吃苦、勤于干事，在“硬骨头”面前，心里装着党与人民事业;在险滩跟前，眼里只有祖国与群众利益。党员只有带头干、带头冲，才保得住“时代先锋”的称谓。
-　　严把“敬畏关”，始终一心奉公
-　　威信源于党性,腐败止于正气”。党员干部要始终牢记,手中的权力是人民赋予的,行使权力必须为人民服务、对人民负责并自觉接受人民的监督。要坚持秉公办事,做清正廉洁的表率,决不能把权力变成牟私的工具;要真正做到耐得住寂寞,管得住小节,守得住清贫,经受住权力、钱色、亲情方方面面的考验,清清白白做人、堂堂正正做官;要时时刻刻自省、自警、自励,在生活上简朴正派,不沽名钓誉,不奢侈拜金,永葆党性的纯洁和党员干部的政治本色,以自身的模范表率来引领社会的风气,真正做到立身不忘做人之本、为政不移公仆之心。
-　　（据共产党员网）"/>
+                />
 
         </LinearLayout>
     </ScrollView>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -84,7 +80,7 @@
         android:background="#f00">
 
         <LinearLayout
-            android:id="@+id/item_dt_zan"
+            android:id="@+id/et_zan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -103,10 +99,10 @@
                 android:textColor="#fff"
                 android:id="@+id/item_dt_dzan" />
 
-            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/item_dt_delete"
+            android:id="@+id/et_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -127,6 +123,7 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/et_comn"
             android:layout_marginLeft="15dp"
             android:layout_width="150dp"
             android:layout_height="25dp"
@@ -135,10 +132,19 @@
             android:textSize="12dip"
             android:background="@drawable/maintop_shape"
             android:hint="点击添加评论"
-            android:id="@+id/editText"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
             android:layout_marginStart="26dp" />
+        <TextView
+            android:id="@+id/et_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发表"
+            android:textColor="#fff"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/et_comn"
+            />
     </RelativeLayout>
 
 </LinearLayout>

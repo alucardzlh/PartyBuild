@@ -28,22 +28,39 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/pbd_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="安以轩"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
                 <TextView
+                    android:id="@+id/pbd_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="安以轩"/>
+                <TextView
+                    android:id="@+id/pbd_Notes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:layout_marginLeft="30dp"
+                   />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/pbd_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="32岁"/>
                 <TextView
+                    android:id="@+id/pbd_sex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
@@ -53,6 +70,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/pbd_setNotes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -73,6 +91,7 @@
         android:background="@color/white"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/pbd_dangwei"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:gravity="center_vertical"
@@ -85,6 +104,7 @@
             android:layout_marginRight="10dp"
             android:background="@color/huise"/>
         <TextView
+            android:id="@+id/pbd_zhiwu"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:gravity="center_vertical"
@@ -94,6 +114,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btn_phone"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:text="@string/pbd_phone"
@@ -103,9 +124,11 @@
         android:textSize="18sp"
         android:gravity="center"
         android:layout_marginTop="30dp"
-        android:background="@drawable/opbtn_bg"/>
+        android:background="@drawable/opbtn_bg"
+      />
 
     <Button
+        android:id="@+id/btn_send"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:text="@string/pbd_sendduan"
@@ -118,6 +141,7 @@
         android:background="@drawable/bg_bg"/>
 
     <Button
+        android:id="@+id/btn_Addt"
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:text="@string/pbd_add"

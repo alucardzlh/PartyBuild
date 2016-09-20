@@ -9,6 +9,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 文件读写权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--发送短信权限-->
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <!--拨打电话权限-->
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <application
         android:name=".Application"
@@ -121,6 +125,8 @@
 
         <activity android:name=".Activitys.FileContentActivity" />
         <activity android:name=".Activitys.MyPartyPayActivity" />
+        <activity android:name=".Activitys.HairDynamicActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

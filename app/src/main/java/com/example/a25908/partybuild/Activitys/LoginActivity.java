@@ -1,20 +1,16 @@
 package com.example.a25908.partybuild.Activitys;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.example.a25908.partybuild.Dialogs.TipDialog;
 import com.example.a25908.partybuild.Dialogs.WaitDialog;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
@@ -26,8 +22,6 @@ import com.example.a25908.partybuild.Views.Toast;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yolanda.nohttp.RequestMethod;
-
-import java.io.File;
 
 import static com.example.a25908.partybuild.Utils.URLconstant.LOGINURL;
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYRTLISTURL;
@@ -45,6 +39,8 @@ public class LoginActivity extends BaseActivity {
     @ViewInject(R.id.login_pwd)
     EditText login_pwd;
 
+    @ViewInject(R.id.close)
+    TextView close;
     @ViewInject(R.id.regiest)
     LinearLayout regiest;
     @ViewInject(R.id.login)
@@ -61,6 +57,12 @@ public class LoginActivity extends BaseActivity {
         psp=PartySharePreferences.getLifeSharedPreferences();
         wd=new WaitDialog(this);
         init();
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         regiest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,12 +98,6 @@ public class LoginActivity extends BaseActivity {
                 Intent i;
                 switch (msg.what){
                     case 0:
-                        GsonRequest LoginRequest = new GsonRequest(URLINSER +PARTYRTLISTURL, RequestMethod.GET);
-                        LoginRequest.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
-                        LoginRequest.add("KeyNo", psp.getUSERID());
-                        LoginRequest.add("deviceId", new Build().MODEL);
-                        CallServer.getInstance().add(LoginActivity.this, LoginRequest, GsonCallBack.getInstance(), 0x003, true, false, true);
-
                         i=new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(i);
                         finish();

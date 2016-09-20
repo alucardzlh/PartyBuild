@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
+import com.example.a25908.partybuild.Utils.FileUtils;
 import com.example.a25908.partybuild.Utils.net.download.DownloadProgressListener;
 import com.example.a25908.partybuild.Utils.net.download.FileDownloader;
 
@@ -31,8 +32,8 @@ public class FilesListAdapter extends BaseAdapter {
 
     ViewHolder vh = null;
     private Context context;
-    private List<DataManager.MyFilesModels> list1;
-    public FilesListAdapter(Context context, List<DataManager.MyFilesModels> list1) {
+    private List<DataManager.DucomentRoom.DataBean.CommentListBean> list1;
+    public FilesListAdapter(Context context, List<DataManager.DucomentRoom.DataBean.CommentListBean> list1) {
         this.context = context;
         this.list1 = list1;
     }
@@ -60,6 +61,7 @@ public class FilesListAdapter extends BaseAdapter {
             vh.files_name=(TextView) view.findViewById(R.id.files_name);
             vh.files_size=(TextView) view.findViewById(R.id.files_size);
             vh.files_path=(TextView) view.findViewById(R.id.files_path);
+            vh.files_time=(TextView) view.findViewById(R.id.files_time);
 
             vh.progressBar=(ProgressBar) view.findViewById(R.id.progressBar);
 
@@ -71,9 +73,11 @@ public class FilesListAdapter extends BaseAdapter {
         } else {
             vh = (ViewHolder) view.getTag();
         }
-        vh.files_name.setText(list1.get(position).FilesName);
-        vh.files_size.setText(list1.get(position).FilesSize+"");
-        vh.files_path.setText(list1.get(position).FilesPath);
+        vh.files_name.setText(list1.get(position).USERNAME);
+        vh.files_size.setText(FileUtils.FormentFileSize(list1.get(position).SIZE));
+        vh.files_path.setText(list1.get(position).PATH);
+        vh.files_time.setText(list1.get(position).ADD_TIME);
+
         return view;
     }
 
@@ -81,14 +85,12 @@ public class FilesListAdapter extends BaseAdapter {
         TextView files_name;
         TextView files_size;
         TextView files_path;
+        TextView files_time;
 
         ProgressBar progressBar;//进度条
         Button downloadButton;//开始
         Button stopButton;//z暂停
         TextView resultView;//进度值
     }
-
-
-
 
 }

@@ -1,8 +1,18 @@
 package com.example.a25908.partybuild.Http;
 
+import com.example.a25908.partybuild.Activitys.DetailsPageActivity;
+import com.example.a25908.partybuild.Activitys.HairDynamicActivity;
 import com.example.a25908.partybuild.Activitys.LoginActivity;
 import com.example.a25908.partybuild.Activitys.MydataActivity;
 import com.example.a25908.partybuild.Activitys.OpinionActivity;
+import com.example.a25908.partybuild.Activitys.PartyCommitteeActivity;
+import com.example.a25908.partybuild.Activitys.PartymembersdetailsActivity;
+import com.example.a25908.partybuild.Activitys.StudyActivity;
+import com.example.a25908.partybuild.Activitys.SupportActivity;
+import com.example.a25908.partybuild.Fragments.Fragment1;
+import com.example.a25908.partybuild.Fragments.Fragment2;
+import com.example.a25908.partybuild.Activitys.PalmPartySchoolActivity;
+import com.example.a25908.partybuild.Fragments.Fragment3;
 import com.example.a25908.partybuild.Fragments.Fragment4;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.Utils.PartySharePreferences;
@@ -60,22 +70,113 @@ public class GsonCallBack implements HttpCallBack {
                     MydataActivity.handler.sendEmptyMessage(1);
                 }
                 break;
+            /**
+             * //修改头像
+             */
             case 0x0022://修改头像
                 jsonString = (String) response.get();
-                DataManager.MyDataList=gson.fromJson(jsonString,DataManager.MyData.class);
+                DataManager.messageMar=gson.fromJson(jsonString,DataManager.message.class);
                 break;
-            case 0x003://党员名册
+            /**
+             * //党员名册
+             */
+            case 0x003:
                 jsonString = (String) response.get();
                 DataManager.PartyerList=gson.fromJson(jsonString,DataManager.Partyer.class);
+                Fragment2.handler.sendEmptyMessage(0);
+                break;
+            /**
+             * //党员名册备注修改
+             */
+            case 0x0031:
+                jsonString = (String) response.get();
+                DataManager.messageMar=gson.fromJson(jsonString,DataManager.message.class);
+                if(DataManager.messageMar.message.equals("success")){
+                    PartymembersdetailsActivity.handler.sendEmptyMessage(0);
+                }else{
+                    PartymembersdetailsActivity.handler.sendEmptyMessage(1);
+                }
+                break;
+            /**
+             * //党委通知
+             */
+            case 0x004:
+                jsonString = (String) response.get();
+                DataManager.paertyCommList=gson.fromJson(jsonString,DataManager.paertyComm.class);
+                if(DataManager.paertyCommList.data.commentList.size()>0 && DataManager.paertyCommList.data.commentList!=null){
+                    Fragment1.handler.sendEmptyMessage(0);
+                }else{
+                    Fragment1.handler.sendEmptyMessage(500);
+                }
+                break;
+            /**
+             * //党委通知详情
+             */
+            case 0x0041:
+                jsonString = (String) response.get();
+                DataManager.partyCommDetailsList=gson.fromJson(jsonString,DataManager.partyCommDetails.class);
+                PartyCommitteeActivity.handler.sendEmptyMessage(0);
+                break;
+            /**
+             * //学习园地
+             */
+            case 0x005:
+                jsonString = (String) response.get();
+                DataManager.paertyCommList=gson.fromJson(jsonString,DataManager.paertyComm.class);
+                if(DataManager.paertyCommList.data.commentList.size()>0 && DataManager.paertyCommList.data.commentList!=null){
+                    Fragment1.handler.sendEmptyMessage(4);
+                }else{
+                    Fragment1.handler.sendEmptyMessage(500);
+                }
+                break;
+            case 0x0051://学习园地详情
+                jsonString = (String) response.get();
+                DataManager.partyCommDetailsList=gson.fromJson(jsonString,DataManager.partyCommDetails.class);
+                StudyActivity.handler.sendEmptyMessage(0);
+                break;
+            case 0x006://党员扶持
+                jsonString = (String) response.get();
+                DataManager.paertyCommList=gson.fromJson(jsonString,DataManager.paertyComm.class);
+                if(DataManager.paertyCommList.data.commentList.size()>0 && DataManager.paertyCommList.data.commentList!=null){
+                    Fragment1.handler.sendEmptyMessage(6);
+                }else{
+                    Fragment1.handler.sendEmptyMessage(500);
+                }
+                break;
+            case 0x0061://党员扶持详情
+                jsonString = (String) response.get();
+                DataManager.partyCommDetailsList=gson.fromJson(jsonString,DataManager.partyCommDetails.class);
+                SupportActivity.handler.sendEmptyMessage(0);
+                break;
+            case 0x007://查询 党建通知，学习园地，党员扶持 详情的评论
+                jsonString = (String) response.get();
+                DataManager.partyCommDetailsList=gson.fromJson(jsonString,DataManager.partyCommDetails.class);
+                SupportActivity.handler.sendEmptyMessage(0);
+                break;
+            case 0x0071://添加  党建通知，学习园地，党员扶持 详情的评论
+                jsonString = (String) response.get();
+                DataManager.messageMar=gson.fromJson(jsonString,DataManager.message.class);
+                if(DataManager.messageMar.message.equals("success")){
+                    DetailsPageActivity.handler.sendEmptyMessage(0);
+                }else{
+                    DetailsPageActivity.handler.sendEmptyMessage(1);
+                }
+                break;
+            case 0x008://文档中心
+                jsonString = (String) response.get();
+                DataManager.DucomentRoomList=gson.fromJson(jsonString,DataManager.DucomentRoom.class);
+                Fragment1.handler.sendEmptyMessage(7);
+                break;
+            case 0x009://党建视频
+                jsonString = (String) response.get();
+                DataManager.partyvideoList=gson.fromJson(jsonString,DataManager.partyvideo.class);
+                Fragment1.handler.sendEmptyMessage(3);
                 break;
             case 0x102://意见反馈提交
                 jsonString = (String) response.get();
                 map = gson.fromJson(jsonString,new TypeToken<Map<String, Object>>(){}.getType());
                 if (map.get("message").equals("success")){
                     OpinionActivity.handler.sendEmptyMessage(0);
-                }
-                else {
-                    OpinionActivity.handler.sendEmptyMessage(1);
                 }
                 break;
             case 0x103://我的党费
@@ -85,6 +186,46 @@ public class GsonCallBack implements HttpCallBack {
                     Fragment4.handler.sendEmptyMessage(1);
                 }
 
+                break;
+
+            case 0x201://人物长廊
+                jsonString = (String) response.get();
+                DataManager.palmparty = gson.fromJson(jsonString,DataManager.MyPALMPARTY.class);
+                if (DataManager.palmparty.message.equals("success")){
+                    PalmPartySchoolActivity.handler.sendEmptyMessage(1);
+                }
+                break;
+            case 0x202://党的章程
+                jsonString = (String) response.get();
+                DataManager.myTCTPdanggui = gson.fromJson(jsonString,DataManager.TCTPdanggui.class);
+                if (DataManager.myTCTPdanggui.message.equals("success")){
+                    PalmPartySchoolActivity.handler.sendEmptyMessage(2);
+                }
+                break;
+
+            case 0x203://党规党纪
+                jsonString = (String) response.get();
+                DataManager.myTCTPdanggui = gson.fromJson(jsonString,DataManager.TCTPdanggui.class);
+                if (DataManager.myTCTPdanggui.message.equals("success")){
+                    PalmPartySchoolActivity.handler.sendEmptyMessage(3);
+                }
+                break;
+            case 0x302://动态查看
+                jsonString = (String) response.get();
+                DataManager.mydynamic = gson.fromJson(jsonString,DataManager.Mydynamic.class);
+                if (DataManager.mydynamic.message.equals("success")){
+                    Fragment3.handler.sendEmptyMessage(1);
+                }
+                break;
+            case 0x301://动态发布
+                jsonString = (String) response.get();
+                map = gson.fromJson(jsonString,new TypeToken<Map<String, Object>>(){}.getType());
+                if(map==null) {
+                    HairDynamicActivity.handler.sendEmptyMessage(2);
+                }
+                else if (map.get("message").equals("success")){
+                    HairDynamicActivity.handler.sendEmptyMessage(1);
+                }
                 break;
         }
     }

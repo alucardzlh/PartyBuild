@@ -3,6 +3,8 @@ package com.example.a25908.partybuild.Fragments;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +28,10 @@ import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Services.CallServer;
 import com.example.a25908.partybuild.Utils.MD5;
+import com.example.a25908.partybuild.Utils.PartySharePreferences;
 import com.example.a25908.partybuild.Utils.URLconstant;
 import com.example.a25908.partybuild.Views.ImageCycleView;
+import com.example.a25908.partybuild.Views.Toast;
 import com.lidroid.xutils.ViewUtils;
 import com.yolanda.nohttp.RequestMethod;
 
@@ -35,6 +39,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.a25908.partybuild.Utils.FileUtils.FileNewsExists;
+import static com.example.a25908.partybuild.Utils.URLconstant.DOCUMENTROOM;
+import static com.example.a25908.partybuild.Utils.URLconstant.PARTYCOMM;
+import static com.example.a25908.partybuild.Utils.URLconstant.PARTYRTLISTURL;
+import static com.example.a25908.partybuild.Utils.URLconstant.PARTYVIDEO;
+import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
 /**
  * @author yusi
@@ -53,11 +62,15 @@ public class Fragment1 extends Fragment {
     String[] text1={"党委通知","掌上党校","党费缴纳","党建视频",
             "学习园地","在线答疑","党员扶持","文档中心",
             "问卷调查"};
+
+    PartySharePreferences psp;
+    public static Handler handler;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_fragment1, container, false);
         ViewUtils.inject(getActivity());
+        psp=PartySharePreferences.getLifeSharedPreferences();
         FileNewsExists();
 
         GsonRequest NewsRequest=new GsonRequest(URLconstant.URLINSER+URLconstant.NEWSURL, RequestMethod.GET);//新闻数据
@@ -85,17 +98,11 @@ public class Fragment1 extends Fragment {
             }
         });
         gvShow();
-        return v;
-    }
-
-    public void gvShow(){
-        GridView gridView= (GridView) v.findViewById(R.id.gridview);
-        MyGridAdapter adapter=new MyGridAdapter(getActivity(),text1,null,imgs);
-        gridView.setAdapter(adapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        handler=new Handler(){
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
                     case 0://党委通知
                         startActivity(new Intent(getActivity(), PartyCommitteeActivity.class));
                         break;
@@ -123,6 +130,89 @@ public class Fragment1 extends Fragment {
                         break;
                     case 7://文档中心
                         startActivity(new Intent(getActivity(), FilesActivity.class));
+                        break;
+                    case 8:
+                        //问卷调查
+                        startActivity(new Intent(getActivity(), QuestionSurveyActivity.class));
+                        break;
+                    case 500:
+                        Toast.show("暂无数据!");
+                        break;
+                }
+            }
+        };
+        return v;
+    }
+
+    public void gvShow(){
+        GridView gridView= (GridView) v.findViewById(R.id.gridview);
+        MyGridAdapter adapter=new MyGridAdapter(getActivity(),text1,null,imgs);
+        gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                GsonRequest Request;
+                switch (position){
+                    case 0://党委通知
+                        Request = new GsonRequest(URLINSER +PARTYCOMM, RequestMethod.GET);
+                        Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                        Request.add("KeyNo", psp.getUSERID());
+                        Request.add("deviceId", new Build().MODEL);
+                        Request.add("type", 0);
+//                        Request.add("PageIndex",);
+//                        Request.add("PageSize",);
+                        CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x004, true, false, true);
+                        break;
+                    case 1://掌上党校
+                        startActivity(new Intent(getActivity(), PalmPartySchoolActivity.class));
+                        break;
+                    case 2: //党费缴纳
+                        startActivity(new Intent(getActivity(), PartyPayActivity.class));
+                        break;
+                    case 3: //党建视频
+                        Request = new GsonRequest(URLINSER +PARTYVIDEO, RequestMethod.GET);
+                        Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                        Request.add("KeyNo", psp.getUSERID());
+                        Request.add("deviceId", new Build().MODEL);
+//                        Request.add("PageIndex",);
+//                        Request.add("PageSize",);
+                        CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x009, true, false, true);
+
+                        break;
+                    case 4://学习园地
+                        Request = new GsonRequest(URLINSER +PARTYCOMM, RequestMethod.GET);
+                        Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                        Request.add("KeyNo", psp.getUSERID());
+                        Request.add("deviceId", new Build().MODEL);
+                        Request.add("type", 1);
+//                        Request.add("PageIndex",);
+//                        Request.add("PageSize",);
+                        CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x005, true, false, true);
+
+                        break;
+                    case 5:
+                        //在线答疑
+                        startActivity(new Intent(getActivity(), AnswerActivity.class));
+                        break;
+                    case 6: //党员扶持
+                        Request= new GsonRequest(URLINSER +PARTYCOMM, RequestMethod.GET);
+                        Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                        Request.add("KeyNo", psp.getUSERID());
+                        Request.add("deviceId", new Build().MODEL);
+                        Request.add("type", 2);
+//                        Request.add("PageIndex",);
+//                        Request.add("PageSize",);
+                        CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x006, true, false, true);
+                        break;
+                    case 7://文档中心
+                        Request= new GsonRequest(URLINSER +DOCUMENTROOM, RequestMethod.GET);
+                        Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                        Request.add("deviceId", new Build().MODEL);
+                        Request.add("KeyNo", psp.getUSERID());
+//                        Request.add("PageIndex",);
+//                        Request.add("PageSize",);
+                        CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x008, true, false, true);
+
                         break;
                     case 8:
                         //问卷调查
