@@ -52,11 +52,6 @@
             android:name=".Activitys.OpinionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activitys.ImagePagerActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar" />
-        <activity
             android:name=".Activitys.DetailsPageActivity"
             android:screenOrientation="portrait" />
         <activity

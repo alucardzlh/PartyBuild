@@ -3,14 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:background="@color/white"
     android:orientation="vertical">
-        <LinearLayout
+        <FrameLayout
+            android:background="@color/white"
             android:id="@+id/imgLayou"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:background="@mipmap/banner">
+            android:layout_marginBottom="20dp">
+g                <ImageView
+                    android:id="@+id/img_pgi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/banner"/>
 
                 <TextView
                     android:id="@+id/imgtxt"
@@ -25,6 +30,6 @@
                     android:text="上见大家都说"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
-        </LinearLayout>
+        </FrameLayout>
 
 </LinearLayout>

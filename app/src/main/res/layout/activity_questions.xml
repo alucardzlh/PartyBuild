@@ -16,7 +16,7 @@
         android:background="#fff">
 
         <EditText
-            android:id="@+id/wenti233"
+            android:id="@+id/wentifaq233"
             android:paddingTop="15dp"
             android:paddingBottom="10dp"
             android:paddingLeft="10dp"
@@ -30,6 +30,7 @@
             android:layout_weight="1"/>
 
         <TextView
+            android:id="@+id/tv_size"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:textStyle="italic"

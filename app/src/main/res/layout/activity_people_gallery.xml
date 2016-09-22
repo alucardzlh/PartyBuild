@@ -4,13 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#f0f0f0"
     tools:context="com.example.a25908.partybuild.Activitys.PeopleGalleryActivity">
     <include
         layout="@layout/headbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <ListView
+        android:layout_marginTop="20dp"
         android:id="@+id/PeopleGallery_list"
         android:layout_width="match_parent"
+        android:divider="#f0f0f0"
         android:layout_height="match_parent"/>
 </LinearLayout>

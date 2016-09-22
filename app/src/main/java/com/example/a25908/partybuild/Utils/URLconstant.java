@@ -36,6 +36,12 @@ public class URLconstant {
 
     public static final String DOCUMENTROOM = "documentControllerInterface/queryDocument";// 文档中心
 
+    public static final String  SURVEY= "questionnaireSurveyControllerInterface/queryQuesion";//问卷调查survey
+
+    public static final String  FAQ="onlineAnswerControllerInterface/queryOnlineAnswer";// 在线答疑
+
+    public static final String  FAQADD="onlineAnswerControllerInterface/saveOnlineAnswer";// 在线答疑之想组织提问
+
     /**
      * Fragment 2 主界面
      */
@@ -51,6 +57,13 @@ public class URLconstant {
     public static final String DONGTAIFABU = "dynamicControllerInterface/saveDynamic";//动态发布
 
     public static final String DONGTAIPLFB = "commentsControllerInterface/saveComments";//动态评论发布
+
+    public static final String DONGTAIDELETE = "dynamicControllerInterface/deleteDynamic";//动态删除
+
+    public static final String DONGTAIPRSISE = "praiseController/savePraise";//动态点赞
+
+    public static final String DONGTAIUPDATE = "praiseController/updatePraise";//动态取消点赞
+
 
     /**
      * Fragment 4 主界面

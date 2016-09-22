@@ -62,51 +62,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             />
+
         <RelativeLayout
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <!--删除-->
-            <LinearLayout
-                android:id="@+id/item_dt_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_marginEnd="25dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true">
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/item_delete"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="删除"
-                    android:id="@+id/item_dt_shanchu" />
-            </LinearLayout>
             <!--点赞-->
-            <LinearLayout
-                android:id="@+id/item_dt_zan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_marginEnd="53dp"
-                android:layout_alignParentTop="true"
-                android:layout_toStartOf="@+id/item_dt_delete">
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/item_click_like"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="赞"
-                    android:id="@+id/item_dt_dzan" />
-            </LinearLayout>
             <!--点赞数-->
             <LinearLayout
                 android:id="@+id/item_dt_zannum"
@@ -132,7 +95,50 @@
                     android:layout_toEndOf="@+id/item_dt_ivzan" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/item_dt_zan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginEnd="17dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true">
+                <ImageView
+                    android:id="@+id/item_dt_zantu"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/item_click_like"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="赞"
+                    android:id="@+id/item_dt_dzan" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/item_dt_delete"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/item_dt_zan"
+                android:layout_marginEnd="25dp">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/item_delete"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="删除"
+                    android:id="@+id/item_dt_shanchu" />
+            </LinearLayout>
+
         </RelativeLayout>
+
         <com.example.a25908.partybuild.Views.CommentListView
             android:layout_marginTop="5dp"
             android:layout_marginLeft="15dp"

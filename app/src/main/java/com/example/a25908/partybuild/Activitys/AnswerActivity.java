@@ -1,7 +1,13 @@
 package com.example.a25908.partybuild.Activitys;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -10,14 +16,26 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.a25908.partybuild.Adapters.AnswerAdapter;
+import com.example.a25908.partybuild.Http.GsonCallBack;
+import com.example.a25908.partybuild.Http.GsonRequest;
+import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
+import com.example.a25908.partybuild.Services.CallServer;
+import com.example.a25908.partybuild.Utils.MD5;
+import com.example.a25908.partybuild.Utils.PartySharePreferences;
+import com.example.a25908.partybuild.Views.Toast;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.yolanda.nohttp.RequestMethod;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.example.a25908.partybuild.Utils.URLconstant.FAQ;
+import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
 /**
  * 在线答疑
@@ -32,14 +50,17 @@ public class AnswerActivity extends BaseActivity {
     private ImageView back;
     @ViewInject(R.id.title)
     private TextView title;
-    private List<Map> list;
     private AnswerAdapter answerAdapter;
-
+    AlertDialog.Builder builder;
+    public static AlertDialog dialog;
+    PartySharePreferences psp;
+    public static  Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer);
         ViewUtils.inject(this);
+        psp=PartySharePreferences.getLifeSharedPreferences();
         title.setText("在线答疑");
         title.setVisibility(View.VISIBLE);
         back.setVisibility(View.VISIBLE);
@@ -57,45 +78,69 @@ public class AnswerActivity extends BaseActivity {
                 startActivity(new Intent(AnswerActivity.this,QuestionsActivity.class));
             }
         });
-
+        handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 0:
+                        answerAdapter = new AnswerAdapter(AnswerActivity.this, DataManager.FAQmarList.data.onlineAnswerlistPage);
+                        listView.setAdapter(answerAdapter);
+                        answerAdapter.notifyDataSetChanged();
+                        break;
+                    case 1:
+                        break;
+                }
+            }
+        };
     }
 
     private void init() {
-        list = new ArrayList<>();
-
-        Map<String,String> map4 = new HashMap<>();
-        map4.put("wen","挺意外！特朗普见墨总统 为讲和还为碰硬?");
-        map4.put("time","08-30 14:22");
-        list.add(map4);
-
-        Map<String,String> map = new HashMap<>();
-        map.put("wen","解决党内存在的问题，根本在于什么，使每个党员都能及时纳入管理?");
-        map.put("da","远大理想、最终目标与共同理想、具体目标是统一的。远大理想、最终目标为共同理想、具体目标规定着前进的方向，我们党之所以能够经受一次次挫折而又一次次奋起，归根到底是因为我们党有远大理想和崇高追求。而共同理想、具体目标则是远大理想、最终目标在当前的体现，是实现共产主义漫长的历史过程中必须经历的里程碑。实现了这些具体目标，才能实现最终目标。我们必须增强初心意识，做共产主义远大理想和中国特色社会主义共同理想的坚定信仰者和忠实践行者。");
-        map.put("time","08-30 14:22");
-        list.add(map);
-
-        Map<String,String> map5 = new HashMap<>();
-        map5.put("wen","面对困难和挑战，我们如何前进?");
-        map5.put("da","当前，中国共产党治国理政面临的问题是以往从来没有的，也是广大干部群众普遍关注的深层次问题，马克思主义当中没有现成的答案，更不可能从西方的话语体系中寻找答案，只能靠我们自己。要坚持把马克思主义基本原理同当代中国实际和时代特点紧密结合起来，推进理论创新、实践创新，不断把马克思主义中国化推向前进。这是中国共产党取得一切成就的根本所在。");
-        map5.put("time","08-30 14:22");
-        list.add(map5);
-
-        Map<String,String> map3 = new HashMap<>();
-        map3.put("wen","挺意外！特朗普见墨总统 为讲和还为碰硬?");
-        map3.put("da","　美国共和党总统候选人唐纳德·特朗普8月30日晚证实，他定于次日应邀访问墨西哥，会见墨西哥总统。\n" +
-                "　　对特朗普的墨西哥之行，就连一些墨西哥政府官员也感到意外。因特朗普曾发表墨西哥移民大多是“毒贩”“强奸犯”等不友好言论，他会见墨政府官员时是否还会保持这种论调备受外界关注。");
-        map3.put("time","08-30 14:22");
-        list.add(map3);
-
-
-        answerAdapter = new AnswerAdapter(this,list);
+        answerAdapter = new AnswerAdapter(this, DataManager.FAQmarList.data.onlineAnswerlistPage);
         listView.setAdapter(answerAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startActivity(new Intent(AnswerActivity.this,AnswerDetailsActivity.class));
+                /**
+                 * //回答状态（0为审核中  1为待回答  2为已答复  3拒审）默认为0
+                 */
+                if (DataManager.FAQmarList.data.onlineAnswerlistPage.get(i).answer_state.equals("2")){
+                    startActivity(new Intent(AnswerActivity.this,AnswerDetailsActivity.class).putExtra("position",i));
+                }else {
+                    String sate=null;
+                    if (DataManager.FAQmarList.data.onlineAnswerlistPage.get(i).answer_state.equals("0")){
+                        sate="您的提问正在审核中...,请稍后!";
+                    } else if (DataManager.FAQmarList.data.onlineAnswerlistPage.get(i).answer_state.equals("1")){
+                        sate="您的提问正等待回答...,请稍后!";
+                    } else if (DataManager.FAQmarList.data.onlineAnswerlistPage.get(i).answer_state.equals("3")){
+                        sate="您的提问内容中含敏感词汇,已被拒审!";
+                    }else {
+                    }
+                    builder = new AlertDialog.Builder(AnswerActivity.this);
+                    builder.setTitle("提示");
+                    builder.setMessage(sate);
+                    dialog = builder.create();
+                    dialog.show();
+                }
+
             }
         });
-
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(QuestionsActivity.QAflag==true){
+            QuestionsActivity.QAflag=false;
+            GsonRequest Request= new GsonRequest(URLINSER +FAQ, RequestMethod.GET);
+            Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+            Request.add("deviceId", new Build().MODEL);
+            Request.add("KeyNo", psp.getUSERID());
+//                        Request.add("PageIndex",);
+//                        Request.add("PageSize",);
+            CallServer.getInstance().add(AnswerActivity.this, Request, GsonCallBack.getInstance(), 0x001011, true, false, true);
+        }
+    }
+
+
 }

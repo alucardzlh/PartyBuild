@@ -80,8 +80,12 @@ public class FileUtils {
     public static void FileNewsExists() {
         File destDir1 = new File(Environment.getExternalStorageDirectory() + "/PartyBuild");//项目文件夹
         File destDir3 = new File(Environment.getExternalStorageDirectory() + "/PartyBuild/Documents");//项目文档文件夹
+        File destDir2 = new File(Environment.getExternalStorageDirectory() + "/PartyBuild/Cache");//项目缓存
         if (!destDir1.exists()) {
             destDir1.mkdirs();
+        }
+        if (!destDir2.exists()) {
+            destDir2.mkdirs();
         }
         if (!destDir3.exists()) {
             destDir3.mkdirs();

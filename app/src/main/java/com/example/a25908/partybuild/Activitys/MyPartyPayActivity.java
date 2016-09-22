@@ -47,7 +47,7 @@ public class MyPartyPayActivity extends BaseActivity {
         list1= new ArrayList<>();
         list1 = DataManager.myPartyPaylist.data.partyMemberlist;
         if (list1 !=null) {
-            nullshuju.setText(View.GONE);
+            nullshuju.setVisibility(View.GONE);
             list_pay.setVisibility(View.VISIBLE);
             MyPartyPayListAdapter adapter = new MyPartyPayListAdapter(MyPartyPayActivity.this, list1);
             list_pay.setAdapter(adapter);

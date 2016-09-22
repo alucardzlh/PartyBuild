@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.a25908.partybuild.Adapters.MyGridAdapterClaim2;
+import com.example.a25908.partybuild.Dialogs.WaitDialog;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.R;
@@ -60,6 +61,9 @@ public class HairDynamicActivity extends BaseActivity {
     private EditText dt_et_con;//内容
     @ViewInject(R.id.myGridViewtc)
     private MyGridView myGridViewtc;//图片
+    public static WaitDialog wd;
+
+    public static HairDynamicActivity instance = null;
 
     private static final String IMAGE_FILE_NAME = "avatarImage.jpg";// 图片文件名称
     private static String urlpath;			// 图片本地路径
@@ -89,6 +93,7 @@ public class HairDynamicActivity extends BaseActivity {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if (msg.what==1){
+                    wd.dismiss();
                     Toast.show("发布成功");
                     finish();
                 }
@@ -101,6 +106,9 @@ public class HairDynamicActivity extends BaseActivity {
     }
 
     private void init(){
+        instance = this;
+        wd = new WaitDialog(HairDynamicActivity.this);
+        wd.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
         psp = new PartySharePreferences();
         back.setVisibility(View.VISIBLE);
         fileclear.setText("发布");
@@ -188,8 +196,8 @@ public class HairDynamicActivity extends BaseActivity {
                     Toast.show("请输入内容或选择照片");
                 }
                 else if(!TextUtils.isEmpty(dt_et_con.getText())&myList.isEmpty()){
-
-                    GsonRequest fabu = new GsonRequest(URLINSER + DONGTAIFABU, RequestMethod.GET);
+                    wd.show();
+                    GsonRequest fabu = new GsonRequest(URLINSER + DONGTAIFABU, RequestMethod.POST);
                     fabu.add("KeyNo",psp.getUSERID());
                     fabu.add("username",psp.getUSERNAME());
                     fabu.add("content",dt_et_con.getText().toString());
@@ -234,6 +242,7 @@ public class HairDynamicActivity extends BaseActivity {
                 attchmentDescS = attchmentDescS + "pic@";//
                 attchmentSteamS = attchmentSteamS + listStirng.get(c) + "@";
             }
+            wd.show();
             GsonRequest fabu2 = new GsonRequest(URLINSER + DONGTAIFABU, RequestMethod.POST);
             fabu2.add("KeyNo",psp.getUSERID());
             fabu2.add("username",psp.getUSERNAME());

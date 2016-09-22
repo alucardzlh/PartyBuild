@@ -1,6 +1,7 @@
 package com.example.a25908.partybuild.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,8 +57,10 @@ public class MyPartyPayListAdapter extends BaseAdapter {
         vh.mpay_money.setText(list1.get(position).MONEY);
         if (list1.get(position).TYPE.equals("0")){
             vh.mpay_type.setText("未缴费");
+            vh.mpay_type.setTextColor(Color.rgb(160,160,160));
         }
         else {
+            vh.mpay_type.setTextColor(Color.rgb(74,207,26));
             vh.mpay_type.setText("已缴费");
         }
 

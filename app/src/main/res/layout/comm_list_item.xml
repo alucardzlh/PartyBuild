@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <!--右边图片-->
+        <com.example.a25908.partybuild.Views.RoundImageView
+            android:id="@+id/comm_Rimg"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ceshi_item2"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/comm_Rname"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="张三"
+                android:layout_marginLeft="10dp"
+                android:textColor="#2D2D2D"
+                android:textSize="17sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true">
+                <!--时间图片-->
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_history_record"
+                    android:id="@+id/imageView" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textSize="13sp"
+                    android:text="08-27 17:56"
+                    android:id="@+id/comm_Rtime"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/imageView" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/comm_Rcontent"
+                android:layout_gravity="top"
+                android:layout_marginTop="5dp"
+                android:lines="2"
+                android:maxLines="2"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:lineSpacingExtra="2dp"
+                android:ellipsize="end"
+                android:text="啊睡觉的空间奥靠房觉的空间奥靠房觉的空间奥靠房觉的空间奥靠房觉的空间奥靠房觉的空间奥靠房觉的空间奥靠房价放假舅妈舅舅靠房价放假舅妈舅舅了卡的拿手的"
+                android:textSize="13sp"
+                android:layout_marginBottom="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

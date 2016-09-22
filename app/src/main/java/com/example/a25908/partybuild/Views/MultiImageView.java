@@ -10,9 +10,12 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.Utils.DensityUtil;
+import com.example.a25908.partybuild.Utils.FileUtils;
 
-import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -26,7 +29,7 @@ public class MultiImageView extends LinearLayout {
 	public static int MAX_WIDTH = 0;
 
 	// 照片的Url列表
-	private List<String> imagesList;
+	private List<DataManager.Mydynamic.DataBean.DynamiclistPageBean.ImglistBean> imagesList;
 
 	/** 长度 单位为Pixel **/
 	private int pxOneMaxWandH;  // 单张图最大允许宽高
@@ -52,7 +55,7 @@ public class MultiImageView extends LinearLayout {
 		super(context, attrs);
 	}
 
-	public void setList(List<String> lists) throws IllegalArgumentException{
+	public void setList(List<DataManager.Mydynamic.DataBean.DynamiclistPageBean.ImglistBean> lists) throws IllegalArgumentException{
 		if(lists==null){
 			throw new IllegalArgumentException("imageList is null...");
 		}
@@ -173,7 +176,7 @@ public class MultiImageView extends LinearLayout {
 	}
 
 	private ImageView createImageView(int position, final boolean isMultiImage) {
-		String url = imagesList.get(position);
+		String url = String.valueOf(imagesList.get(position).path);
 		ImageView imageView = new ColorFilterImageView(getContext());
 		if(isMultiImage){
 			imageView.setScaleType(ScaleType.CENTER_CROP);
@@ -187,8 +190,17 @@ public class MultiImageView extends LinearLayout {
 
 		imageView.setId(url.hashCode());
 		imageView.setOnClickListener(new ImageOnClickListener(position));
-		List<Bitmap> bitmapList = new ArrayList<>();
-		Glide.with(getContext()).load(imagesList.get(position)).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
+		Bitmap bitmap = FileUtils.stringtoBitmap(url);
+		//Glide不能能直接加载Bitmap,需要先将bitmap转bytes
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+		byte[] bytes=baos.toByteArray();
+		try {
+			baos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Glide.with(getContext()).load(bytes).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
 		return imageView;
 	}
 

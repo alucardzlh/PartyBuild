@@ -5,9 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
 
 import java.util.List;
@@ -18,12 +18,10 @@ import java.util.List;
  */
 public class TheConstitutionOfThePartyAdapter extends BaseAdapter {
     private Context context;
-    private List<String> list1;
-    private List<String> list2;
-    public TheConstitutionOfThePartyAdapter(Context context,List<String> list1, List<String> list2) {
+    private List<DataManager.TCTPdanggui.DataBean.CommentListBean> list1;
+    public TheConstitutionOfThePartyAdapter(Context context, List<DataManager.TCTPdanggui.DataBean.CommentListBean> list1) {
         this.context = context;
         this.list1 = list1;
-        this.list2 = list2;
     }
 
     @Override
@@ -53,8 +51,8 @@ public class TheConstitutionOfThePartyAdapter extends BaseAdapter {
         } else {
             vh = (ViewHolder) view.getTag();
         }
-        vh.tcop_tname.setText(list1.get(position));
-        vh.tcop_content.setText("     "+list2.get(position));
+        vh.tcop_tname.setText(list1.get(position).TITLE);
+        vh.tcop_content.setText("     "+list1.get(position).CONTENT);
         return view;
     }
 

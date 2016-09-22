@@ -60,55 +60,8 @@ public class FilesActivity extends BaseActivity {
         files_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(FilesActivity.this,FileContentActivity.class).putExtra("name",DataManager.DucomentRoomList.data.commentList.get(position).USERNAME).putExtra("path",DataManager.DucomentRoomList.data.commentList.get(position).PATH).putExtra("size", FileUtils.FormentFileSize(DataManager.DucomentRoomList.data.commentList.get(position).SIZE)));
+                startActivity(new Intent(FilesActivity.this,FileContentActivity.class).putExtra("name",DataManager.DucomentRoomList.data.commentList.get(position).NAME).putExtra("path",DataManager.DucomentRoomList.data.commentList.get(position).PATH).putExtra("size", FileUtils.FormentFileSize(DataManager.DucomentRoomList.data.commentList.get(position).SIZE)));
             }
         });
-
-//        files_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                DownloadQueue downloadQueue=NoHttp.newDownloadQueue();
-//                //下载文件
-//               DownloadRequest downloadRequest=NoHttp.createDownloadRequest(Path,null,null,true,false);
-//// what 区分下载
-//// downloadRequest 下载请求对象
-//// downloadListener 下载监听
-//                downloadQueue.add(0, downloadRequest, downloadListener);
-////                暂停或者停止下载
-////                downloadRequest.cancel();
-//            }
-//        });
     }
-
-//    private DownloadListener downloadListener = new DownloadListener() {
-//        //     // 下载出错
-//        @Override
-//        public void onDownloadError(int what, Exception exception) {
-//
-//        }
-//
-//        //     开始下载
-//        @Override
-//        public void onStart(int what, boolean isResume, long rangeSize, Headers responseHeaders, long allCount) {
-//
-//        }
-//
-//        //     // 下载进度变化
-//        @Override
-//        public void onProgress(int what, int progress, long fileCount) {
-//
-//        }
-//
-//        //      // 下载完成
-//        @Override
-//        public void onFinish(int what, String filePath) {
-//            Toast.show("下载成功！");
-//        }
-//
-//        //     // 下载暂停或者取消
-//        @Override
-//        public void onCancel(int what) {
-//
-//        }
-//    };
 }

@@ -10,8 +10,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.StrictMode;
 import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.a25908.partybuild.Adapters.commListAdapter;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.Model.DataManager;
@@ -31,17 +36,17 @@ import com.example.a25908.partybuild.Services.CallServer;
 import com.example.a25908.partybuild.Utils.MD5;
 import com.example.a25908.partybuild.Utils.PartySharePreferences;
 import com.example.a25908.partybuild.Utils.URLconstant;
+import com.example.a25908.partybuild.Views.MyListView;
 import com.example.a25908.partybuild.Views.Toast;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yolanda.nohttp.RequestMethod;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;//这个特别容易导错
+import org.jsoup.select.Elements;
 
 import static com.example.a25908.partybuild.Utils.URLconstant.IMGURL;
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYDETAILS;
@@ -67,30 +72,26 @@ public class DetailsPageActivity extends BaseActivity {
     @ViewInject(R.id.ptime)
     private TextView ptime;
     @ViewInject(R.id.pcontent)
-    private TextView pcontent;
+    private WebView pcontent;
 
     @ViewInject(R.id.et_comn)
     private EditText et_comn;//评论内容框
     @ViewInject(R.id.et_send)
     private TextView et_send;//评论发表
-
-    @ViewInject(R.id.et_zan)
-    private LinearLayout et_zan;//点赞
+    @ViewInject(R.id.mylist_comm)
+    private MyListView mylist_comm;//评论列表
 
     @ViewInject(R.id.et_delete)
     private LinearLayout et_delete;//删除
-    private String picName = "networkPic.jpg";
-    /**网络图片Getter*/
-    private NetworkImageGetter mImageGetter;
     PartySharePreferences psp;
     public static  Handler handler;
-    private static final String TAG = "ImgLabelActivity";
     String dtr1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_page);
         ViewUtils.inject(this);
+        struct();
         psp=PartySharePreferences.getLifeSharedPreferences();
         title.setText("详情");
         returnT.setVisibility(View.VISIBLE);
@@ -115,44 +116,41 @@ public class DetailsPageActivity extends BaseActivity {
             ptitle.setText(DataManager.partyCommDetailsList.data.NewsList.title);
             ptime.setText(DataManager.partyCommDetailsList.data.NewsList.add_time);
             String str=DataManager.partyCommDetailsList.data.NewsList.content;
-            dtr1=str.replaceAll("<img src=\"","<img  src=\""+IMGURL);
-            String dtr2=dtr1.replaceAll("<p>","<p style=\"font-size:28px\">");
-//            pcontent.setText(Html.fromHtml(dtr1));
+//            dtr1=str.replaceAll("<img src=\"","<img  src=\""+IMGURL);
+            if(str.indexOf("http") == -1){
+                dtr1=str.replaceAll("src=\"","src=\""+IMGURL);
+            }else{
+                dtr1=str;
+            }
 
-//            WebView Description = (WebView)findViewById(R.id.pcontent);
-//            //支持javascript
-//            Description.getSettings().setJavaScriptEnabled(true);
-//            // 设置可以支持缩放
-//            Description.getSettings().setSupportZoom(true);
-//            // 设置出现缩放工具
-//            Description.getSettings().setBuiltInZoomControls(true);
-//            //扩大比例的缩放
-//            Description.getSettings().setUseWideViewPort(true);
-//            //自适应屏幕
-//            Description.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-//            Description.getSettings().setLoadWithOverviewMode(true);
+//            pcontent.setMovementMethod(ScrollingMovementMethod.getInstance());// 设置可滚动
+//            pcontent.setMovementMethod(LinkMovementMethod.getInstance());//设置超链接可以打开网页
+//            String html="<p><strong>强调</strong></p><p><em>斜体</em></p>"
+//                    +"<p><a href=\"http://www.dreamdu.com/xhtml/\">超链接HTML入门</a>学习HTML!</p><p><font color=\"#aabb00\">颜色1"
+//                    +"</p><p><font color=\"#00bbaa\">颜色2</p><h1>标题1</h1><h3>标题2</h3><h6>标题3</h6><p>大于>小于<</p><p>" +
+//                    "下面是网络图片</p><img src=\"http://avatar.csdn.net/0/3/8/2_zhang957411207.jpg\"/>";
+////            pcontent.setText(Html.fromHtml("<html><body>"+str33+"</body></html>"));
 //
-//
-//            Description.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-//            WebSettings webSettings = Description.getSettings();
-//            webSettings.setTextSize(WebSettings.TextSize.NORMAL);
-//
-//            Description.loadDataWithBaseURL (null, "<html>"+dtr2+"</html>", "text/html", "UTF-8",null);
-            mImageGetter = new NetworkImageGetter();
-            pcontent.setText(Html.fromHtml(dtr1, mImageGetter, null));
+//            pcontent.setText(Html.fromHtml(dtr1, imgGetter1, null));
+//            pcontent.loadData(dtr1, "text/html; charset=UTF-8",null);
+            WebSettings webSettings = pcontent.getSettings();
+            String cacheDirPath = Environment.getExternalStorageDirectory() + "/PartyBuild/Cache"; //缓存路径
+            webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);  //缓存模式
+            webSettings.setAppCachePath(cacheDirPath); //设置缓存路径
+            webSettings.setAppCacheEnabled(true); //开启缓存功能
 
+            pcontent.loadDataWithBaseURL(null,getNewContent(dtr1), "text/html", "utf-8", null);
             /**
              * 查询评论
              */
-//            GsonRequest Request = new GsonRequest(URLINSER +PARTYDETAILSCOMN, RequestMethod.GET);
-//            Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
-//            Request.add("KeyNo", psp.getUSERID());
-//            Request.add("deviceId", new Build().MODEL);
-//            Request.add("type", 0);//评论内容类型 ( 0 查询党委通知、学习园地、党员扶持评论)
-//            Request.add("nvid", DataManager.partyCommDetailsList.data.NewsList.newsid);
-////                Request.add("PageIndex", 1);
-////                Request.add("PageSize", 10);
-//            CallServer.getInstance().add(DetailsPageActivity.this, Request, GsonCallBack.getInstance(), 0x007, true, false, true);
+            GsonRequest Request = new GsonRequest(URLINSER +PARTYDETAILSCOMN, RequestMethod.GET);
+            Request.add("token", MD5.MD5s(DataManager.partyCommDetailsList.data.NewsList.newsid + new Build().MODEL));
+            Request.add("KeyNo", DataManager.partyCommDetailsList.data.NewsList.newsid);
+            Request.add("deviceId", new Build().MODEL);
+            Request.add("type", 0);//评论内容类型 ( 0 查询党委通知、学习园地、党员扶持评论)
+//                Request.add("PageIndex", 1);
+//                Request.add("PageSize", 10);
+            CallServer.getInstance().add(DetailsPageActivity.this, Request, GsonCallBack.getInstance(), 0x007, true, false, true);
 
         }
         et_comn.setOnKeyListener(new View.OnKeyListener() {
@@ -180,10 +178,24 @@ public class DetailsPageActivity extends BaseActivity {
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 0:
+                        GsonRequest Request = new GsonRequest(URLINSER +PARTYDETAILSCOMN, RequestMethod.GET);
+                        Request.add("token", MD5.MD5s(DataManager.partyCommDetailsList.data.NewsList.newsid + new Build().MODEL));
+                        Request.add("KeyNo", DataManager.partyCommDetailsList.data.NewsList.newsid);
+                        Request.add("deviceId", new Build().MODEL);
+                        Request.add("type", 0);//评论内容类型 ( 0 查询党委通知、学习园地、党员扶持评论)
+//                Request.add("PageIndex", 1);
+//                Request.add("PageSize", 10);
+                        CallServer.getInstance().add(DetailsPageActivity.this, Request, GsonCallBack.getInstance(), 0x007, true, false, true);
+
                         Toast.show("评论发表成功!");
                         break;
                     case 1:
                         Toast.show("评论发表失败!");
+                        break;
+                    case 2://查询评论
+                        commListAdapter adapter=new commListAdapter(DetailsPageActivity.this,DataManager.CommentMarList.data.commentList);
+                        mylist_comm.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
                         break;
                 }
             }
@@ -203,85 +215,69 @@ public class DetailsPageActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 网络图片
-     * @author Susie
-     */
-    private final class NetworkImageGetter implements Html.ImageGetter{
-
-        @Override
+    Html.ImageGetter imgGetter1 = new Html.ImageGetter() {
         public Drawable getDrawable(String source) {
-
             Drawable drawable = null;
-            // 判断是否以http开头
-            if(source.startsWith("http")) {
-                // 判断路径是否存在
-                    // 不存在即开启异步任务加载网络图片
-                    AsyncLoadNetworkPic networkPic = new AsyncLoadNetworkPic();
-                    networkPic.execute(source);
+            URL url;
+            try {
+                url = new URL(source);
+                drawable = Drawable.createFromStream(url.openStream(), "");  //获取网路图片
+            } catch (Exception e) {
+                return null;
             }
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable
+                    .getIntrinsicHeight());
             return drawable;
         }
-    }
+    };
     /**
-     * 加载网络图片异步类
-     * @author Susie
+     * 这里面的resource就是fromhtml函数的第一个参数里面的含有的url
      */
-    private final class AsyncLoadNetworkPic extends AsyncTask<String, Integer, Void> {
-
-        @Override
-        protected Void doInBackground(String... params) {
-            // 加载网络图片
-            loadNetPic(params);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            // 当执行完成后再次为其设置一次
-            pcontent.setText(Html.fromHtml(dtr1, mImageGetter, null));
-        }
-        /**加载网络图片*/
-        private void loadNetPic(String... params) {
-            String path = params[0];
-            File file = new File(Environment.getExternalStorageDirectory(), picName);
-            InputStream in = null;
-            FileOutputStream out = null;
+    Html.ImageGetter imgGetter = new Html.ImageGetter() {
+        public Drawable getDrawable(String source) {
+            Log.i("RG", "source---?>>>" + source);
+            Drawable drawable = null;
+            URL url;
             try {
-                URL url = new URL(path);
-                HttpURLConnection connUrl = (HttpURLConnection) url.openConnection();
-                connUrl.setConnectTimeout(5000);
-                connUrl.setRequestMethod("GET");
-                if(connUrl.getResponseCode() == 200) {
-                    in = connUrl.getInputStream();
-                    out = new FileOutputStream(file);
-                    byte[] buffer = new byte[1024];
-                    int len;
-                    while((len = in.read(buffer))!= -1){
-                        out.write(buffer, 0, len);
-                    }
-                } else {
-                    Log.i(TAG, connUrl.getResponseCode() + "");
-                }
+                url = new URL(source);
+                Log.i("RG", "url---?>>>" + url);
+                drawable = Drawable.createFromStream(url.openStream(), ""); // 获取网路图片
             } catch (Exception e) {
                 e.printStackTrace();
-            } finally {
-                if(in != null) {
-                    try {
-                        in.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if(out != null) {
-                    try {
-                        out.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+                return null;
             }
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
+                    drawable.getIntrinsicHeight());
+            Log.i("RG", "url---?>>>" + url);
+            return drawable;
         }
+    };
+
+    public static void struct() {
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads().detectDiskWrites().detectNetwork() // or
+                // .detectAll()
+                // for
+                // all
+                // detectable
+                // problems
+                .penaltyLog().build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects() // 探测SQLite数据库操作
+                .penaltyLog() // 打印logcat
+                .penaltyDeath().build());
     }
+
+    private String getNewContent(String htmltext){
+
+        Document doc=Jsoup.parse(htmltext);
+        Elements elements=doc.getElementsByTag("img");
+        for (Element element : elements) {
+            element.attr("width","100%").attr("height","auto");
+        }
+
+        Log.d("VACK", doc.toString());
+        return doc.toString();
+    }
+
 }

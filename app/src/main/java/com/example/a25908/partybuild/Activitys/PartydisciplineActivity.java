@@ -1,5 +1,6 @@
 package com.example.a25908.partybuild.Activitys;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,7 +13,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 
 /**
  * @author yusi
- *党规党纪界面
+ *党规党纪界面、与党的章程详情
  */
 public class PartydisciplineActivity extends BaseActivity {
     @ViewInject(R.id.returnT)
@@ -30,25 +31,42 @@ public class PartydisciplineActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partydiscipline);
         ViewUtils.inject(this);
-        title.setText("党规党纪");
-        title.setVisibility(View.VISIBLE);
-        back.setVisibility(View.VISIBLE);
-        back.setOnClickListener(new View.OnClickListener() {
+        Intent intent = getIntent();
+        int i = intent.getIntExtra("i",0);
+        int b = intent.getIntExtra("b",0);
+        if (b==1) {
+            title.setText("党规党纪");
+            title.setVisibility(View.VISIBLE);
+            back.setVisibility(View.VISIBLE);
+            back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+        }
+        else {
+            title.setText("党的章程");
+            title.setVisibility(View.VISIBLE);
+            back.setVisibility(View.VISIBLE);
+            back.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        init();
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+        }
+            init(i);
     }
 
     /**
      * 初始化
      */
-    private void init(){
-        pdp_title.setText(DataManager.myTCTPdanggui.data.commentList.get(0).TITLE+"");
-        pdp_time.setText("("+DataManager.myTCTPdanggui.data.commentList.get(0).DESCRIBES+")");
-        pdp_con.setText(DataManager.myTCTPdanggui.data.commentList.get(0).CONTENT);
+    private void init(int i){
+
+        pdp_title.setText(DataManager.myTCTPdanggui.data.commentList.get(i).TITLE+"");
+        pdp_time.setText("("+DataManager.myTCTPdanggui.data.commentList.get(i).DESCRIBES+")");
+        pdp_con.setText(DataManager.myTCTPdanggui.data.commentList.get(i).CONTENT);
     }
 }

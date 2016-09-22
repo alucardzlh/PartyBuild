@@ -1,27 +1,28 @@
 package com.example.a25908.partybuild.Adapters;
 
 import android.content.Context;
-import android.util.Log;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
+import com.example.a25908.partybuild.Utils.FileUtils;
 
 import java.util.List;
-import java.util.Map;
 /**
  * @author yusi
  * 人物长廊界面Adapter
  */
 public class PeopleGalleryAdapter extends BaseAdapter {
     private Context context;
-    private List<String> list;
-    public PeopleGalleryAdapter(Context context,List<String> list) {
+    private List<DataManager.MyPALMPARTY.DataBean.CommentListBean> list;
+    public PeopleGalleryAdapter(Context context,List<DataManager.MyPALMPARTY.DataBean.CommentListBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -47,19 +48,23 @@ public class PeopleGalleryAdapter extends BaseAdapter {
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.activity_people_gallery_item, null);
             vh = new ViewHolder();
-            vh.imgLayou=(LinearLayout) view.findViewById(R.id.imgLayou);
+            vh.imgLayou=(FrameLayout) view.findViewById(R.id.imgLayou);
             vh.imgtxt=(TextView) view.findViewById(R.id.imgtxt);
+            vh.img_pgi = (ImageView) view.findViewById(R.id.img_pgi);
             view.setTag(vh);
         } else {
             vh = (ViewHolder) view.getTag();
         }
-        vh.imgLayou.setBackgroundResource(R.mipmap.banner);
-        vh.imgtxt.setText(list.get(position));
+        Bitmap bitmap = FileUtils.stringtoBitmap(list.get(position).title_img);
+        vh.img_pgi.setImageBitmap(bitmap);
+        vh.imgtxt.setText(list.get(position).title);
         return view;
     }
 
     public class ViewHolder {
-        LinearLayout imgLayou;
+        FrameLayout imgLayou;
         TextView imgtxt;
+
+        ImageView img_pgi;
     }
 }

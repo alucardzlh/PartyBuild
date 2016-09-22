@@ -8,247 +8,42 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-    <include layout="@layout/headbar"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#000"
-        android:textSize="17sp"
-        android:gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:text="基层党员组织情况问卷调查表"/>
-    
-    <TextView
-        android:layout_marginLeft="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="一、关于党员"
-        android:textColor="#000"
-        android:textSize="17sp"/>
-    <TextView
-        android:layout_marginTop="7dp"
-        android:layout_marginLeft="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="1.你作为一名共产党员光荣吗？"
-        android:textColor="#000"
-        android:textSize="15sp"/>
-
-    <RadioGroup
-        android:id="@+id/frist_ti"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/maintop_shape3"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rg1_1"
-            android:textColor="#2D2D2D"
-            android:text="非常光荣" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rg1_2"
-            android:textColor="#2D2D2D"
-            android:text="比较光荣" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rg1_3"
-            android:textColor="#2D2D2D"
-            android:text="不感多光荣光荣" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rg1_4"
-            android:textColor="#2D2D2D"
-            android:text="不光荣" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rg1_5"
-            android:textColor="#2D2D2D"
-            android:text="其他" />
-
-
-
-
-    </RadioGroup>
-        <!--其他-->
         <LinearLayout
-            android:visibility="gone"
-            android:id="@+id/rg_qita"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/maintop_shape3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:textColor="#2D2D2D"
-                android:gravity="left"
-                android:background="#0000"
-                android:hint="请写下您的意见....."/>
+            <include layout="@layout/headbar"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:layout_marginRight="5dp"
-                android:textStyle="italic"
-                android:gravity="right"
-                android:text="200字"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/textView" />
-            <LinearLayout
-                android:layout_margin="5dp"
+                android:textColor="#000"
+                android:textSize="17sp"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="基层党员组织情况问卷调查表"/>
+
+            <ListView
+                android:id="@+id/list_qs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="right">
-                <Button
-                    android:layout_width="50dp"
-                    android:layout_height="20dp"
-                    android:text="保存"
-                    android:textSize="13sp"
-                    android:textColor="#fff"
-                    android:background="@drawable/maintop_shape2"
-                    android:id="@+id/save_yijian" />
-            </LinearLayout>
+                android:listSelector="#00000000"
+                />
+
+            <Button
+                android:id="@+id/tijiao2"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="提交"
+                android:textSize="18sp"
+                android:textColor="#fff"
+                android:background="@drawable/maintop_shape2"/>
+
+
         </LinearLayout>
-
-
-    <TextView
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="7dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="2.你认为你的党员权利行使得如何？"
-        android:textColor="#000"
-        android:textSize="15sp"/>
-    <RadioGroup
-        android:id="@+id/frist2_ti"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/maintop_shape3"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rg2_1"
-            android:textColor="#2D2D2D"
-            android:text="能够行使" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rg2_2"
-            android:textColor="#2D2D2D"
-            android:text="能行使一定权利" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rg2_3"
-            android:textColor="#2D2D2D"
-            android:text="没有条件行使" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#2D2D2D"
-            android:id="@+id/rg2_4"
-            android:text="不想行使" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rg2_5"
-            android:textColor="#2D2D2D"
-            android:text="其他" />
-
-
-
-
-    </RadioGroup>
-        <!--其他-->
-        <LinearLayout
-            android:visibility="gone"
-            android:id="@+id/rg_qita2"
-            android:background="@drawable/maintop_shape3"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="#0000"
-                android:gravity="left"
-                android:hint="请写下您的意见....."/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:layout_marginRight="5dp"
-                android:textStyle="italic"
-                android:gravity="right"
-                android:text="200字"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/textView2" />
-            <LinearLayout
-                android:layout_margin="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="right">
-                <Button
-                    android:layout_width="50dp"
-                    android:layout_height="20dp"
-                    android:text="保存"
-                    android:textSize="13sp"
-                    android:textColor="#fff"
-                    android:background="@drawable/maintop_shape2"
-                    android:id="@+id/save_yijian2" />
-            </LinearLayout>
-        </LinearLayout>
-
-
-    <Button
-        android:id="@+id/tijiao2"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="提交"
-        android:textSize="18sp"
-        android:textColor="#fff"
-        android:background="@drawable/maintop_shape2"/>
-
-
-    </LinearLayout>
 
     </ScrollView>
 

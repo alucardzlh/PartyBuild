@@ -222,7 +222,7 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/rr5"
                     android:layout_marginLeft="10dp"
-                    android:background="@color/red"
+                    android:background="@drawable/btn_bg3"
                     android:textSize="18sp"
                     android:textColor="@color/white"
                     android:text="注销"/>

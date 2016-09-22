@@ -61,15 +61,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <TextView
+            <WebView
                 android:id="@+id/pcontent"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />
-
+            <com.example.a25908.partybuild.Views.MyListView
+                android:id="@+id/mylist_comm"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
+
     </ScrollView>
 
     <RelativeLayout
@@ -79,27 +85,6 @@
         android:orientation="horizontal"
         android:background="#f00">
 
-        <LinearLayout
-            android:id="@+id/et_zan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginEnd="54dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/xiangqingzan"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="赞"
-                android:textColor="#fff"
-                android:id="@+id/item_dt_dzan" />
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/et_delete"

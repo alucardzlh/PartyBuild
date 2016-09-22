@@ -127,12 +127,12 @@ public class CommentListView extends LinearLayout {
         }
 
         SpannableStringBuilder builder = new SpannableStringBuilder();
-        builder.append(setClickableSpan(name, bean.userid));
+        builder.append(setClickableSpan(name, String.valueOf(bean.userid)));
 
         if (!TextUtils.isEmpty(toReplyName)) {
 
             builder.append(" 回复 ");
-            builder.append(setClickableSpan(toReplyName, (Integer) bean.to_userid));
+            builder.append(setClickableSpan(toReplyName, String.valueOf(bean.to_userid)));
         }
         builder.append(": ");
         //转换表情字符
@@ -168,7 +168,7 @@ public class CommentListView extends LinearLayout {
     }
 
     @NonNull
-    private SpannableString setClickableSpan(final String textStr, final int id) {
+    private SpannableString setClickableSpan(final String textStr, final String id) {
         SpannableString subjectSpanText = new SpannableString(textStr);
         subjectSpanText.setSpan(new SpannableClickable(itemColor){
                                     @Override

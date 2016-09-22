@@ -1,5 +1,6 @@
 package com.example.a25908.partybuild.Http;
 
+import com.example.a25908.partybuild.Activitys.AnswerActivity;
 import com.example.a25908.partybuild.Activitys.DetailsPageActivity;
 import com.example.a25908.partybuild.Activitys.HairDynamicActivity;
 import com.example.a25908.partybuild.Activitys.LoginActivity;
@@ -7,6 +8,8 @@ import com.example.a25908.partybuild.Activitys.MydataActivity;
 import com.example.a25908.partybuild.Activitys.OpinionActivity;
 import com.example.a25908.partybuild.Activitys.PartyCommitteeActivity;
 import com.example.a25908.partybuild.Activitys.PartymembersdetailsActivity;
+import com.example.a25908.partybuild.Activitys.PeopleGalleryActivity;
+import com.example.a25908.partybuild.Activitys.QuestionsActivity;
 import com.example.a25908.partybuild.Activitys.StudyActivity;
 import com.example.a25908.partybuild.Activitys.SupportActivity;
 import com.example.a25908.partybuild.Fragments.Fragment1;
@@ -150,8 +153,10 @@ public class GsonCallBack implements HttpCallBack {
                 break;
             case 0x007://查询 党建通知，学习园地，党员扶持 详情的评论
                 jsonString = (String) response.get();
-                DataManager.partyCommDetailsList=gson.fromJson(jsonString,DataManager.partyCommDetails.class);
-                SupportActivity.handler.sendEmptyMessage(0);
+                DataManager.CommentMarList=gson.fromJson(jsonString,DataManager.CommentMar.class);
+                if(DataManager.CommentMarList.data.commentList.size()>0) {
+                    DetailsPageActivity.handler.sendEmptyMessage(2);
+                }
                 break;
             case 0x0071://添加  党建通知，学习园地，党员扶持 详情的评论
                 jsonString = (String) response.get();
@@ -171,6 +176,35 @@ public class GsonCallBack implements HttpCallBack {
                 jsonString = (String) response.get();
                 DataManager.partyvideoList=gson.fromJson(jsonString,DataManager.partyvideo.class);
                 Fragment1.handler.sendEmptyMessage(3);
+                break;
+            case 0x0010://在线答疑
+                jsonString = (String) response.get();
+                DataManager.FAQmarList=gson.fromJson(jsonString,DataManager.FAQmar.class);
+                Fragment1.handler.sendEmptyMessage(5);
+                break;
+            case 0x00101://在线答疑之想组织提问
+                jsonString = (String) response.get();
+                DataManager.messageMar=gson.fromJson(jsonString,DataManager.message.class);
+                if(DataManager.messageMar.message.equals("success")){
+                    QuestionsActivity.handler.sendEmptyMessage(0);
+                }else{
+                    QuestionsActivity.handler.sendEmptyMessage(1);
+                }
+                break;
+            case 0x001011://再次在线答疑
+                jsonString = (String) response.get();
+                DataManager.FAQmarList=gson.fromJson(jsonString,DataManager.FAQmar.class);
+                AnswerActivity.handler.sendEmptyMessage(0);
+                break;
+            case 0x0011://问卷调查
+                jsonString = (String) response.get();
+                DataManager.surveyList=gson.fromJson(jsonString,DataManager.survey.class);
+                if( DataManager.surveyList.data.DynamiclistPage.size()>0){
+                    Fragment1.handler.sendEmptyMessage(8);
+                }else{
+                    Fragment1.handler.sendEmptyMessage(500);
+                }
+
                 break;
             case 0x102://意见反馈提交
                 jsonString = (String) response.get();
@@ -195,6 +229,12 @@ public class GsonCallBack implements HttpCallBack {
                     PalmPartySchoolActivity.handler.sendEmptyMessage(1);
                 }
                 break;
+            case 0x2023://人物长廊详情
+                jsonString = (String) response.get();
+                DataManager.partyCommDetailsList=gson.fromJson(jsonString,DataManager.partyCommDetails.class);
+                PeopleGalleryActivity.handler.sendEmptyMessage(1);
+
+                break;
             case 0x202://党的章程
                 jsonString = (String) response.get();
                 DataManager.myTCTPdanggui = gson.fromJson(jsonString,DataManager.TCTPdanggui.class);
@@ -217,6 +257,20 @@ public class GsonCallBack implements HttpCallBack {
                     Fragment3.handler.sendEmptyMessage(1);
                 }
                 break;
+            case 0x3021://动态查看加载更多、刷新
+                jsonString = (String) response.get();
+                DataManager.mydynamic = gson.fromJson(jsonString,DataManager.Mydynamic.class);
+                if (DataManager.mydynamic.message.equals("success")){
+                    Fragment3.handler.sendEmptyMessage(4);
+                }
+                break;
+            case 0x3022://动态查看加载更多、刷新
+                jsonString = (String) response.get();
+                DataManager.mydynamic = gson.fromJson(jsonString,DataManager.Mydynamic.class);
+                if (DataManager.mydynamic.message.equals("success")){
+                    Fragment3.handler.sendEmptyMessage(5);
+                }
+                break;
             case 0x301://动态发布
                 jsonString = (String) response.get();
                 map = gson.fromJson(jsonString,new TypeToken<Map<String, Object>>(){}.getType());
@@ -224,7 +278,21 @@ public class GsonCallBack implements HttpCallBack {
                     HairDynamicActivity.handler.sendEmptyMessage(2);
                 }
                 else if (map.get("message").equals("success")){
-                    HairDynamicActivity.handler.sendEmptyMessage(1);
+                    Fragment3.handler.sendEmptyMessage(6);
+                }
+                break;
+            case 0x303://动态评论、点赞取消赞
+                jsonString = (String) response.get();
+                map = gson.fromJson(jsonString,new TypeToken<Map<String, Object>>(){}.getType());
+                if (!map.get("message").equals("success")){
+                    Fragment3.handler.sendEmptyMessage(2);
+                }
+                break;
+            case 0x304://动态删除
+                jsonString = (String) response.get();
+                map = gson.fromJson(jsonString,new TypeToken<Map<String, Object>>(){}.getType());
+                if (map.get("message").equals("success")){
+                    Fragment3.handler.sendEmptyMessage(3);
                 }
                 break;
         }

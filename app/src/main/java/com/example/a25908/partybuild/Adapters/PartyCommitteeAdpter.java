@@ -49,7 +49,6 @@ public class PartyCommitteeAdpter extends BaseAdapter {
             view = LayoutInflater.from(mContext).inflate(R.layout.list_item_dangwei,null);
             viewHolder = new ViewHolder();
             viewHolder.imageView12 = (ImageView) view.findViewById(R.id.item_pc_iv);
-            viewHolder.item_bt = (TextView) view.findViewById(R.id.item_bt);
             viewHolder.title = (TextView) view.findViewById(R.id.item_pc_title);
             viewHolder.context = (TextView) view.findViewById(R.id.item_pc_context);
             viewHolder.browse = (TextView) view.findViewById(R.id.item_liulan);
@@ -62,8 +61,7 @@ public class PartyCommitteeAdpter extends BaseAdapter {
         }
 
         viewHolder.imageView12.setImageBitmap(FileUtils.stringtoBitmap(list.get(i).title_img));
-        viewHolder.item_bt.setText(list.get(i).title);
-        viewHolder.title.setText(list.get(i).title_img_name);
+        viewHolder.title.setText(list.get(i).title);
         viewHolder.context.setText(list.get(i).describes);
         viewHolder.browse.setText(list.get(i).browse);
         viewHolder.time.setText(list.get(i).add_time);
@@ -72,7 +70,6 @@ public class PartyCommitteeAdpter extends BaseAdapter {
 
     class ViewHolder{
         private ImageView imageView12;//右边图片
-        private TextView item_bt;//item标题
         private TextView title;//标题
         private TextView context;//内容
         private TextView  browse;//浏览数

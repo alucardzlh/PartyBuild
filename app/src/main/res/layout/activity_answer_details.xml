@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:src="@mipmap/wen"/>
                 <TextView
-                    android:id="@+id/item_an_wen1222"
+                    android:id="@+id/item_an_wen12w22"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -43,7 +43,7 @@
                     android:ellipsize="end"
                     android:text="解决党内存在的问题，根本在于什么，使每个党员都能及时纳入管理?"/>
                 <com.example.a25908.partybuild.Views.RoundImageView
-                    android:id="@+id/item_an_tx"
+                    android:id="@+id/item_an_tx1"
                     android:src="@drawable/ceshi_item1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
@@ -76,12 +76,13 @@
                         android:src="@drawable/ic_history_record"
                         android:id="@+id/imageView21212" />
                     <TextView
+                        android:id="@+id/item_ad_time22TW"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:textSize="13sp"
                         android:text="08-27 17:56"
-                        android:id="@+id/item_ad_time22"
+
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/imageView" />
                 </LinearLayout>
@@ -95,6 +96,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="#fff">
+
             <LinearLayout
                 android:paddingTop="20dp"
                 android:id="@+id/item_an_huida"
@@ -106,9 +108,9 @@
                 <ImageView
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/da"/>
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:background="@mipmap/online_ok"/>
                 <TextView
                     android:id="@+id/item_an_da"
                     android:layout_width="0dp"
@@ -117,6 +119,7 @@
                     android:textSize="15sp"
                     android:text="       远大理想、最终目标与共同理想、具体目标是统一的。远大理想、最终目标为共同理想、具体目标规定着前进的方向，我们党之所以能够经受一次次挫折而又一次次奋起，归根到底是因为我们党有远大理想和崇高追求。而共同理想、具体目标则是远大理想、最终目标在当前的体现，是实现共产主义漫长的历史过程中必须经历的里程碑。实现了这些具体目标，才能实现最终目标。我们必须增强初心意识，做共产主义远大理想和中国特色社会主义共同理想的坚定信仰者和忠实践行者。"/>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
@@ -139,12 +142,12 @@
                         android:src="@drawable/ic_history_record"
                         android:id="@+id/imageView" />
                     <TextView
+                        android:id="@+id/item_ad_timeHD"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:textSize="13sp"
                         android:text="08-27 17:56"
-                        android:id="@+id/item_ad_time"
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/imageView" />
                 </LinearLayout>

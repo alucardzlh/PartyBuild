@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.a25908.partybuild.Dialogs.WaitDialog;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.R;
@@ -42,11 +43,14 @@ public class PalmPartySchoolActivity extends BaseActivity {
     private RelativeLayout pps3;
     public static Handler handler;
     PartySharePreferences psp;
+    private WaitDialog waitDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_palm_party_school);
         ViewUtils.inject(this);
+        waitDialog = new WaitDialog(PalmPartySchoolActivity.this);
+        waitDialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
         title.setText("掌上党校");
         title.setVisibility(View.VISIBLE);
         back.setVisibility(View.VISIBLE);
@@ -66,13 +70,16 @@ public class PalmPartySchoolActivity extends BaseActivity {
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 1:
+                        waitDialog.dismiss();
                         startActivity(new Intent(PalmPartySchoolActivity.this, PeopleGalleryActivity.class));
                         break;
                     case 2:
+                        waitDialog.dismiss();
                         startActivity(new Intent(PalmPartySchoolActivity.this, TheConstitutionOfThePartyActivity.class));
                         break;
                     case 3:
-                        startActivity(new Intent(PalmPartySchoolActivity.this, PartydisciplineActivity.class));
+                        waitDialog.dismiss();
+                        startActivity(new Intent(PalmPartySchoolActivity.this, TheConstitutionOfThePartyActivity.class).putExtra("falg",1));
                         break;
                 }
             }
@@ -83,6 +90,7 @@ public class PalmPartySchoolActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.pps1://人物长廊
+                    waitDialog.show();
                     GsonRequest ppsRequest = new GsonRequest(URLINSER + PALMPARTY, RequestMethod.GET);
                     ppsRequest.add("KeyNo",psp.getUSERID());//psp.getUSERID()
                     ppsRequest.add("type",3);
@@ -92,6 +100,7 @@ public class PalmPartySchoolActivity extends BaseActivity {
 
                     break;
                 case R.id.pps2://党的章程
+                    waitDialog.show();
                     GsonRequest TCTPRequest = new GsonRequest(URLINSER + TCOP, RequestMethod.GET);
                     TCTPRequest.add("KeyNo",0);
                     TCTPRequest.add("deviceId",new Build().MODEL);
@@ -99,6 +108,7 @@ public class PalmPartySchoolActivity extends BaseActivity {
                     CallServer.getInstance().add(PalmPartySchoolActivity.this,TCTPRequest, GsonCallBack.getInstance(),0x202,true,false,true);
                     break;
                 case R.id.pps3:
+                    waitDialog.show();
                     GsonRequest TCTPRequest2 = new GsonRequest(URLINSER + TCOP, RequestMethod.GET);
                     TCTPRequest2.add("KeyNo",1);
                     TCTPRequest2.add("deviceId",new Build().MODEL);

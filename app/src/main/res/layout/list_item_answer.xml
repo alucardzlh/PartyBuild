@@ -4,57 +4,86 @@
     android:layout_height="wrap_content"
     android:background="#F0F0F0"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="#fff">
-    <LinearLayout
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_marginTop="5dp"
+        <LinearLayout
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/wen"/>
+            <TextView
+                android:id="@+id/item_an_wen"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="解决党内存在的问题，根本在于什么，使每个党员都能及时纳入管理?"/>
+            <com.example.a25908.partybuild.Views.RoundImageView
+                android:id="@+id/item_an_tx"
+                android:src="@drawable/ceshi_item1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="12dp" />
+
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/wen"/>
-        <TextView
-            android:id="@+id/item_an_wen"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="18sp"
-            android:textColor="#000"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:text="解决党内存在的问题，根本在于什么，使每个党员都能及时纳入管理?"/>
-        <com.example.a25908.partybuild.Views.RoundImageView
-            android:id="@+id/item_an_tx"
-            android:src="@drawable/ceshi_item1"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
             android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="12dp" />
+            android:layout_alignParentStart="true">
+            <!--时间图片-->
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_history_record"
+                />
+            <TextView
+                android:id="@+id/TWitem_an_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="13sp"
+                android:text="08-27 17:56"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imageView1" />
+        </LinearLayout>
 
-    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="10dp"
+            android:background="@color/huise"/>
 
         <RelativeLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/item_an_wait"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/wait_an"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
                 android:visibility="gone"
                 android:layout_marginStart="10dp"
                 android:layout_alignParentTop="true"
@@ -69,9 +98,9 @@
                 <ImageView
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/da"/>
+                    android:layout_width="50dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/online_ok"/>
                 <TextView
                     android:id="@+id/item_an_da"
                     android:layout_width="0dp"
@@ -83,6 +112,7 @@
                     android:text="解决党内存在的问题，根本在于什么，使每个党员都能及时纳入管理?"/>
             </LinearLayout>
         </RelativeLayout>
+
         <LinearLayout
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
@@ -92,9 +122,11 @@
             android:gravity="center|right"
             >
             <LinearLayout
+                android:id="@+id/hdtime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:visibility="gone"
                 android:orientation="horizontal"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true">
