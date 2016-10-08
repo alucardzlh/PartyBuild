@@ -1,11 +1,10 @@
 package com.example.a25908.partybuild.Utils;
 
-import android.content.Intent;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
-import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -16,14 +15,17 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.ProtocolException;
-import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FileUtils {
+    private static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 0;
+    private static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 1;
+    private Context context;
+
     /**
      * 获取视频文件截图
      *
@@ -98,20 +100,22 @@ public class FileUtils {
      * @return
      */
     public static List<String> getFile(File file){
-        if (!file.exists()) {
-            file.mkdirs();
-        }
         List<String> list=new ArrayList<>();
         File[] files=file.listFiles(filter);
-        for(File f:files){
-            if(f.isDirectory()){
-                getFile(f);
-                System.out.println();
-            }else{
-                list.add(f.getName()+"&"+f.getPath());
-                System.out.println("文件名："+f.getName()+">>>路径："+f.getPath());
+        //版本大于6.0的情况
+        if (!file.exists()) {
+            file.mkdirs();
+            for(File f:files){
+                if(f.isDirectory()){
+                    getFile(f);
+                    System.out.println();
+                }else{
+                    list.add(f.getName()+"&"+f.getPath());
+                    System.out.println("文件名："+f.getName()+">>>路径："+f.getPath());
+                }
             }
         }
+
         return list;
     }
 
@@ -126,7 +130,7 @@ public class FileUtils {
             if(pathname.isDirectory()){
                 return true;
             }else{
-                return pathname.getName().matches("^.*\\.txt$") || pathname.getName().matches("^.*\\.dox$");
+                return  pathname.getName().matches("^.*\\.doc$") || pathname.getName().matches("^.*\\.xls$") || pathname.getName().matches("^.*\\.xlsx$") || pathname.getName().matches("^.*\\.docx$");
             }
 
         }
@@ -249,5 +253,34 @@ public class FileUtils {
             }
         }
         return res;
+    }
+
+
+    /**
+     *     //判断email格式是否正确
+     * @param email
+     * @return
+     */
+    public static boolean isEmail(String email) {
+        String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+        Pattern p = Pattern.compile(str);
+        Matcher m = p.matcher(email);
+
+        return m.matches();
+    }
+
+
+    /**
+     * 判断是否全是数字
+     * @param str
+     * @return
+     */
+    public static boolean isNumeric(String str) {
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(str);
+        if (!isNum.matches()) {
+            return false;
+        }
+        return true;
     }
 }

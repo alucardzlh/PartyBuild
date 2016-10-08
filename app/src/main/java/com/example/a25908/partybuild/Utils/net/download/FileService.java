@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ÒµÎñbean
- * 
+ * ä¸šåŠ¡bean
+ *
  */
 public class FileService {
 	private DBOpenHelper openHelper;
@@ -21,8 +21,8 @@ public class FileService {
 	}
 
 	/**
-	 * »ñÈ¡Ã¿ÌõÏß³ÌÒÑ¾­ÏÂÔØµÄÎÄ¼ş³¤¶È
-	 * 
+	 * è·å–æ¯æ¡çº¿ç¨‹å·²ç»ä¸‹è½½çš„æ–‡ä»¶é•¿åº¦
+	 *
 	 * @param path
 	 * @return
 	 */
@@ -42,13 +42,13 @@ public class FileService {
 	}
 
 	/**
-	 * ±£´æÃ¿ÌõÏß³ÌÒÑ¾­ÏÂÔØµÄÎÄ¼ş³¤¶È
-	 * 
+	 * ä¿å­˜æ¯æ¡çº¿ç¨‹å·²ç»ä¸‹è½½çš„æ–‡ä»¶é•¿åº¦
+	 *
 	 * @param path
 	 * @param map
 	 */
 	public void save(String path, Map<Integer, Integer> map) {// int threadid,
-																// int position
+		// int position
 		SQLiteDatabase db = openHelper.getWritableDatabase();
 		db.beginTransaction();
 		try {
@@ -65,8 +65,8 @@ public class FileService {
 	}
 
 	/**
-	 * ÊµÊ±¸üĞÂÃ¿ÌõÏß³ÌÒÑ¾­ÏÂÔØµÄÎÄ¼ş³¤¶È
-	 * 
+	 * å®æ—¶æ›´æ–°æ¯æ¡çº¿ç¨‹å·²ç»ä¸‹è½½çš„æ–‡ä»¶é•¿åº¦
+	 *
 	 * @param path
 	 * @param map
 	 */
@@ -79,8 +79,8 @@ public class FileService {
 	}
 
 	/**
-	 * µ±ÎÄ¼şÏÂÔØÍê³Éºó£¬É¾³ı¶ÔÓ¦µÄÏÂÔØ¼ÇÂ¼
-	 * 
+	 * å½“æ–‡ä»¶ä¸‹è½½å®Œæˆåï¼Œåˆ é™¤å¯¹åº”çš„ä¸‹è½½è®°å½•
+	 *
 	 * @param path
 	 */
 	public void delete(String path) {

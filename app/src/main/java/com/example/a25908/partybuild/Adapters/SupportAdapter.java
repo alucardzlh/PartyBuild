@@ -6,15 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
-import com.example.a25908.partybuild.Utils.FileUtils;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+
+import Decoder.BASE64Decoder;
 
 /**
  * 党员扶持的adapter
@@ -54,18 +56,25 @@ public class SupportAdapter extends BaseAdapter {
             viewHolder.title = (TextView) view.findViewById(R.id.item_sa_tx1);
             viewHolder.context = (TextView) view.findViewById(R.id.item_sa_tx2);
             viewHolder.time = (TextView) view.findViewById(R.id.item_time2);
-            viewHolder.zan = (LinearLayout) view.findViewById(R.id.item_sa_zan);
+            viewHolder.item_dt_dzan = (TextView) view.findViewById(R.id.item_dt_dzan);
 
             view.setTag(viewHolder);
         }
         else {
             viewHolder = (sViewHolder) view.getTag();
         }
-        viewHolder.imageView.setImageBitmap(FileUtils.stringtoBitmap(list.get(i).title_img));
+        try {
+            BASE64Decoder decode = new BASE64Decoder();
+            byte[] b = decode.decodeBuffer(list.get(i).title_img);
+            Glide.with(context).load(b).diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.imageView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        viewHolder.imageView.setImageBitmap(FileUtils.stringtoBitmap(list.get(i).title_img));
         viewHolder.time.setText(list.get(i).add_time+"");
         viewHolder.title.setText(list.get(i).title+"");
         viewHolder.context.setText(list.get(i).describes+"");
-
+        viewHolder.item_dt_dzan.setText("浏览 "+list.get(i).browse+"");
         return view;
     }
 
@@ -73,7 +82,7 @@ public class SupportAdapter extends BaseAdapter {
         public ImageView imageView;//右边图片
         public TextView title;//标题
         public TextView context;//内容
-        public LinearLayout zan;//赞
+        public TextView item_dt_dzan;//赞
         public TextView time;//时间
 
     }

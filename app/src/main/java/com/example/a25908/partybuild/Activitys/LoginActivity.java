@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -38,6 +41,10 @@ public class LoginActivity extends BaseActivity {
     EditText login_user;
     @ViewInject(R.id.login_pwd)
     EditText login_pwd;
+    @ViewInject(R.id.user_c)
+    ImageView user_c;
+    @ViewInject(R.id.pwd_c)
+    ImageView pwd_c;
 
     @ViewInject(R.id.close)
     TextView close;
@@ -116,5 +123,67 @@ public class LoginActivity extends BaseActivity {
         builder.setPositiveButton("确认", null);
         dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
+
+        user_c.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login_user.setText("");
+            }
+        });
+        pwd_c.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                login_pwd.setText("");
+            }
+        });
+        login_user.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (start > 0) {
+                    user_c.setVisibility(View.VISIBLE);
+                } else {
+                    user_c.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    user_c.setVisibility(View.VISIBLE);
+                } else {
+                    user_c.setVisibility(View.GONE);
+                }
+            }
+        });
+        login_pwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (start > 0) {
+                    pwd_c.setVisibility(View.VISIBLE);
+                } else {
+                    pwd_c.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    pwd_c.setVisibility(View.VISIBLE);
+                } else {
+                    pwd_c.setVisibility(View.GONE);
+                }
+            }
+        });
+
     }
 }

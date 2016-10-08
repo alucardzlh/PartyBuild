@@ -1,19 +1,22 @@
 package com.example.a25908.partybuild.Activitys;
 
-import android.app.Activity;
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.a25908.partybuild.Adapters.FilesListAdapter;
 import com.example.a25908.partybuild.Adapters.MysFilesListAdapter;
 import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Utils.FileUtils;
@@ -38,6 +41,7 @@ import static com.example.a25908.partybuild.Utils.IntentFile.getWordFileIntent;
  * 我的文档
  */
 public class MyFilesActivity extends BaseActivity {
+    private static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 0;
     @ViewInject(R.id.returnT)
     private ImageView back;
     @ViewInject(R.id.title)
@@ -79,6 +83,15 @@ public class MyFilesActivity extends BaseActivity {
             }
         });
         File file=new File(Environment.getExternalStorageDirectory() + "/PartyBuild/Documents");
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                //READ_EXTERNAL_STORAGE
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        READ_EXTERNAL_STORAGE_REQUEST_CODE);
+                return;
+            }
+        }
         list=getFile(file);
         list1=new ArrayList<>();//文件名
         list2=new ArrayList<>();//文件路径
@@ -155,4 +168,17 @@ public class MyFilesActivity extends BaseActivity {
         dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        Log.e("asas",requestCode+"");//拒绝为0
+        if (requestCode==0){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+            }
+            else {
+                Toast.show("权限获取失败，部分功能无法使用，请到设置中开放权限");
+            }
+
+        }
+    }
 }

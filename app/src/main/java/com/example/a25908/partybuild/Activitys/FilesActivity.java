@@ -54,13 +54,28 @@ public class FilesActivity extends BaseActivity {
                 finish();
             }
         });
-
         adapter = new FilesListAdapter(FilesActivity.this,  DataManager.DucomentRoomList.data.commentList);
         files_list.setAdapter(adapter);
         files_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(FilesActivity.this,FileContentActivity.class).putExtra("name",DataManager.DucomentRoomList.data.commentList.get(position).NAME).putExtra("path",DataManager.DucomentRoomList.data.commentList.get(position).PATH).putExtra("size", FileUtils.FormentFileSize(DataManager.DucomentRoomList.data.commentList.get(position).SIZE)));
+                String path="";
+                String namehz="";
+                if(! DataManager.DucomentRoomList.data.commentList.get(position).PATH.equals("")){
+                    if( DataManager.DucomentRoomList.data.commentList.get(position).PATH.indexOf("webapps")!=-1){
+                        String [] sstr= DataManager.DucomentRoomList.data.commentList.get(position).PATH.split("webapps");
+                        String b=sstr[1].replace("\\", "/");
+                        path="http://192.168.10.44:7070"+b;
+                        String [] hh= b.split("/");
+                        namehz=hh[hh.length-1];
+                    }else{
+                        path=DataManager.DucomentRoomList.data.commentList.get(position).PATH;
+                        String [] hh=DataManager.DucomentRoomList.data.commentList.get(position).PATH.split("/");
+                        namehz=hh[hh.length-1];
+                    }
+
+                }
+                startActivity(new Intent(FilesActivity.this,FileContentActivity.class).putExtra("name",DataManager.DucomentRoomList.data.commentList.get(position).NAME).putExtra("path",path).putExtra("size", FileUtils.FormentFileSize(DataManager.DucomentRoomList.data.commentList.get(position).SIZE)).putExtra("namehz",namehz));
             }
         });
     }

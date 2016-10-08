@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.example.a25908.partybuild.Activitys.HairDynamicActivity;
 import com.example.a25908.partybuild.Adapters.DynamicAdapters;
 import com.example.a25908.partybuild.Http.GsonCallBack;
@@ -38,7 +37,7 @@ import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
  * @author weixuan
  * 党群动态
  */
-public class Fragment3 extends Fragment {
+public class Fragment3 extends Fragment{
 	private SuperRecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private DynamicAdapters adapters;
@@ -46,6 +45,8 @@ public class Fragment3 extends Fragment {
     PartySharePreferences psp;
     public static Handler handler;
     protected boolean isVisible;
+
+    private boolean scrolled=false;//判断是否有滚动位移
     /**
      * 当Fragment可见时加载数据
      * @param isVisibleToUser
@@ -146,8 +147,8 @@ public class Fragment3 extends Fragment {
                     TCTPRequest.add("KeyNo", psp.getUSERID());
                     TCTPRequest.add("deviceId", new Build().MODEL);
                     TCTPRequest.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
-                    TCTPRequest.add("PageSize",3);
-                    TCTPRequest.add("pageIndex",Integer.valueOf(DataManager.mydynamic.data.Paging.CurrentPage)+1);
+                    TCTPRequest.add("PageSize",5);
+                    TCTPRequest.add("PageIndex",Integer.valueOf(DataManager.mydynamic.data.Paging.CurrentPage)+1);
                     CallServer.getInstance().add(getActivity(), TCTPRequest, GsonCallBack.getInstance(), 0x3022, true, false, true);
                 }
                 else {
@@ -159,23 +160,37 @@ public class Fragment3 extends Fragment {
 
 
 
-
         //自动加载
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                Glide.with(getActivity()).resumeRequests();//图片加载重启
+//                Glide.with(getActivity()).resumeRequests();//图片加载重启
+                if (dy!=0){
+                    scrolled = true;
+                }
 
             }
 
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if(newState != RecyclerView.SCROLL_STATE_IDLE){
-                    Glide.with(getActivity()).pauseRequests();//图片加载暂停
+            public void onScrollStateChanged(RecyclerView irecyclerView, int newState) {
+                super.onScrollStateChanged(irecyclerView, newState);
+                switch (newState){
+                    case RecyclerView.SCROLL_STATE_IDLE: // The RecyclerView is not currently scrolling.
+                        if (adapters.getScrolling()&&scrolled) {
+                            //对于滚动不加载图片
+                            adapters.setScrolling(false);
+                            adapters.notifyDataSetChanged();
+                        }
+                        scrolled=false;
+                        break;
+                    case RecyclerView.SCROLL_STATE_DRAGGING: // The RecyclerView is currently being dragged by outside input such as user touch input.
+                        adapters.setScrolling(false);
+                        break;
+                    case RecyclerView.SCROLL_STATE_SETTLING: // The RecyclerView is currently animating to a final position while not under
+                        adapters.setScrolling(true);
+                        break;
                 }
-
             }
         });
     }
@@ -191,7 +206,7 @@ public class Fragment3 extends Fragment {
         TCTPRequest.add("deviceId",new Build().MODEL);
         TCTPRequest.add("token", MD5.MD5s(psp.getUSERID() + new  Build().MODEL));
         TCTPRequest.add("PageSize",5);
-        TCTPRequest.add("PageIndex", 0);
+        TCTPRequest.add("PageIndex", 1);
         CallServer.getInstance().add(getActivity(),TCTPRequest, GsonCallBack.getInstance(),0x302,true,false,true);
     }
 
@@ -205,7 +220,8 @@ public class Fragment3 extends Fragment {
         TCTPRequest.add("deviceId",new Build().MODEL);
         TCTPRequest.add("token", MD5.MD5s(psp.getUSERID() + new  Build().MODEL));
         TCTPRequest.add("PageSize",5);
-        TCTPRequest.add("PageIndex", 0);
+        TCTPRequest.add("PageIndex", 1);
         CallServer.getInstance().add(getActivity(),TCTPRequest, GsonCallBack.getInstance(),0x3021,true,false,true);
     }
+
 }

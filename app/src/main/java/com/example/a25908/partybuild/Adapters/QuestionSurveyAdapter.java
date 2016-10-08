@@ -1,21 +1,24 @@
 package com.example.a25908.partybuild.Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.ImageView;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.a25908.partybuild.Activitys.QuestionSurveyActivity;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
-import com.example.a25908.partybuild.Utils.FileUtils;
-import com.example.a25908.partybuild.Views.RoundImageView;
+import com.example.a25908.partybuild.Views.Toast;
 
 import java.util.List;
 
@@ -26,9 +29,17 @@ import java.util.List;
 
 public class QuestionSurveyAdapter extends BaseAdapter {
     private Context context;
-    private List<DataManager.survey.DataBean.DynamiclistPageBean> list;
+    private List<DataManager.MyQuestions.DataBean.QuestionlistPageBean> list;
+//    private List<RadioButton> radioButtonList;// 装载RadioButton的集合
 
-    public QuestionSurveyAdapter(Context context, List<DataManager.survey.DataBean.DynamiclistPageBean> list){
+    private int radioButtonSize = 0;// 计算布局中RadioButton的个数
+    private int checkBoxSize = 0;// 计算布局中CheckBox个数
+
+    public int answer_id;//回答id
+    public int topic_id;//题目id
+    public String content = "";//内容
+
+    public QuestionSurveyAdapter(Context context, List<DataManager.MyQuestions.DataBean.QuestionlistPageBean> list){
         this.context = context;
         this.list = list;
     }
@@ -49,47 +60,110 @@ public class QuestionSurveyAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         aViewHodler viewHodler = null;
         if (view == null){
             view = LayoutInflater.from(context).inflate(R.layout.list_item_questionsur,null);
             viewHodler = new aViewHodler();
-            viewHodler.bigtitle = (TextView) view.findViewById(R.id.bigtitle);
             viewHodler.smititle = (TextView) view.findViewById(R.id.smititle);
-            viewHodler.rg_room = (RadioGroup) view.findViewById(R.id.rg_room);
-            viewHodler.rg_qita = (LinearLayout) view.findViewById(R.id.rg_qita);
-
-            viewHodler.cb_room = (LinearLayout) view.findViewById(R.id.cb_room);
-
+            viewHodler.biglin = (LinearLayout) view.findViewById(R.id.biglin);
             view.setTag(viewHodler);
         }
         else {
             viewHodler = (aViewHodler) view.getTag();
         }
-//
-//        //添加单选按钮
-//        for(int t = 0 ; t < 5 ; i++){
-//            RadioButton radio = new RadioButton(context);
-//            radio.setText("radio" + i);
-//            viewHodler.rg_room.addView(radio);
-//        }
-//        //添加多选按钮
-//        for(int t = 0 ; t < 5 ; i++){
-//            CheckBox radio = new CheckBox(context);
-//            radio.setText("radio" + i);
-//            viewHodler.rg_room.addView(radio);
-//        }
+        viewHodler.smititle.setText(list.get(i).topic_name);
+
+        if (list.get(i).type==0){//单选
+            RadioGroup radioGroup = new RadioGroup(context);
+            // 设置RadioGroup为垂直
+            radioGroup.setOrientation(RadioGroup.VERTICAL);
+            radioGroup.setBackgroundResource(R.drawable.maintop_shape3);
+            RadioButton radio;
+            for(int b=0; b<list.get(i).alist.size(); b++){
+                radio = new RadioButton(context);
+                radio.setText(list.get(i).alist.get(b).answer_name);
+                // radioGroup.setTag(list.get(i).surveyOptionID);
+                // 设置id，我是将封装数据中选项有一个唯一的id当做该控件id了
+//                radio.setId(list.get(i).alist.get(b).answer_id);
+                radio.setId(b);
+//                surveyIDMap.put(list.get(i).surveyOptionID, moduleSurveyID);
+//                radioButtonList.add(radio);
+                radioGroup.addView(radio);
+            }
+            viewHodler.biglin.addView(radioGroup);
+            radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup radioGroup, int i2) {
+                    if (list.get(i).alist.get(i2).answer_name.equals("其他")){
+                        final EditText ed = new EditText(context);
+                        ed.setHint("请输入您的意见...");
+                        ed.setLines(3);
+                        final int a = list.get(i).alist.get(i2).topic_id;
+                        final int b = list.get(i).alist.get(i2).answer_id;
+                        new AlertDialog.Builder(context)
+                                .setTitle("其他意见")
+                                .setView(ed)
+                                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        content = ed.getText().toString();
+                                        topic_id = a;
+                                        answer_id = b;
+                                        QuestionSurveyActivity.handler.sendEmptyMessage(0);
+                                    }
+                                })
+                        .setNegativeButton("取消",null)
+                        .setCancelable(false)
+                        .show();
+                    }
+                    else {
+                        topic_id = list.get(i).alist.get(i2).topic_id;
+                        answer_id = list.get(i).alist.get(i2).answer_id;
+                        QuestionSurveyActivity.handler.sendEmptyMessage(0);
+                    }
+                }
+            });
+        }
+        else {//多选
+            LinearLayout layout = new LinearLayout(context);
+            // 设置LinearLayout垂直
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.setBackgroundResource(R.drawable.maintop_shape3);
+            for(int b=0; b<list.get(i).alist.size(); b++) {
+                final CheckBox cb = new CheckBox(context);
+                cb.setText(list.get(i).alist.get(b).answer_name);
+                // cb.setTag(list.get(i).surveyOptionID);
+                // 设置id，与RadioButton一样
+                cb.setId(b);
+//                surveyIDMap.put(list.get(i).surveyOptionID, moduleSurveyID);
+//                checkBoxList.add(cb);
+                layout.addView(cb);
+                final int d = list.get(i).alist.get(b).topic_id;
+                final int c = list.get(i).alist.get(b).answer_id;
+                cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b2) {
+                        if (b2){
+                            Toast.show("选中了"+cb.getText().toString());
+                            topic_id = d;
+                            answer_id = c;
+                            QuestionSurveyActivity.handler.sendEmptyMessage(1);
+                        }
+                    }
+                });
+            }
+            viewHodler.biglin.addView(layout);
+        }
+
+
 
         return view;
     }
 
     class aViewHodler{
-        public TextView bigtitle;//大标题
         public TextView smititle;//小标题
-        public RadioGroup rg_room;//选项
-        public LinearLayout rg_qita;//回答
-
-        public LinearLayout cb_room;//多选容器
+        public LinearLayout biglin;//
 
     }
 }

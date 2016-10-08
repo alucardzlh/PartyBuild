@@ -32,7 +32,6 @@ import com.example.a25908.partybuild.Views.MultiImageView;
 import com.example.a25908.partybuild.Views.RoundImageView;
 import com.yolanda.nohttp.RequestMethod;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.a25908.partybuild.Utils.URLconstant.DONGTAIDELETE;
@@ -50,6 +49,7 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
     private Context context;
     private long mLasttime = 0;
     private List<DataManager.Mydynamic.DataBean.DynamiclistPageBean> list;
+    private  boolean scrollState=false;
 
     public DynamicAdapters(Context context,List<DataManager.Mydynamic.DataBean.DynamiclistPageBean> list){
         this.context = context;
@@ -58,6 +58,13 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
     public void setDataList(List<DataManager.Mydynamic.DataBean.DynamiclistPageBean> ComplainList){
         this.list=ComplainList;
     }
+    public void setScrolling(boolean scrollState) {
+        this.scrollState = scrollState;
+    }
+    public boolean getScrolling() {
+        return scrollState;
+    }
+
 
 
     //创建新View，被LayoutManager所调用
@@ -76,8 +83,10 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final DynamicViewHolder viewHolder = (DynamicViewHolder) holder;
         final PartySharePreferences psp = new PartySharePreferences();
+
+        if (!scrollState){
         //获取、处理评论
-            viewHolder.commentList.setDatas(list.get(position).commentslist);
+            viewHolder.commentList.setDatas(list.get(position).commentslist);}
             //评论
             viewHolder.item_dt_huihu.setOnClickListener(new View.OnClickListener() {
 
@@ -260,31 +269,59 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
             }
         });
 
-        //图片处理
-        if (holder instanceof ImageViewHolder) {
-            final List<String> photos = new ArrayList<>();
-            if (!list.get(position).imglist.isEmpty()){
-                for (int i = 0;list.get(position).imglist.size()>i;i++){
-                    photos.add(String.valueOf(list.get(position).imglist.get(i).path));
+        if (!scrollState){
+            //图片处理
+            if (holder instanceof ImageViewHolder) {
+//            final List<String> photos = new ArrayList<>();
+//            if (!list.get(position).imglist.isEmpty()){
+//                for (int i = 0;list.get(position).imglist.size()>i;i++){
+//                    photos.add(String.valueOf(list.get(position).imglist.get(i).path));
+//                }
+//            }
+
+
+                if (!list.get(position).imglist.isEmpty()) {
+                    ((ImageViewHolder) holder).multiImageView.setVisibility(View.VISIBLE);
+                    ((ImageViewHolder) holder).multiImageView.setList(list.get(position).imglist);
+                    ((ImageViewHolder) holder).multiImageView.setOnItemClickListener(new MultiImageView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int iposition) {
+                            //点击查看大图
+                            onThumbnailClick(FileUtils.stringtoBitmap(String.valueOf(list.get(position).imglist.get(iposition).path)));
+                        }
+                    });
+                } else {
+                    ((ImageViewHolder) holder).multiImageView.setVisibility(View.GONE);
                 }
+
             }
-
-
-            if (!list.get(position).imglist.isEmpty()) {
-                ((ImageViewHolder) holder).multiImageView.setVisibility(View.VISIBLE);
-                ((ImageViewHolder) holder).multiImageView.setList(list.get(position).imglist);
-                ((ImageViewHolder) holder).multiImageView.setOnItemClickListener(new MultiImageView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        //点击查看大图
-                        onThumbnailClick(FileUtils.stringtoBitmap(photos.get(position)));
-                    }
-                });
-            } else {
-                ((ImageViewHolder) holder).multiImageView.setVisibility(View.GONE);
-            }
-
         }
+
+//        //图片处理
+//        if (holder instanceof ImageViewHolder) {
+////            final List<String> photos = new ArrayList<>();
+////            if (!list.get(position).imglist.isEmpty()){
+////                for (int i = 0;list.get(position).imglist.size()>i;i++){
+////                    photos.add(String.valueOf(list.get(position).imglist.get(i).path));
+////                }
+////            }
+//
+//
+//            if (!list.get(position).imglist.isEmpty()) {
+//                ((ImageViewHolder) holder).multiImageView.setVisibility(View.VISIBLE);
+//                ((ImageViewHolder) holder).multiImageView.setList(list.get(position).imglist);
+//                ((ImageViewHolder) holder).multiImageView.setOnItemClickListener(new MultiImageView.OnItemClickListener() {
+//                    @Override
+//                    public void onItemClick(View view, int iposition) {
+//                        //点击查看大图
+//                        onThumbnailClick(FileUtils.stringtoBitmap(String.valueOf(list.get(position).imglist.get(iposition).path)));
+//                    }
+//                });
+//            } else {
+//                ((ImageViewHolder) holder).multiImageView.setVisibility(View.GONE);
+//            }
+//
+//        }
     }
     //获取数据的数量
     @Override

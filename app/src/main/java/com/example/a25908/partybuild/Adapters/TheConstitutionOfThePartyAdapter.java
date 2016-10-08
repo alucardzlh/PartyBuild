@@ -1,6 +1,7 @@
 package com.example.a25908.partybuild.Adapters;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,7 @@ public class TheConstitutionOfThePartyAdapter extends BaseAdapter {
             vh = (ViewHolder) view.getTag();
         }
         vh.tcop_tname.setText(list1.get(position).TITLE);
-        vh.tcop_content.setText("     "+list1.get(position).CONTENT);
+        vh.tcop_content.setText(Html.fromHtml(list1.get(position).CONTENT));
         return view;
     }
 

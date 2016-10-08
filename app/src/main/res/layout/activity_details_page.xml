@@ -1,135 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_details_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F6F6F6"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.example.a25908.partybuild.Activitys.DetailsPageActivity">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/headbar"/>
 
-    <include layout="@layout/headbar"/>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <LinearLayout
-            android:layout_alignBottom="@+id/s2333333"
+        <com.example.a25908.partybuild.Views.ListenedScrollView
+            android:id="@+id/dp_slv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:id="@+id/ptitle"
-                android:background="@mipmap/title_xiangqin"
-                android:textColor="#000"
-                android:textSize="16sp"
-                android:paddingLeft="15dp"
-                android:gravity="bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="新建区举行脱贫攻坚政策学习及业务培训工作会"
-                />
+            android:layout_height="0dp"
+            android:layout_weight="1">
             <LinearLayout
-                android:layout_marginLeft="13dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-                <!--时间图片-->
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_history_record"
-                    android:id="@+id/imageView" />
-                <TextView
-                    android:id="@+id/ptime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:textSize="13sp"
-                    android:text="08-27 17:56"
-                    />
-
-            </LinearLayout>
-            <ImageView
-                android:id="@+id/imageView_dp"
-                android:layout_margin="10dp"
-                android:src="@mipmap/banner"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <WebView
-                android:id="@+id/pcontent"
-                android:layout_marginTop="15dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:layout_alignBottom="@+id/s2333333"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                />
-            <com.example.a25908.partybuild.Views.MyListView
-                android:id="@+id/mylist_comm"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:id="@+id/ptitle"
+                    android:background="@mipmap/title_xiangqin"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:paddingLeft="15dp"
+                    android:gravity="bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="新建区举行脱贫攻坚政策学习及业务培训工作会"
+                    />
 
-    </ScrollView>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:background="#f00">
-
-
-        <LinearLayout
-            android:id="@+id/et_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_marginEnd="15dp"
-            android:layout_alignTop="@+id/item_dt_zan"
-            android:layout_alignParentEnd="true">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/item_delete"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="删除"
-                android:textColor="#fff"
-                android:id="@+id/item_dt_shanchu" />
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/et_comn"
-            android:layout_marginLeft="15dp"
-            android:layout_width="150dp"
-            android:layout_height="25dp"
-            android:textColorHint="@color/white"
-            android:paddingLeft="5dp"
-            android:textSize="12dip"
-            android:background="@drawable/maintop_shape"
-            android:hint="点击添加评论"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="26dp" />
-        <TextView
-            android:id="@+id/et_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="发表"
-            android:textColor="#fff"
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/et_comn"
-            />
-    </RelativeLayout>
-
-</LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="13dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <!--时间图片-->
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_history_record"
+                        android:id="@+id/imageView" />
+                    <TextView
+                        android:id="@+id/ptime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:textSize="13sp"
+                        android:text="08-27 17:56"
+                        />
+                </LinearLayout>
+                <ImageView
+                    android:id="@+id/imageView_dp"
+                    android:layout_margin="10dp"
+                    android:src="@mipmap/banner"
+                    android:visibility="gone"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/dp_tip"
+                    android:text="tip：点击上方图片播放视频"
+                    android:textSize="13sp"
+                    android:visibility="gone"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/textView_dp"
+                    android:text="啊是大飒飒大苏打实打实大苏打实打实打算撒大苏打实打实大苏打萨达萨达萨达是撒大苏打上撒旦撒大苏打撒撒大苏打似的撒啊大撒旦撒阿斯顿撒"
+                    android:background="@drawable/maintop_shape3"
+                    android:layout_marginTop="10dp"
+                    android:padding="7dp"
+                    android:visibility="gone"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <WebView
+                    android:id="@+id/pcontent"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+                <com.example.a25908.partybuild.Views.MyListView
+                    android:id="@+id/mylist_comm"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </com.example.a25908.partybuild.Views.ListenedScrollView>
+    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        app:backgroundTint="@color/red"
+        app:rippleColor="#ff87ffeb"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        android:src="@drawable/ic_add_black_24dp"
+        />
+</android.support.design.widget.CoordinatorLayout>

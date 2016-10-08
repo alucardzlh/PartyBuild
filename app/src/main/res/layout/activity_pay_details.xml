@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_pay_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/huiwhite"
+    android:orientation="vertical">
+
+    <include layout="@layout/headbar"/>
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#fff"
+        android:gravity="center_vertical">
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@mipmap/item3"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:lines="1"
+                android:text="缴纳党费"/>
+            <TextView
+                android:id="@+id/pd_qian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColor="@color/red"
+                android:textSize="16sp"
+                android:text="50 RMB"
+                android:lines="1"/>
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#878787"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="20dp"
+        android:background="#878787"/>
+    <RadioGroup
+        android:id="@+id/rg_zf"
+        android:background="#fff"
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:text="支付宝支付"
+            android:textSize="18sp"
+            android:button="@null"
+            android:drawableLeft="@mipmap/zfb2"
+            android:drawablePadding="5dp"
+            android:drawableRight="@android:drawable/btn_radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rb_zfb" />
+
+        <RadioButton
+            android:text="微信支付"
+            android:textSize="18sp"
+            android:button="@null"
+            android:drawableLeft="@mipmap/weixin2"
+            android:drawablePadding="5dp"
+            android:drawableRight="@android:drawable/btn_radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rb_wx"/>
+    </RadioGroup>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#878787"/>
+
+    <Button
+        android:id="@+id/btn_zf"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="立即支付"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:background="@drawable/btn_bg3"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+</LinearLayout>

@@ -1,19 +1,23 @@
 package com.example.a25908.partybuild.Activitys;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Utils.FileUtils;
 import com.example.a25908.partybuild.Utils.net.download.DownloadProgressListener;
@@ -33,6 +37,7 @@ import static com.example.a25908.partybuild.Utils.FileUtils.getFile;
  * 下载详情
  */
 public class FileContentActivity extends BaseActivity {
+    private static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 0;
     @ViewInject(R.id.returnT)
     private ImageView back;
     @ViewInject(R.id.title)
@@ -82,6 +87,8 @@ public class FileContentActivity extends BaseActivity {
     }
 
     List<String> list=new ArrayList<>();
+    String name;
+    String namehz, hz;
     long l;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,9 +105,10 @@ public class FileContentActivity extends BaseActivity {
             }
         });
         Intent i=getIntent();
-        String name=i.getStringExtra("name");
+        name=i.getStringExtra("name");
         String path=i.getStringExtra("path");
         String size=i.getStringExtra("size");
+        namehz=i.getStringExtra("namehz");
         fname = (TextView) findViewById(R.id.fname);
         fsize = (TextView) findViewById(R.id.fsize);
         fsize.setText(size);
@@ -109,8 +117,19 @@ public class FileContentActivity extends BaseActivity {
         downloadButton = (Button) findViewById(R.id.downloadbutton);
         stopButton = (Button) findViewById(R.id.stopbutton);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        fname.setText(name);
-        pathText.setText(path);
+        String [] ddr=namehz.split("\\.");
+        DataManager.DucomentName=name;
+        hz=ddr[ddr.length-1];
+        fname.setText(name+"."+hz);
+        if(!path.equals("")){
+            pathText.setText(path);
+        }else{
+            pathText.setText("文件已损坏!");
+            pathText.setVisibility(View.VISIBLE);
+            downloadButton.setEnabled(false);
+            stopButton.setEnabled(false);
+        }
+
 
         ButtonClickListener listener = new ButtonClickListener();
         downloadButton.setOnClickListener(listener);
@@ -119,6 +138,15 @@ public class FileContentActivity extends BaseActivity {
     }
     public void init(){
         File file=new File(Environment.getExternalStorageDirectory() + "/PartyBuild/Documents");
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                //READ_EXTERNAL_STORAGE
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        READ_EXTERNAL_STORAGE_REQUEST_CODE);
+                return;
+            }
+        }
         list=getFile(file);
         List<String> list1=new ArrayList<>();//文件名
         List<String> list2=new ArrayList<>();//文件路径
@@ -140,7 +168,7 @@ public class FileContentActivity extends BaseActivity {
             System.out.println( "文件的大小为：" + g.FormentFileSize(l));
         }
         for(int i=0;i<list1.size();i++){
-            if(list1.get(i).equals((pathText.getText().toString()).substring((pathText.getText().toString()).lastIndexOf('/') + 1))){
+            if(list1.get(i).equals((fname.getText().toString()))){
                 resultView.setText("下载成功!");
                 downloadButton.setText("已下载");
                 downloadButton.setEnabled(false);
@@ -158,7 +186,6 @@ public class FileContentActivity extends BaseActivity {
                     // http://abv.cn/music/光辉岁月.mp3，可以换成其他文件下载的链接
                     String path = pathText.getText().toString();
                     String filename = path.substring(path.lastIndexOf('/') + 1);
-
                     try {
                         // URL编码（这里是为了将中文进行URL编码）
                         filename = URLEncoder.encode(filename, "UTF-8");
@@ -171,9 +198,10 @@ public class FileContentActivity extends BaseActivity {
                         // File savDir =
                         // Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
                         // 保存路径
-                        String file = Environment.getExternalStorageDirectory()+"/PartyBuild/Documents/";
+                        String file = Environment.getExternalStorageDirectory()+"/PartyBuild/Documents";
                         File savDir=new File(file);
                         download(path, savDir);
+
                     } else {
                         Toast.makeText(getApplicationContext(),
                                 "SD卡不存在", Toast.LENGTH_SHORT).show();
@@ -262,4 +290,16 @@ public class FileContentActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode==0){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+            }
+            else {
+                com.example.a25908.partybuild.Views.Toast.show("权限获取失败，部分功能无法使用，请到设置中开放权限");
+            }
+
+        }
+    }
 }

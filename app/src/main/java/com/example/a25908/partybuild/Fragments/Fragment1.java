@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.example.a25908.partybuild.Activitys.PalmPartySchoolActivity;
 import com.example.a25908.partybuild.Activitys.PartyCommitteeActivity;
 import com.example.a25908.partybuild.Activitys.PartyPayActivity;
 import com.example.a25908.partybuild.Activitys.PartyVideoActivity;
+import com.example.a25908.partybuild.Activitys.QuestionSurvey2Activity;
 import com.example.a25908.partybuild.Activitys.StudyActivity;
 import com.example.a25908.partybuild.Activitys.SupportActivity;
 import com.example.a25908.partybuild.Adapters.MyGridAdapter;
@@ -38,10 +40,13 @@ import com.yolanda.nohttp.RequestMethod;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.a25908.partybuild.Dialogs.TipDialog.builder;
 import static com.example.a25908.partybuild.Utils.FileUtils.FileNewsExists;
 import static com.example.a25908.partybuild.Utils.URLconstant.DOCUMENTROOM;
 import static com.example.a25908.partybuild.Utils.URLconstant.FAQ;
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYCOMM;
+import static com.example.a25908.partybuild.Utils.URLconstant.PARTYVIDEO;
+import static com.example.a25908.partybuild.Utils.URLconstant.SURVEY;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
 /**
@@ -141,7 +146,14 @@ public class Fragment1 extends Fragment {
                     case 8:
                         //问卷调查
                         wd.dismiss();
-//                        startActivity(new Intent(getActivity(), QuestionSurveyActivity.class));
+
+                            startActivity(new Intent(getActivity(), QuestionSurvey2Activity.class));
+//                        break;
+                    case 9://问卷调查
+                        builder = new AlertDialog.Builder(getActivity());
+                            builder.setTitle("提示");
+                            builder.setMessage("您已经回答过了");
+                            builder.setPositiveButton("确认", null);
                         break;
                     case 500:
                         wd.dismiss();
@@ -180,16 +192,15 @@ public class Fragment1 extends Fragment {
                         startActivity(new Intent(getActivity(), PartyPayActivity.class));
                         break;
                     case 3: //党建视频
-                        Toast.show("功能还在开发中。。。");
-//                        wd.show();
-//                        Request = new GsonRequest(URLINSER +PARTYVIDEO, RequestMethod.POST);
-//                        Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
-//                        Request.add("KeyNo", psp.getUSERID());
-//                        Request.add("deviceId", new Build().MODEL);
-//                        Request.add("type",1);
-////                        Request.add("PageIndex",);
-////                        Request.add("PageSize",);
-//                        CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x009, true, false, true);
+                        wd.show();
+                        Request = new GsonRequest(URLINSER +PARTYVIDEO, RequestMethod.POST);
+                        Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                        Request.add("KeyNo", psp.getUSERID());
+                        Request.add("deviceId", new Build().MODEL);
+                        Request.add("type",1);
+//                        Request.add("PageIndex",);
+//                        Request.add("PageSize",);
+                        CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x009, true, false, true);
 
                         break;
                     case 4://学习园地
@@ -237,13 +248,13 @@ public class Fragment1 extends Fragment {
 
                         break;
                     case 8: //问卷调查
-                        Toast.show("此模块开发中...!");
-//                        wd.show();
-//                        Request= new GsonRequest(URLINSER +SURVEY, RequestMethod.GET);
-//                        Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
-//                        Request.add("KeyNo", psp.getUSERID());
-//                        Request.add("deviceId", new Build().MODEL);
-//                        CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x0011, true, false, true);
+//                        Toast.show("此模块开发中...!");
+                        wd.show();
+                        Request= new GsonRequest(URLINSER +SURVEY, RequestMethod.GET);
+                        Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                        Request.add("KeyNo", psp.getUSERID());
+                        Request.add("deviceId", new Build().MODEL);
+                        CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x0011, true, false, true);
                         break;
 
                 }

@@ -5,9 +5,6 @@
     android:layout_height="match_parent"
     android:background="#f0f0f0"
     android:orientation="vertical">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,7 +23,7 @@
             <ListView
                 android:id="@+id/list_qs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:listSelector="#00000000"
                 />
 
@@ -44,8 +41,6 @@
 
 
         </LinearLayout>
-
-    </ScrollView>
 
 
 </LinearLayout>

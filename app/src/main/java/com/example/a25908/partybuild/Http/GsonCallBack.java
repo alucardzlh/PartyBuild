@@ -6,18 +6,22 @@ import com.example.a25908.partybuild.Activitys.HairDynamicActivity;
 import com.example.a25908.partybuild.Activitys.LoginActivity;
 import com.example.a25908.partybuild.Activitys.MydataActivity;
 import com.example.a25908.partybuild.Activitys.OpinionActivity;
+import com.example.a25908.partybuild.Activitys.PalmPartySchoolActivity;
 import com.example.a25908.partybuild.Activitys.PartyCommitteeActivity;
+import com.example.a25908.partybuild.Activitys.PartyPayActivity;
+import com.example.a25908.partybuild.Activitys.PartyVideoActivity;
 import com.example.a25908.partybuild.Activitys.PartymembersdetailsActivity;
 import com.example.a25908.partybuild.Activitys.PeopleGalleryActivity;
+import com.example.a25908.partybuild.Activitys.QuestionSurvey2Activity;
 import com.example.a25908.partybuild.Activitys.QuestionsActivity;
 import com.example.a25908.partybuild.Activitys.StudyActivity;
 import com.example.a25908.partybuild.Activitys.SupportActivity;
 import com.example.a25908.partybuild.Fragments.Fragment1;
 import com.example.a25908.partybuild.Fragments.Fragment2;
-import com.example.a25908.partybuild.Activitys.PalmPartySchoolActivity;
 import com.example.a25908.partybuild.Fragments.Fragment3;
 import com.example.a25908.partybuild.Fragments.Fragment4;
 import com.example.a25908.partybuild.Model.DataManager;
+import com.example.a25908.partybuild.Receivers.GetuiReceiver;
 import com.example.a25908.partybuild.Utils.PartySharePreferences;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -73,6 +77,11 @@ public class GsonCallBack implements HttpCallBack {
                     MydataActivity.handler.sendEmptyMessage(1);
                 }
                 break;
+            case 0x0023://请求单位部门
+                jsonString = (String) response.get();
+                DataManager.MyDataBMList=gson.fromJson(jsonString,DataManager.MyDataBM.class);
+                Fragment4.handler.sendEmptyMessage(2);
+                break;
             /**
              * //修改头像
              */
@@ -121,6 +130,17 @@ public class GsonCallBack implements HttpCallBack {
                 PartyCommitteeActivity.handler.sendEmptyMessage(0);
                 break;
             /**
+             * //党委通知推送详情
+             */
+            case 0x00411:
+                jsonString = (String) response.get();
+                DataManager.partyCommDetailsList=gson.fromJson(jsonString,DataManager.partyCommDetails.class);
+                if (DataManager.partyCommDetailsList.message.equals("success")){
+                    GetuiReceiver.handler.sendEmptyMessage(0);
+                }
+
+                break;
+            /**
              * //学习园地
              */
             case 0x005:
@@ -137,6 +157,11 @@ public class GsonCallBack implements HttpCallBack {
                 DataManager.partyCommDetailsList=gson.fromJson(jsonString,DataManager.partyCommDetails.class);
                 StudyActivity.handler.sendEmptyMessage(0);
                 break;
+            case 0x00511://学习园地详情
+                jsonString = (String) response.get();
+                DataManager.partyCommDetailsList=gson.fromJson(jsonString,DataManager.partyCommDetails.class);
+                GetuiReceiver.handler.sendEmptyMessage(1);
+                break;
             case 0x006://党员扶持
                 jsonString = (String) response.get();
                 DataManager.paertyCommList=gson.fromJson(jsonString,DataManager.paertyComm.class);
@@ -150,6 +175,11 @@ public class GsonCallBack implements HttpCallBack {
                 jsonString = (String) response.get();
                 DataManager.partyCommDetailsList=gson.fromJson(jsonString,DataManager.partyCommDetails.class);
                 SupportActivity.handler.sendEmptyMessage(0);
+                break;
+            case 0x00611://党员扶持详情
+                jsonString = (String) response.get();
+                DataManager.partyCommDetailsList=gson.fromJson(jsonString,DataManager.partyCommDetails.class);
+                GetuiReceiver.handler.sendEmptyMessage(2);
                 break;
             case 0x007://查询 党建通知，学习园地，党员扶持 详情的评论
                 jsonString = (String) response.get();
@@ -177,6 +207,11 @@ public class GsonCallBack implements HttpCallBack {
                 DataManager.partyvideoList=gson.fromJson(jsonString,DataManager.partyvideo.class);
                 Fragment1.handler.sendEmptyMessage(3);
                 break;
+            case 0x0091://党建视频详情
+                jsonString = (String) response.get();
+                DataManager.mypartyvideo=gson.fromJson(jsonString,DataManager.Mypartyvideo.class);
+                PartyVideoActivity.handler.sendEmptyMessage(0);
+                break;
             case 0x0010://在线答疑
                 jsonString = (String) response.get();
                 DataManager.FAQmarList=gson.fromJson(jsonString,DataManager.FAQmar.class);
@@ -198,11 +233,26 @@ public class GsonCallBack implements HttpCallBack {
                 break;
             case 0x0011://问卷调查
                 jsonString = (String) response.get();
-                DataManager.surveyList=gson.fromJson(jsonString,DataManager.survey.class);
-                if( DataManager.surveyList.data.DynamiclistPage.size()>0){
-                    Fragment1.handler.sendEmptyMessage(8);
+                DataManager.myQuestions=gson.fromJson(jsonString,DataManager.MyQuestions.class);
+                if(DataManager.myQuestions.message.equals("success")){
+                    if (DataManager.myQuestions.status.equals("repeated")){
+                        Fragment1.handler.sendEmptyMessage(9);
+                    }
+                    else{
+                        Fragment1.handler.sendEmptyMessage(8);
+                    }
                 }else{
                     Fragment1.handler.sendEmptyMessage(500);
+                }
+
+                break;
+            case 0x0012://问卷调查提交
+                jsonString = (String) response.get();
+                DataManager.myQuestions=gson.fromJson(jsonString,DataManager.MyQuestions.class);
+                if( DataManager.myQuestions.message.equals("success")){
+                    if (!DataManager.myQuestions.status.equals("REPEATED")){
+                        QuestionSurvey2Activity.handler.sendEmptyMessage(0);
+                    }
                 }
 
                 break;
@@ -221,6 +271,14 @@ public class GsonCallBack implements HttpCallBack {
                 }
 
                 break;
+            case 0x104://党费查询
+                jsonString = (String) response.get();
+                DataManager.myPartyPaylist = gson.fromJson(jsonString,DataManager.MyPartyPay.class);
+                if (DataManager.myPartyPaylist.message.equals("success")){
+                    PartyPayActivity.handler.sendEmptyMessage(0);
+                }
+
+                break;
 
             case 0x201://人物长廊
                 jsonString = (String) response.get();
@@ -233,6 +291,12 @@ public class GsonCallBack implements HttpCallBack {
                 jsonString = (String) response.get();
                 DataManager.partyCommDetailsList=gson.fromJson(jsonString,DataManager.partyCommDetails.class);
                 PeopleGalleryActivity.handler.sendEmptyMessage(1);
+
+                break;
+            case 0x20213://人物长廊推送详情
+                jsonString = (String) response.get();
+                DataManager.partyCommDetailsList=gson.fromJson(jsonString,DataManager.partyCommDetails.class);
+                GetuiReceiver.handler.sendEmptyMessage(3);
 
                 break;
             case 0x202://党的章程
@@ -295,6 +359,10 @@ public class GsonCallBack implements HttpCallBack {
                     Fragment3.handler.sendEmptyMessage(3);
                 }
                 break;
+            case 0x500://微信支付实体类
+                jsonString = (String) response.get();
+                DataManager.wechatpay=gson.fromJson(jsonString,DataManager.WechatPay.class);
+
         }
     }
 

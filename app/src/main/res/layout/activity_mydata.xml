@@ -10,6 +10,7 @@
         layout="@layout/headbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -25,44 +26,62 @@
                 android:paddingTop="10dp"
                 android:background="@drawable/bg_bg"
                 android:orientation="vertical">
+
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:paddingLeft="10dp"
-                    android:text="基本信息"/>
+                    android:text="基本信息"
+                    android:id="@+id/textView2" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:layout_margin="5dp"
                     android:background="@color/huise"/>
-                <LinearLayout
+                <RelativeLayout
+                    android:id="@+id/mmdd_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    >
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
-                        android:textColor="@color/black"
                         android:textSize="18sp"
+                        android:textColor="@color/black"
                         android:paddingLeft="10dp"
-                        android:text="姓名："/>
-                    <EditText
+                        android:text="姓  名："/>
+                    <ImageView
+                        android:id="@+id/mds1"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@mipmap/youjiantou"/>
+                    <TextView
                         android:background="@drawable/et_shape"
                         android:id="@+id/md_name"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
-                        android:textColor="@color/black"
                         android:paddingLeft="10dp"
+                        android:textSize="16sp"
+                        android:text="小王"
+                        android:layout_toLeftOf="@id/mds1"/>
 
-                        android:textSize="18sp"
-                        android:text="18173"/>
-                </LinearLayout>
-                <LinearLayout
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/huise"/>
+                <RelativeLayout
+                    android:id="@+id/mmdd_sex"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -73,44 +92,34 @@
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:paddingLeft="10dp"
-                        android:text="性别："/>
-                    <EditText
+                        android:text="性  别："/>
+                    <ImageView
+                        android:id="@+id/mds2"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@mipmap/youjiantou"/>
+
+                    <TextView
                         android:background="@drawable/et_shape"
                         android:id="@+id/md_sex"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:text="18173"/>
-                </LinearLayout>
-                <LinearLayout
+                        android:textSize="16sp"
+                        android:text="男"
+                        android:layout_toLeftOf="@id/mds2"/>
+                </RelativeLayout>
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        android:paddingLeft="10dp"
-                        android:text="年龄："/>
-                    <EditText
-                        android:background="@drawable/et_shape"
-                        android:id="@+id/md_age"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/black"
-                        android:paddingLeft="10dp"
-
-                        android:textSize="18sp"
-                        android:text="18173"/>
-                </LinearLayout>
-                <LinearLayout
+                    android:layout_height="0.5dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/huise"/>
+                <RelativeLayout
+                    android:id="@+id/mmdd_brith"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -122,20 +131,33 @@
                         android:textSize="18sp"
                         android:paddingLeft="10dp"
                         android:text="出生年月："/>
-                    <EditText
+                    <ImageView
+                        android:id="@+id/mds4"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@mipmap/youjiantou"/>
+
+                    <TextView
                         android:background="@drawable/et_shape"
                         android:id="@+id/md_birth"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
-                        android:textColor="@color/black"
                         android:paddingLeft="10dp"
-
-                        android:textSize="18sp"
-                        android:text="18173"/>
-                </LinearLayout>
-
-                <LinearLayout
+                        android:textSize="16sp"
+                        android:text="1996-08-02"
+                        android:layout_toLeftOf="@id/mds4"/>
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/huise"/>
+                <RelativeLayout
+                    android:id="@+id/mmdd_age"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -146,19 +168,68 @@
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:paddingLeft="10dp"
-                        android:text="简介："/>
-                    <EditText
+                        android:text="年  龄："/>
+                    <ImageView
+                        android:id="@+id/mds3"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@mipmap/youjiantou"/>
+
+                    <TextView
                         android:background="@drawable/et_shape"
-                        android:id="@+id/md_jianjie"
+                        android:id="@+id/md_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:textSize="16sp"
+                        android:text="18"
+                        android:layout_toLeftOf="@id/mds3"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/huise"/>
+                <RelativeLayout
+                    android:id="@+id/mmdd_jianjie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/jj"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
                         android:textColor="@color/black"
-                        android:paddingLeft="10dp"
-
                         android:textSize="18sp"
-                        android:text="18173"/>
-                </LinearLayout>
+                        android:paddingLeft="10dp"
+                        android:text="简  介："/>
+                    <ImageView
+                        android:id="@+id/mds5"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@mipmap/youjiantou"/>
+                    <TextView
+                        android:id="@+id/md_jianjie"
+                        android:background="@drawable/et_shape"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/jj"
+                        android:paddingLeft="10dp"
+                        android:textSize="16sp"
+                        android:gravity="right"
+                        android:layout_marginTop="5dp"
+                        android:text="大厦大厦是"
+                        android:layout_toLeftOf="@id/mds5"/>
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -170,9 +241,9 @@
                 android:background="@drawable/bg_bg"
                 android:orientation="vertical">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:paddingLeft="10dp"
@@ -182,7 +253,8 @@
                     android:layout_height="0.5dp"
                     android:layout_margin="5dp"
                     android:background="@color/huise"/>
-                <LinearLayout
+                <RelativeLayout
+                    android:id="@+id/mmdd_dangwei"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -193,20 +265,35 @@
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:paddingLeft="10dp"
-                        android:text="单位："/>
-                    <EditText
+                        android:text="单  位："/>
+                    <ImageView
+                        android:id="@+id/mds6"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@mipmap/youjiantou"/>
+
+                    <TextView
                         android:background="@drawable/et_shape"
                         android:id="@+id/md_dangwie"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
-                        android:textColor="@color/black"
                         android:paddingLeft="10dp"
-
-                        android:textSize="18sp"
-                        android:text=""/>
-                </LinearLayout>
-                <LinearLayout
+                        android:textSize="16sp"
+                        android:text="区警察局"
+                        android:layout_alignParentTop="true"
+                        android:layout_toLeftOf="@+id/mds6" />
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/huise"/>
+                <RelativeLayout
+                    android:id="@+id/mmdd_bumen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -217,20 +304,33 @@
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:paddingLeft="10dp"
-                        android:text="部门："/>
-                    <EditText
+                        android:text="部  门："/>
+                    <ImageView
+                        android:id="@+id/mds7"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@mipmap/youjiantou"/>
+                    <TextView
                         android:background="@drawable/et_shape"
                         android:id="@+id/md_bumeng"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="10dp"
-                        android:textColor="@color/black"
-
-                        android:textSize="18sp"
-                        android:text=""/>
-                </LinearLayout>
-                <LinearLayout
+                        android:textSize="16sp"
+                        android:text="部门"
+                        android:layout_toLeftOf="@id/mds7"/>
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/huise"/>
+                <RelativeLayout
+                    android:id="@+id/mmdd_zhiwu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -241,24 +341,40 @@
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:paddingLeft="10dp"
-                        android:text="职务："/>
-                    <EditText
+                        android:text="职  务："/>
+                    <ImageView
+                        android:id="@+id/mds8"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@mipmap/youjiantou"/>
+
+                    <TextView
                         android:background="@drawable/et_shape"
                         android:id="@+id/md_zhiweu"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
-                        android:textColor="@color/black"
-
                         android:paddingLeft="10dp"
-                        android:textSize="18sp"
-                        android:text=""/>
-                </LinearLayout>
-                <LinearLayout
+                        android:textSize="16sp"
+                        android:text="刑法队队长"
+                        android:layout_toLeftOf="@id/mds8"/>
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/huise"/>
+                <RelativeLayout
+                    android:id="@+id/mmdd_xzz"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/xz"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
@@ -266,20 +382,33 @@
                         android:textSize="18sp"
                         android:paddingLeft="10dp"
                         android:text="现住址："/>
-                    <EditText
-                        android:background="@drawable/et_shape"
+                    <ImageView
+                        android:id="@+id/mds9"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@mipmap/youjiantou"/>
+
+                    <TextView
                         android:id="@+id/md_address"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/black"
-                        android:paddingLeft="10dp"
-
-                        android:textSize="18sp"
-                        android:text=""/>
-                </LinearLayout>
-
-                <LinearLayout
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:gravity="right"
+                        android:text="江西省南昌市南昌县常胜街紫阳大道桐梓巷南方村"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toRightOf="@id/xz"
+                        android:layout_toLeftOf="@id/mds9" />
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/huise"/>
+                <RelativeLayout
+                    android:id="@+id/mmdd_huji"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -290,20 +419,35 @@
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:paddingLeft="10dp"
-                        android:text="户籍："/>
-                    <EditText
+                        android:text="户  籍："/>
+                    <ImageView
+                        android:id="@+id/mds10"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@mipmap/youjiantou"/>
+
+                    <TextView
                         android:background="@drawable/et_shape"
                         android:id="@+id/md_guxiang"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
-                        android:textColor="@color/black"
                         android:paddingLeft="10dp"
-
-                        android:textSize="18sp"
-                        android:text=""/>
-                </LinearLayout>
-                <LinearLayout
+                        android:textSize="16sp"
+                        android:text="江西省"
+                        android:layout_alignParentTop="true"
+                        android:layout_toLeftOf="@+id/mds10" />
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/huise"/>
+                <RelativeLayout
+                    android:id="@+id/mmdd_youxiang"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -314,20 +458,34 @@
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:paddingLeft="10dp"
-                        android:text="邮箱："/>
-                    <EditText
+                        android:text="邮  箱："/>
+                    <ImageView
+                        android:id="@+id/mds11"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@mipmap/youjiantou"/>
+
+                    <TextView
                         android:background="@drawable/et_shape"
                         android:id="@+id/md_youxiang"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
-                        android:textColor="@color/black"
-
                         android:paddingLeft="10dp"
-                        android:textSize="18sp"
-                        android:text=""/>
-                </LinearLayout>
-                <LinearLayout
+                        android:textSize="16sp"
+                        android:text="1345678958@qq.com"
+                        android:layout_toLeftOf="@id/mds11"/>
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/huise"/>
+                <RelativeLayout
+                    android:id="@+id/mmdd_dianhua"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -338,21 +496,34 @@
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:paddingLeft="10dp"
-                        android:text="电话："/>
-                    <EditText
+                        android:text="电  话："/>
+                    <ImageView
+                        android:id="@+id/mds12"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@mipmap/youjiantou"/>
+
+                    <TextView
                         android:background="@drawable/et_shape"
                         android:id="@+id/md_mphone"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
-                        android:textColor="@color/black"
-
                         android:paddingLeft="10dp"
-                        android:textSize="18sp"
-                        android:text=""/>
-                </LinearLayout>
-
-                <LinearLayout
+                        android:textSize="16sp"
+                        android:text="10086"
+                        android:layout_toLeftOf="@id/mds12"/>
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/huise"/>
+                <RelativeLayout
+                    android:id="@+id/mmdd_shouji"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -364,18 +535,27 @@
                         android:textSize="18sp"
                         android:paddingLeft="10dp"
                         android:text="手机号："/>
-                    <EditText
+                    <ImageView
+                        android:id="@+id/mds13"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:background="@mipmap/youjiantou"/>
+
+                    <TextView
                         android:background="@drawable/et_shape"
                         android:id="@+id/md_sphone"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:gravity="center_vertical"
-                        android:textColor="@color/black"
-
                         android:paddingLeft="10dp"
-                        android:textSize="18sp"
-                        android:text=""/>
-                </LinearLayout>
+                        android:textSize="16sp"
+                        android:text="1008611"
+                        android:layout_alignParentTop="true"
+                        android:layout_toStartOf="@+id/mds13" />
+                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -1,6 +1,5 @@
 package com.example.a25908.partybuild.Activitys;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.a25908.partybuild.Dialogs.WaitDialog;
 import com.example.a25908.partybuild.Http.GsonCallBack;
@@ -24,7 +22,6 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yolanda.nohttp.RequestMethod;
 
 import static com.example.a25908.partybuild.Utils.URLconstant.FAQADD;
-import static com.example.a25908.partybuild.Utils.URLconstant.PARTYCOMM;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
 /**

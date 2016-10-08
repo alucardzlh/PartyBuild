@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.a25908.partybuild.Model.SortModel;
 import com.example.a25908.partybuild.R;
+import com.example.a25908.partybuild.Utils.FileUtils;
 
 import java.util.List;
 
@@ -27,15 +28,15 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer
 		this.list = list;
 		this.mContext = mContext;
 	}
-	
+
 	// when the data changed , call updateListView() to update
 	public void updateListView(List<SortModel> list)
 	{
 		this.list = list;
 		notifyDataSetChanged();
 	}
-	
-	
+
+
 	public int getCount()
 	{
 		return this.list.size();
@@ -67,12 +68,12 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer
 			viewHolder.tvInfo = (TextView) view.findViewById(R.id.txt_user_list_info);
 			view.setTag(viewHolder);
 		}
-		else 
+		else
 			viewHolder = (ViewHolder) view.getTag();
-		
+
 		// get position and get the first letter
 		int section = getSectionForPosition(pos);
-		
+
 		if(pos == getPositionForSection(section))
 		{
 			viewHolder.tvLetter.setVisibility(View.VISIBLE);
@@ -80,16 +81,23 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer
 		}
 		else
 			viewHolder.tvLetter.setVisibility(View.GONE);
-
-		viewHolder.tvImg.setBackgroundResource(this.list.get(pos).img);
+		try{
+			if(this.list.get(pos).img.equals("")){
+				viewHolder.tvImg.setImageResource(R.mipmap.appicon);
+			}else{
+				viewHolder.tvImg.setImageBitmap(FileUtils.stringtoBitmap(this.list.get(pos).img));
+			}
+		}catch (NullPointerException e){
+			viewHolder.tvImg.setBackgroundResource(R.mipmap.appicon);
+		}
 		viewHolder.tvId.setText(this.list.get(pos).id);
 		viewHolder.tvName.setText(this.list.get(pos).name);
 		viewHolder.tvInfo.setText(this.list.get(pos).info);
-		
+
 		return view;
 	}
 
-	final static class ViewHolder 
+	final static class ViewHolder
 	{
 		ImageView tvImg;
 		TextView tvId;
@@ -97,7 +105,7 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer
 		TextView tvName;
 		TextView tvInfo;
 	}
-	
+
 	public int getPositionForSection(int section)
 	{
 		for (int i = 0; i < getCount(); i++)
@@ -107,7 +115,7 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer
 			if (firstChar == section)
 				return i;
 		}
-		
+
 		return -1;
 	}
 
@@ -116,19 +124,19 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer
 		return this.list.get(arg0).sortLetters.charAt(0);
 	}
 
-	
+
 	public Object[] getSections()
 	{
 		return null;
 	}
 
-	private String getAlpha(String str) 
+	private String getAlpha(String str)
 	{
 		String  sortStr = str.trim().substring(0, 1).toUpperCase();
-		if (sortStr.matches("[A-Z]")) 
+		if (sortStr.matches("[A-Z]"))
 			return sortStr;
-		else 
+		else
 			return "#";
 	}
-	
+
 }

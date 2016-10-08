@@ -45,4 +45,39 @@
         <item>王四</item>
     </string-array>
 
+    <string-array name="sexMar">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+    <string-array name="danweiMar">
+        <item>警察局</item>
+        <item>人民医院</item>
+        <item>疗养院</item>
+        <item>科技公司</item>
+        <item>交通局</item>
+        <item>食品卫生安全局</item>
+        <item>教育局</item>
+    </string-array>
+    <string-array name="bumenMar">
+        <item>执法部</item>
+        <item>交通部</item>
+        <item>后勤部</item>
+        <item>校检部</item>
+        <item>安全检查部</item>
+        <item>研发部</item>
+        <item>广告部</item>
+        <item>人事部</item>
+        <item>财务部</item>
+    </string-array>
+    <string-array name="zhiwuMar">
+        <item>执法大队长</item>
+        <item>交通协警</item>
+        <item>后勤主管</item>
+        <item>校检主管</item>
+        <item>人事经理</item>
+        <item>项目经理</item>
+        <item>财务经理</item>
+        <item>广告经理</item>
+    </string-array>
+
 </resources>

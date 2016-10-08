@@ -42,9 +42,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="none"
-        android:text=""
+        android:gravity="center"
+        android:text="sadasdasda"
         android:visibility="gone"
-        android:textSize="12sp" />
+        android:textColor="@color/red"
+        android:textSize="20sp" />
     <LinearLayout
         android:layout_marginTop="15dp"
         android:layout_below="@id/fname"

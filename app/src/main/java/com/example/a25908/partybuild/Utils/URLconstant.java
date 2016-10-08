@@ -16,6 +16,8 @@ public class URLconstant {
 
     public static final String IMGURL = "http://192.168.10.44:7070";//富文本图片前缀
 
+//    public static final String URLINSER = "http://192.168.10.139:8080/zhirong.partybuild/Interface/";
+
     /**
      * Fragment 1 主界面
      */
@@ -29,6 +31,7 @@ public class URLconstant {
     public static final String PARTYDETAILSADDCOMN = "commentsControllerInterface/saveComments";//党委通知,党员扶持,学习园地 详情的  添加评论
 
     public static final String PARTYVIDEO = "videoControllerInterface/queryvideolist";//党建视频video
+    public static final String PARTYVIDEOCOMN = "videoControllerInterface/queryvideoById";//党建视频详情video
 
     public static final String TCOP = "regulatoryFrameworkControllerInterface/queryRegulatory";//党的章程 党归党纪
 
@@ -37,6 +40,8 @@ public class URLconstant {
     public static final String DOCUMENTROOM = "documentControllerInterface/queryDocument";// 文档中心
 
     public static final String  SURVEY= "questionnaireSurveyControllerInterface/queryQuesion";//问卷调查survey
+
+    public static final String  SURVEYTIJIAO= "questionnaireSurveyControllerInterface/saveQuesion";//问卷调查survey
 
     public static final String  FAQ="onlineAnswerControllerInterface/queryOnlineAnswer";// 在线答疑
 
@@ -72,6 +77,8 @@ public class URLconstant {
 
     public static final String USERDATEURL = "userDataController/queryuserData";//个人资料
 
+    public static final String USERDATEDWBMURL = "documentControllerInterface/queryUnit";//个人资料-单位部门
+//
     public static final String UPDATEUSERDATEURL = "userDataController/updateuserData";//个人资料
 
     public static final String OPINION = "feedbackController/saveFeedback";//意见反馈

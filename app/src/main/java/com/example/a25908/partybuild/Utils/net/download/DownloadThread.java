@@ -9,14 +9,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * ÎÄ¼şÏÂÔØThread
+ * æ–‡ä»¶ä¸‹è½½Thread
  */
 public class DownloadThread extends Thread {
 	private static final String TAG = "DownloadThread";
 	private File saveFile;
 	private URL downUrl;
 	private int block;
-	/* ÏÂÔØ¿ªÊ¼Î»ÖÃ */
+	/* ä¸‹è½½å¼€å§‹ä½ç½® */
 	private int threadId = -1;
 	private int downLength;
 	private boolean finish = false;
@@ -34,47 +34,47 @@ public class DownloadThread extends Thread {
 
 	@Override
 	public void run() {
-		if (downLength < block) {// Î´ÏÂÔØÍê³É
+		if (downLength < block) {// æœªä¸‹è½½å®Œæˆ
 			try {
 				HttpURLConnection http = (HttpURLConnection) downUrl
 						.openConnection();
-				http.setConnectTimeout(5 * 1000); // ÉèÖÃÁ¬½Ó³¬Ê±
-				http.setRequestMethod("GET"); // ÉèÖÃÇëÇó·½·¨£¬ÕâÀïÊÇ¡°GET¡±
-				// ä¯ÀÀÆ÷¿É½ÓÊÜµÄMIMEÀàĞÍ
+				http.setConnectTimeout(5 * 1000); // è®¾ç½®è¿æ¥è¶…æ—¶
+				http.setRequestMethod("GET"); // è®¾ç½®è¯·æ±‚æ–¹æ³•ï¼Œè¿™é‡Œæ˜¯â€œGETâ€
+				// æµè§ˆå™¨å¯æ¥å—çš„MIMEç±»å‹
 				http.setRequestProperty(
 						"Accept",
 						"image/gif, image/jpeg, image/pjpeg, image/pjpeg, application/x-shockwave-flash, application/xaml+xml, application/vnd.ms-xpsdocument, application/x-ms-xbap, application/x-ms-application, application/vnd.ms-excel, application/vnd.ms-powerpoint, application/msword, */*");
-				http.setRequestProperty("Accept-Language", "zh-CN"); // ä¯ÀÀÆ÷ËùÏ£ÍûµÄÓïÑÔÖÖÀà£¬µ±·şÎñÆ÷ÄÜ¹»Ìá¹©Ò»ÖÖÒÔÉÏµÄÓïÑÔ°æ±¾Ê±ÒªÓÃµ½
-				http.setRequestProperty("Referer", downUrl.toString());// °üº¬Ò»¸öURL£¬ÓÃ»§´Ó¸ÃURL´ú±íµÄÒ³Ãæ³ö·¢·ÃÎÊµ±Ç°ÇëÇóµÄÒ³Ãæ¡£
-				http.setRequestProperty("Charset", "UTF-8"); // ×Ö·û¼¯
-				int startPos = block * (threadId - 1) + downLength;// ¿ªÊ¼Î»ÖÃ
-				int endPos = block * threadId - 1;// ½áÊøÎ»ÖÃ
+				http.setRequestProperty("Accept-Language", "zh-CN"); // æµè§ˆå™¨æ‰€å¸Œæœ›çš„è¯­è¨€ç§ç±»ï¼Œå½“æœåŠ¡å™¨èƒ½å¤Ÿæä¾›ä¸€ç§ä»¥ä¸Šçš„è¯­è¨€ç‰ˆæœ¬æ—¶è¦ç”¨åˆ°
+				http.setRequestProperty("Referer", downUrl.toString());// åŒ…å«ä¸€ä¸ªURLï¼Œç”¨æˆ·ä»è¯¥URLä»£è¡¨çš„é¡µé¢å‡ºå‘è®¿é—®å½“å‰è¯·æ±‚çš„é¡µé¢ã€‚
+				http.setRequestProperty("Charset", "UTF-8"); // å­—ç¬¦é›†
+				int startPos = block * (threadId - 1) + downLength;// å¼€å§‹ä½ç½®
+				int endPos = block * threadId - 1;// ç»“æŸä½ç½®
 				http.setRequestProperty("Range", "bytes=" + startPos + "-"
-						+ endPos);// ÉèÖÃ»ñÈ¡ÊµÌåÊı¾İµÄ·¶Î§
-				// ä¯ÀÀÆ÷ÀàĞÍ£¬Èç¹ûServlet·µ»ØµÄÄÚÈİÓëä¯ÀÀÆ÷ÀàĞÍÓĞ¹ØÔò¸ÃÖµ·Ç³£ÓĞÓÃ¡£
+						+ endPos);// è®¾ç½®è·å–å®ä½“æ•°æ®çš„èŒƒå›´
+				// æµè§ˆå™¨ç±»å‹ï¼Œå¦‚æœServletè¿”å›çš„å†…å®¹ä¸æµè§ˆå™¨ç±»å‹æœ‰å…³åˆ™è¯¥å€¼éå¸¸æœ‰ç”¨ã€‚
 				http.setRequestProperty(
 						"User-Agent",
 						"Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.2; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729)");
-				http.setRequestProperty("Connection", "Keep-Alive"); // ÉèÖÃÎª³Ö¾ÃÁ¬½Ó
+				http.setRequestProperty("Connection", "Keep-Alive"); // è®¾ç½®ä¸ºæŒä¹…è¿æ¥
 
-				// µÃµ½ÊäÈëÁ÷
+				// å¾—åˆ°è¾“å…¥æµ
 				InputStream inStream = http.getInputStream();
 				byte[] buffer = new byte[1024];
 				int offset = 0;
 				print("Thread " + this.threadId
 						+ " start download from position " + startPos);
-				// Ëæ»ú·ÃÎÊÎÄ¼ş
+				// éšæœºè®¿é—®æ–‡ä»¶
 				RandomAccessFile threadfile = new RandomAccessFile(
 						this.saveFile, "rwd");
-				// ¶¨Î»µ½posÎ»ÖÃ
+				// å®šä½åˆ°posä½ç½®
 				threadfile.seek(startPos);
 				while (!downloader.getExit()
 						&& (offset = inStream.read(buffer, 0, 1024)) != -1) {
-					// Ğ´ÈëÎÄ¼ş
+					// å†™å…¥æ–‡ä»¶
 					threadfile.write(buffer, 0, offset);
-					downLength += offset; // ÀÛ¼ÓÏÂÔØµÄ´óĞ¡
-					downloader.update(this.threadId, downLength); // ¸üĞÂÖ¸¶¨Ïß³ÌÏÂÔØ×îºóµÄÎ»ÖÃ
-					downloader.append(offset); // ÀÛ¼ÓÒÑÏÂÔØ´óĞ¡
+					downLength += offset; // ç´¯åŠ ä¸‹è½½çš„å¤§å°
+					downloader.update(this.threadId, downLength); // æ›´æ–°æŒ‡å®šçº¿ç¨‹ä¸‹è½½æœ€åçš„ä½ç½®
+					downloader.append(offset); // ç´¯åŠ å·²ä¸‹è½½å¤§å°
 				}
 				threadfile.close();
 				inStream.close();
@@ -92,8 +92,8 @@ public class DownloadThread extends Thread {
 	}
 
 	/**
-	 * ÏÂÔØÊÇ·ñÍê³É
-	 * 
+	 * ä¸‹è½½æ˜¯å¦å®Œæˆ
+	 *
 	 * @return
 	 */
 	public boolean isFinish() {
@@ -101,9 +101,9 @@ public class DownloadThread extends Thread {
 	}
 
 	/**
-	 * ÒÑ¾­ÏÂÔØµÄÄÚÈİ´óĞ¡
-	 * 
-	 * @return Èç¹û·µ»ØÖµÎª-1,´ú±íÏÂÔØÊ§°Ü
+	 * å·²ç»ä¸‹è½½çš„å†…å®¹å¤§å°
+	 *
+	 * @return å¦‚æœè¿”å›å€¼ä¸º-1,ä»£è¡¨ä¸‹è½½å¤±è´¥
 	 */
 	public long getDownLength() {
 		return downLength;

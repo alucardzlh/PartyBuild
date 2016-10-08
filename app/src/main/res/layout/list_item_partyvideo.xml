@@ -4,9 +4,10 @@
     android:background="@color/huiwhite"
     android:orientation="vertical"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="150dp"
         android:orientation="vertical"
         android:layout_marginTop="10dp"
         android:paddingLeft="5dp"
@@ -18,10 +19,13 @@
             android:orientation="horizontal">
             <!--右边图片-->
             <ImageView
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:id="@+id/item_pc_iv"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ceshi_item2"
                 />
 
@@ -70,27 +74,7 @@
             android:layout_weight="1">
 
             <!--赞-->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="赞"
-                android:textSize="18dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:id="@+id/item_zan" />
             <!--回复-->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="回复"
-                android:textSize="18dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:id="@+id/item_huifu"
-                android:layout_alignParentTop="true"
-                android:layout_toStartOf="@+id/item_zan" />
             <!--浏览-->
             <TextView
                 android:layout_width="wrap_content"
@@ -114,19 +98,32 @@
                 <!--时间图片-->
                 <ImageView
                     android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_height="19dp"
                     android:src="@drawable/ic_history_record"
                     android:id="@+id/imageView" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:textSize="13sp"
-                    android:text="08-27 17:56"
-                    android:id="@+id/item_time"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/imageView" />
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="浏览"
+                android:textSize="18dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:id="@+id/item_huifu"
+                android:layout_marginEnd="23dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textSize="13sp"
+                android:text="08-27 17:56"
+                android:id="@+id/item_time"
+                android:layout_marginStart="21dp"
+                android:layout_centerVertical="true" />
 
         </RelativeLayout>
 

@@ -15,7 +15,8 @@
             android:orientation="horizontal">
             <ImageView
                 android:id="@+id/study_img"
-                android:layout_width="80dp"
+                android:layout_width="120dp"
+                android:scaleType="centerCrop"
                 android:layout_height="100dp"
                 android:src="@mipmap/banner"
                 android:layout_margin="10dp"/>
@@ -88,12 +89,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="浏览10"/>
-                <TextView
-                    android:id="@+id/study_bt2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="已学习"/>
                 <TextView
                     android:id="@+id/study_bt3"
                     android:layout_width="wrap_content"

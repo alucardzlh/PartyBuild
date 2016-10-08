@@ -1,8 +1,10 @@
 package com.example.a25908.partybuild.Activitys;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -13,6 +15,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -51,6 +55,7 @@ import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
  * @author weixuan
  */
 public class HairDynamicActivity extends BaseActivity {
+    private static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 0;
     @ViewInject(R.id.returnT)
     private ImageView back;
     @ViewInject(R.id.fileclear)
@@ -122,6 +127,28 @@ public class HairDynamicActivity extends BaseActivity {
         builder= new AlertDialog.Builder(this);
         builder.setTitle("请选择上传方式：");
         final String[] items = new String[]{"本地", "拍照"};
+        fileclear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (TextUtils.isEmpty(dt_et_con.getText())&myList.isEmpty()){
+                    Toast.show("请输入内容或选择照片");
+                }
+                else if(!TextUtils.isEmpty(dt_et_con.getText())&myList.isEmpty()){
+                    wd.show();
+                    GsonRequest fabu = new GsonRequest(URLINSER + DONGTAIFABU, RequestMethod.POST);
+                    fabu.add("KeyNo",psp.getUSERID());
+                    fabu.add("username",psp.getUSERNAME());
+                    fabu.add("content",dt_et_con.getText().toString());
+                    fabu.add("deviceId",new Build().MODEL);
+                    fabu.add("token", MD5.MD5s(psp.getUSERID() + new  Build().MODEL));
+                    CallServer.getInstance().add(HairDynamicActivity.this,fabu, GsonCallBack.getInstance(),0x301,true,false,true);
+                }
+                else if (myList!=null){
+                    addImgs1();
+                }
+            }
+        });
+
         builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -148,6 +175,7 @@ public class HairDynamicActivity extends BaseActivity {
                 dialog.dismiss();
             }
         });
+
 
         myGridViewtc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -181,6 +209,16 @@ public class HairDynamicActivity extends BaseActivity {
             }
         });
 
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                //READ_EXTERNAL_STORAGE
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        READ_EXTERNAL_STORAGE_REQUEST_CODE);
+                return;
+            }
+        }
         com_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -189,27 +227,7 @@ public class HairDynamicActivity extends BaseActivity {
             }
         });
 
-        fileclear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (TextUtils.isEmpty(dt_et_con.getText())&myList.isEmpty()){
-                    Toast.show("请输入内容或选择照片");
-                }
-                else if(!TextUtils.isEmpty(dt_et_con.getText())&myList.isEmpty()){
-                    wd.show();
-                    GsonRequest fabu = new GsonRequest(URLINSER + DONGTAIFABU, RequestMethod.POST);
-                    fabu.add("KeyNo",psp.getUSERID());
-                    fabu.add("username",psp.getUSERNAME());
-                    fabu.add("content",dt_et_con.getText().toString());
-                    fabu.add("deviceId",new Build().MODEL);
-                    fabu.add("token", MD5.MD5s(psp.getUSERID() + new  Build().MODEL));
-                    CallServer.getInstance().add(HairDynamicActivity.this,fabu, GsonCallBack.getInstance(),0x301,true,false,true);
-                }
-                else if (myList!=null){
-                    addImgs1();
-                }
-            }
-        });
+
     }
 
     /**
@@ -366,5 +384,22 @@ public class HairDynamicActivity extends BaseActivity {
         myList.addAll(newList);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode==0){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                com_photo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+                    }
+                });
+            }
+            else {
+                Toast.show("权限获取失败，无法上传图片，请到设置中开放存储权限");
+            }
+        }
 
+    }
 }

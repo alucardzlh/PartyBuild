@@ -4,7 +4,7 @@ public class SortModel
 {
 	
 	public String id;
-	public int img;
+	public String img;
 	public String name;
 	public String info;
 	public String sortLetters;

@@ -2,9 +2,7 @@ package com.example.a25908.partybuild.Fragments;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Observable;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -17,13 +15,11 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.a25908.partybuild.Activitys.AboutsActivity;
 import com.example.a25908.partybuild.Activitys.LoginActivity;
@@ -33,6 +29,7 @@ import com.example.a25908.partybuild.Activitys.MydataActivity;
 import com.example.a25908.partybuild.Activitys.OpinionActivity;
 import com.example.a25908.partybuild.Activitys.TestWebActivity;
 import com.example.a25908.partybuild.Activitys.tsteActivity;
+import com.example.a25908.partybuild.Dialogs.WaitDialog;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.Model.DataManager;
@@ -47,14 +44,11 @@ import com.yolanda.nohttp.RequestMethod;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Observer;
 
-import static com.example.a25908.partybuild.Utils.URLconstant.LOGINURL;
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYPAY;
 import static com.example.a25908.partybuild.Utils.URLconstant.UPDATEUSERDATEURL;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
+import static com.example.a25908.partybuild.Utils.URLconstant.USERDATEDWBMURL;
 import static com.example.a25908.partybuild.Utils.URLconstant.USERDATEURL;
 
 /**
@@ -71,23 +65,34 @@ public class Fragment4 extends Fragment {
     public static Handler handler;
     AlertDialog.Builder builder;
     RoundImageView userimg;
-
+    WaitDialog wd;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_fragment4, container, false);
         psp = PartySharePreferences.getLifeSharedPreferences();
+        wd=new WaitDialog(getActivity());
         show();
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 switch (msg.what) {
-                    case 0://我的资料
-                        startActivity(new Intent(getActivity(), MydataActivity.class));
+                    case 0://我的资料-中转
+                        wd.show();
+                        GsonRequest LoginRequest = new GsonRequest(URLINSER + USERDATEDWBMURL, RequestMethod.GET);
+                        LoginRequest.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                        LoginRequest.add("KeyNo", psp.getUSERID());
+                        LoginRequest.add("deviceId", new Build().MODEL);
+                        CallServer.getInstance().add(getActivity(), LoginRequest, GsonCallBack.getInstance(), 0x0023, true, false, true);
                         break;
                     case 1://我的党费
+                        wd.dismiss();
                         startActivity(new Intent(getActivity(), MyPartyPayActivity.class));
+                        break;
+                    case 2://我的资料-跳转
+                        wd.dismiss();
+                        startActivity(new Intent(getActivity(), MydataActivity.class));
                         break;
                 }
             }
@@ -180,6 +185,7 @@ public class Fragment4 extends Fragment {
                     startActivity(new Intent(getActivity(), MyFilesActivity.class));
                     break;
                 case R.id.my3://我的党费
+                    wd.show();
                     GsonRequest PartyPayRequest = new GsonRequest(URLINSER + PARTYPAY, RequestMethod.GET);
                     PartyPayRequest.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
                     PartyPayRequest.add("deviceId", new Build().MODEL);

@@ -8,14 +8,10 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.Utils.DensityUtil;
 import com.example.a25908.partybuild.Utils.FileUtils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -192,15 +188,16 @@ public class MultiImageView extends LinearLayout {
 		imageView.setOnClickListener(new ImageOnClickListener(position));
 		Bitmap bitmap = FileUtils.stringtoBitmap(url);
 		//Glide不能能直接加载Bitmap,需要先将bitmap转bytes
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-		byte[] bytes=baos.toByteArray();
-		try {
-			baos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Glide.with(getContext()).load(bytes).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+//		byte[] bytes=baos.toByteArray();
+//		try {
+//			baos.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		Glide.with(getContext()).load(FileUtils.stringtoBitmap(url)).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
+		imageView.setImageBitmap(bitmap);
 		return imageView;
 	}
 

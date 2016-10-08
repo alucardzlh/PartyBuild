@@ -20,6 +20,9 @@
             <ImageView
                 android:id="@+id/item_sa_iv2"
                 android:layout_width="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:scaleType="centerCrop"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/ceshi_item1"
@@ -93,10 +96,6 @@
                 android:layout_marginEnd="16dp"
                 android:layout_alignBottom="@+id/item_time2"
                 android:layout_alignParentEnd="true">
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/item_click_like"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

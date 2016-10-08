@@ -3,11 +3,13 @@ package com.example.a25908.partybuild.Activitys;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -15,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.a25908.partybuild.Fragments.Fragment1;
 import com.example.a25908.partybuild.Fragments.Fragment2;
@@ -28,11 +31,16 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.a25908.partybuild.Utils.FileUtils.deleteDir;
+
+
 /**
  * @author yusi
  * Fragment 主控制界面
  */
 public class MainActivity extends FragmentActivity {
+    private long exitTime = 0;
+
     @ViewInject(R.id.address)
     public static LinearLayout address;
     @ViewInject(R.id.ewm)
@@ -65,6 +73,7 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+
         ViewUtils.inject(this);
         mViewPager.setCurrentItem(0);
         initView();
@@ -201,4 +210,22 @@ public class MainActivity extends FragmentActivity {
                 break;
         }
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                deleteDir(Environment.getExternalStorageDirectory() + "/Credit/cache");//正常退出时，清除缓存
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

@@ -1,30 +1,24 @@
 package com.example.a25908.partybuild.Activitys;
 
+import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
+import android.support.design.widget.FloatingActionButton;
 import android.text.Html;
-import android.text.Spanned;
-import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.a25908.partybuild.Adapters.commListAdapter;
@@ -33,23 +27,25 @@ import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Services.CallServer;
+import com.example.a25908.partybuild.Utils.FileUtils;
 import com.example.a25908.partybuild.Utils.MD5;
 import com.example.a25908.partybuild.Utils.PartySharePreferences;
-import com.example.a25908.partybuild.Utils.URLconstant;
+import com.example.a25908.partybuild.Views.ListenedScrollView;
 import com.example.a25908.partybuild.Views.MyListView;
 import com.example.a25908.partybuild.Views.Toast;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yolanda.nohttp.RequestMethod;
 
-import java.net.URL;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;//这个特别容易导错
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.net.URL;
+
+import static com.example.a25908.partybuild.R.id.fab;
 import static com.example.a25908.partybuild.Utils.URLconstant.IMGURL;
-import static com.example.a25908.partybuild.Utils.URLconstant.PARTYDETAILS;
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYDETAILSADDCOMN;
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYDETAILSCOMN;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
@@ -73,43 +69,67 @@ public class DetailsPageActivity extends BaseActivity {
     private TextView ptime;
     @ViewInject(R.id.pcontent)
     private WebView pcontent;
+    @ViewInject(R.id.dp_slv)
+    private ListenedScrollView dp_slv;
+    @ViewInject(R.id.textView_dp)
+    private TextView textView_dp;
+    @ViewInject(R.id.dp_tip)
+    private TextView dp_tip;
 
-    @ViewInject(R.id.et_comn)
-    private EditText et_comn;//评论内容框
-    @ViewInject(R.id.et_send)
-    private TextView et_send;//评论发表
     @ViewInject(R.id.mylist_comm)
     private MyListView mylist_comm;//评论列表
-
-    @ViewInject(R.id.et_delete)
-    private LinearLayout et_delete;//删除
     PartySharePreferences psp;
     public static  Handler handler;
     String dtr1;
+    EditText et;
+    Intent intent;
+    FloatingActionButton fab1;
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_page);
         ViewUtils.inject(this);
         struct();
+        fab1 = (FloatingActionButton) findViewById(fab);
         psp=PartySharePreferences.getLifeSharedPreferences();
         title.setText("详情");
         returnT.setVisibility(View.VISIBLE);
         returnT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if (intent.getIntExtra("fl",0)==110){
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                }else {
+                    finish();
+                }
+
+
             }
         });
-        Intent intent = getIntent();
+        intent = getIntent();
         int flag = intent.getIntExtra("flag",0);
         if (flag==1){
+            fab1.setVisibility(View.GONE);
+            ptitle.setText(DataManager.mypartyvideo.data.videoPage.title);
+            ptime.setText(DataManager.mypartyvideo.data.videoPage.add_time);
             imageView_dp.setVisibility(View.VISIBLE);
-            imageView_dp.setImageResource(R.mipmap.banner2);
+//            try {
+//                BASE64Decoder decode = new BASE64Decoder();
+//                byte[] b = decode.decodeBuffer(DataManager.partyvideoList.data.videolistPage.get(intent.getIntExtra("i",0)).img);
+//                Glide.with(DetailsPageActivity.this).load(b).into(imageView_dp);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            Bitmap bitmap = intent.getBundleExtra("img");
+            imageView_dp.setImageBitmap(FileUtils.stringtoBitmap(DataManager.partyvideoList.data.videolistPage.get(intent.getIntExtra("i",0)).img));
+            textView_dp.setVisibility(View.VISIBLE);
+            dp_tip.setVisibility(View.VISIBLE);
+            textView_dp.setText(DataManager.mypartyvideo.data.videoPage.content);
             imageView_dp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(DetailsPageActivity.this, WebVedioActivity.class).putExtra("url", URLconstant.videourl));
+                    startActivity(new Intent(DetailsPageActivity.this, WebVedioActivity.class).putExtra("url", DataManager.mypartyvideo.data.videoPage.path));
                 }
             });
         }else {
@@ -122,7 +142,6 @@ public class DetailsPageActivity extends BaseActivity {
             }else{
                 dtr1=str;
             }
-
 //            pcontent.setMovementMethod(ScrollingMovementMethod.getInstance());// 设置可滚动
 //            pcontent.setMovementMethod(LinkMovementMethod.getInstance());//设置超链接可以打开网页
 //            String html="<p><strong>强调</strong></p><p><em>斜体</em></p>"
@@ -153,25 +172,6 @@ public class DetailsPageActivity extends BaseActivity {
             CallServer.getInstance().add(DetailsPageActivity.this, Request, GsonCallBack.getInstance(), 0x007, true, false, true);
 
         }
-        et_comn.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    // 先隐藏键盘
-                    ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                            .hideSoftInputFromWindow(DetailsPageActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                    //进行搜索操作的方法，在该方法中可以加入mEditSearchUser的非空判断
-                    sendShow(et_comn.getText().toString());
-                }
-                return false;
-            }
-        });
-        et_send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendShow(et_comn.getText().toString());
-            }
-        });
         handler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -200,19 +200,38 @@ public class DetailsPageActivity extends BaseActivity {
                 }
             }
         };
-    }
-    public void sendShow(String et){
-        if(!et.equals("")){
-            GsonRequest Request = new GsonRequest(URLINSER +PARTYDETAILSADDCOMN, RequestMethod.GET);
-            Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
-            Request.add("KeyNo", psp.getUSERID());
-            Request.add("deviceId", new Build().MODEL);
-            Request.add("type", 0);//评论内容类型 ( 0 查询党委通知、学习园地、党员扶持评论)
-            Request.add("nvid", DataManager.partyCommDetailsList.data.NewsList.newsid);
-            Request.add("content", et);
-            Request.add("username", psp.getUSERNAME());
-            CallServer.getInstance().add(DetailsPageActivity.this, Request, GsonCallBack.getInstance(), 0x0071, true, false, true);
-        }
+
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showinit();
+            }
+        });
+        dp_slv.setOnScrollListener(new ListenedScrollView.OnScrollListener() {
+            @Override
+            public void onBottomArrived() {
+                //滑倒底部了
+            }
+
+            @Override
+            public void onScrollStateChanged(ListenedScrollView view, int scrollState) {
+                //滑动状态改变
+                if (scrollState==0){
+                    fab1.setVisibility(View.VISIBLE);
+                }else if(scrollState==1) {
+                    fab1.setVisibility(View.GONE);
+                }
+                else {
+                    fab1.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onScrollChanged(int l, int t, int oldl, int oldt) {
+                //滑动位置改变
+            }
+        });
+
     }
 
     Html.ImageGetter imgGetter1 = new Html.ImageGetter() {
@@ -278,6 +297,39 @@ public class DetailsPageActivity extends BaseActivity {
 
         Log.d("VACK", doc.toString());
         return doc.toString();
+    }
+
+    /**
+     * 评论dialog
+     */
+    public void showinit() {
+        et = new EditText(DetailsPageActivity.this);
+        et.setPadding(20,50,0,0);
+        new AlertDialog.Builder(DetailsPageActivity.this)
+                .setTitle("评论")
+                .setView(et)
+                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(!et.equals("")){
+                            GsonRequest Request = new GsonRequest(URLINSER +PARTYDETAILSADDCOMN, RequestMethod.GET);
+                            Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                            Request.add("KeyNo", psp.getUSERID());
+                            Request.add("deviceId", new Build().MODEL);
+                            Request.add("type", 0);//评论内容类型 ( 0 查询党委通知、学习园地、党员扶持评论)
+                            Request.add("nvid", DataManager.partyCommDetailsList.data.NewsList.newsid);
+                            Request.add("content", et.getText().toString());
+                            Request.add("username", psp.getUSERNAME());
+                            CallServer.getInstance().add(DetailsPageActivity.this, Request, GsonCallBack.getInstance(), 0x0071, true, false, true);
+                        }else{
+                            Toast.show("评论内容不能为空!!!");
+                        }
+
+                    }
+                })
+                .setNegativeButton("取消", null)
+                .setCancelable(false)
+                .show();
     }
 
 }

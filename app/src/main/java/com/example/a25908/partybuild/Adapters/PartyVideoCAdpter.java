@@ -8,11 +8,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
-import com.example.a25908.partybuild.Utils.FileUtils;
 
+import java.io.IOException;
 import java.util.List;
+
+import Decoder.BASE64Decoder;
 
 /**
  * 党委通知 和 党建视频 的adapter
@@ -58,8 +62,14 @@ public class PartyVideoCAdpter extends BaseAdapter {
         else {
             viewHolder = (ViewHolder) view.getTag();
         }
-
-        viewHolder.imageView12.setImageBitmap(FileUtils.stringtoBitmap(list.get(i).img));
+        try {
+            BASE64Decoder decode = new BASE64Decoder();
+            byte[] b = decode.decodeBuffer(list.get(i).img);
+            Glide.with(mContext).load(b).diskCacheStrategy(DiskCacheStrategy.ALL).into(viewHolder.imageView12);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        viewHolder.imageView12.setImageBitmap(FileUtils.stringtoBitmap(list.get(i).img));
         viewHolder.title.setText(list.get(i).title);
         viewHolder.context.setText(list.get(i).describes);
         viewHolder.browse.setText(list.get(i).browe);

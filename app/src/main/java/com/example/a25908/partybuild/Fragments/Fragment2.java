@@ -20,7 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.a25908.partybuild.Activitys.LoginActivity;
+import com.example.a25908.partybuild.Activitys.OrganizationalActivity;
 import com.example.a25908.partybuild.Activitys.PartymembersdetailsActivity;
 import com.example.a25908.partybuild.Contacts.PinYinKit;
 import com.example.a25908.partybuild.Contacts.PinyinComparator;
@@ -137,11 +137,11 @@ public class Fragment2 extends Fragment  {
                                 //        姓名集合
                                 String[] str = new String[size];
                                 //        头像集合
-                                int[] img = new int[size];
+                                String [] img = new String[size];
 
                                 for (int i = 0; i < size; i++) {
                                     str[i] = DataManager.PartyerList.data.UserlistPage.get(i).USERNAME;
-                                    img[i] = R.mipmap.banner;
+                                    img[i] = DataManager.PartyerList.data.UserlistPage.get(i).HEAD_IMG;
                                 }
 
                                 sortListView.setSelector(new ColorDrawable(Color.TRANSPARENT));
@@ -206,12 +206,18 @@ public class Fragment2 extends Fragment  {
                 }
             }
         };
+        zzjg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    startActivity(new Intent(getActivity(), OrganizationalActivity.class));
+            }
+        });
 
 
         return v;
     }
 
-    private List<SortModel> filledData(String [] date,int [] img) throws BadHanyuPinyinOutputFormatCombination {
+    private List<SortModel> filledData(String [] date,String [] img) throws BadHanyuPinyinOutputFormatCombination {
         List<SortModel> mSortList = new ArrayList<SortModel>();
 
         for(int i=0; i<date.length; i++){

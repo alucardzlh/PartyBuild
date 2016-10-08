@@ -53,6 +53,22 @@ public class PartySharePreferences {
             editor.putString("PARTYTIME", user.data.join_party+"");
             editor.putString("USERID", user.data.userid+"");
             editor.commit();
+    }
+    }
+    /**
+     * 保存问卷提交状态
+     */
+    public void putQSA(Boolean b){
+        if(sp!=null){
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putBoolean("QuestionSurvey", b);
+            editor.commit();}
+    }
+    public boolean getQSA() {
+        if(sp!=null) {
+            return sp.getBoolean("QuestionSurvey", false);
+        }else{
+            return false;
         }
     }
 

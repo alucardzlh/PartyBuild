@@ -75,7 +75,6 @@ public class FilesListAdapter extends BaseAdapter {
         }
         vh.files_name.setText(list1.get(position).NAME);
         vh.files_size.setText(FileUtils.FormentFileSize(list1.get(position).SIZE));
-        vh.files_path.setText(list1.get(position).PATH);
         vh.files_time.setText(list1.get(position).ADD_TIME);
 
         return view;

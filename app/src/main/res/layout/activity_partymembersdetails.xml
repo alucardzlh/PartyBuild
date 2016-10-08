@@ -19,10 +19,11 @@
         android:background="@color/white"
         android:orientation="horizontal">
         <com.example.a25908.partybuild.Views.RoundImageView
+            android:id="@+id/pmd_img"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="10dp"
-            android:background="@mipmap/banner"/>
+         />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,6 +92,19 @@
         android:background="@color/white"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/pbd_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="电话："/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/huise"/>
+        <TextView
             android:id="@+id/pbd_dangwei"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
@@ -99,7 +113,7 @@
             android:text="单位："/>
         <View
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="1dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/huise"/>

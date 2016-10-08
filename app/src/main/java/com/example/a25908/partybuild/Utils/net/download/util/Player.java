@@ -12,16 +12,15 @@ import android.widget.SeekBar;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
-
 /**
- * ½ø¶ÈÌõ
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 public class Player implements OnBufferingUpdateListener, OnCompletionListener,
 		OnPreparedListener {
 
-	public MediaPlayer mediaPlayer; // Ã½Ìå²¥·ÅÆ÷
-	private SeekBar seekBar; // ÍÏ¶¯Ìõ
-	private Timer mTimer = new Timer(); // ¼ÆÊ±Æ÷
+	public MediaPlayer mediaPlayer; // Ã½ï¿½å²¥ï¿½ï¿½ï¿½ï¿½
+	private SeekBar seekBar; // ï¿½Ï¶ï¿½ï¿½ï¿½
+	private Timer mTimer = new Timer(); // ï¿½ï¿½Ê±ï¿½ï¿½
 
 	public Player(SeekBar seekBar) {
 		super();
@@ -44,7 +43,7 @@ public class Player implements OnBufferingUpdateListener, OnCompletionListener,
 			if (mediaPlayer == null)
 				return;
 			if (mediaPlayer.isPlaying() && seekBar.isPressed() == false) {
-				handler.sendEmptyMessage(0); // ·¢ËÍÏûÏ¢
+				handler.sendEmptyMessage(0); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 			}
 		}
 	};
@@ -68,7 +67,7 @@ public class Player implements OnBufferingUpdateListener, OnCompletionListener,
 		try {
 			mediaPlayer.reset();
 			mediaPlayer.setDataSource(url);
-			mediaPlayer.prepare(); // prepare×Ô¶¯²¥·Å
+			mediaPlayer.prepare(); // prepareï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (SecurityException e) {

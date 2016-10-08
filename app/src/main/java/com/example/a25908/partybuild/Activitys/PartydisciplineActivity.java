@@ -2,6 +2,7 @@ package com.example.a25908.partybuild.Activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -67,6 +68,6 @@ public class PartydisciplineActivity extends BaseActivity {
 
         pdp_title.setText(DataManager.myTCTPdanggui.data.commentList.get(i).TITLE+"");
         pdp_time.setText("("+DataManager.myTCTPdanggui.data.commentList.get(i).DESCRIBES+")");
-        pdp_con.setText(DataManager.myTCTPdanggui.data.commentList.get(i).CONTENT);
+        pdp_con.setText(Html.fromHtml(DataManager.myTCTPdanggui.data.commentList.get(i).CONTENT));
     }
 }

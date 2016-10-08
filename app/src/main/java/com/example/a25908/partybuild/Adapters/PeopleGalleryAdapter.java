@@ -1,7 +1,6 @@
 package com.example.a25908.partybuild.Adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +9,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
-import com.example.a25908.partybuild.Utils.FileUtils;
 
+import java.io.IOException;
 import java.util.List;
+
+import Decoder.BASE64Decoder;
+
 /**
  * @author yusi
  * 人物长廊界面Adapter
@@ -55,8 +59,15 @@ public class PeopleGalleryAdapter extends BaseAdapter {
         } else {
             vh = (ViewHolder) view.getTag();
         }
-        Bitmap bitmap = FileUtils.stringtoBitmap(list.get(position).title_img);
-        vh.img_pgi.setImageBitmap(bitmap);
+        try {
+            BASE64Decoder decode = new BASE64Decoder();
+            byte[] b = decode.decodeBuffer(list.get(position).title_img);
+            Glide.with(context).load(b).diskCacheStrategy(DiskCacheStrategy.ALL).into(vh.img_pgi);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        Bitmap bitmap = FileUtils.stringtoBitmap(list.get(position).title_img);
+//        vh.img_pgi.setImageBitmap(bitmap);
         vh.imgtxt.setText(list.get(position).title);
         return view;
     }
