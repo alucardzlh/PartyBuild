@@ -65,32 +65,22 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
             android:layout_weight="1">
-            <!--浏览-->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="浏览 30"
-                android:textSize="18dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:id="@+id/item_liulan"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_toStartOf="@+id/item_huifu"
-                android:layout_marginEnd="13dp" />
+
             <!--时间-->
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
                 android:orientation="horizontal"
                 android:layout_centerVertical="true"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:id="@+id/linearLayout">
                 <!--时间图片-->
                 <ImageView
                     android:layout_width="20dp"
@@ -108,7 +98,35 @@
                     android:layout_toEndOf="@+id/imageView" />
             </LinearLayout>
 
-        </RelativeLayout>
+            <TextView
+                android:paddingLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:layout_height="match_parent"
+                android:text="发布人：张三"
+                android:textSize="13sp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:id="@+id/faburen"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/linearLayout" />
+            <!--浏览-->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="match_parent"
+                android:text="浏览 30"
+                android:textSize="13dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center|right"
+                android:id="@+id/item_liulan"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/item_huifu"
+                android:layout_marginEnd="13dp" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

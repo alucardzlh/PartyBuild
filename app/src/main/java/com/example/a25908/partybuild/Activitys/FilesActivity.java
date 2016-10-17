@@ -2,6 +2,7 @@ package com.example.a25908.partybuild.Activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -12,18 +13,12 @@ import com.example.a25908.partybuild.Adapters.FilesListAdapter;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Utils.FileUtils;
-import com.example.a25908.partybuild.Utils.URLconstant;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-/**
+/** 文档中心
  * @author yusi
- *         文档中心
+ *
  */
 public class FilesActivity extends BaseActivity {
     @ViewInject(R.id.returnT)
@@ -61,21 +56,21 @@ public class FilesActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String path="";
                 String namehz="";
-                if(! DataManager.DucomentRoomList.data.commentList.get(position).PATH.equals("")){
-                    if( DataManager.DucomentRoomList.data.commentList.get(position).PATH.indexOf("webapps")!=-1){
-                        String [] sstr= DataManager.DucomentRoomList.data.commentList.get(position).PATH.split("webapps");
-                        String b=sstr[1].replace("\\", "/");
-                        path="http://192.168.10.44:7070"+b;
-                        String [] hh= b.split("/");
+                if(!TextUtils.isEmpty(DataManager.DucomentRoomList.data.commentList.get(position).PATH)){
+//                    if( DataManager.DucomentRoomList.data.commentList.get(position).PATH.indexOf("webapps")!=-1){
+//                        String [] sstr= DataManager.DucomentRoomList.data.commentList.get(position).PATH.split("webapps");
+//                        String b=sstr[1].replace("\\", "/");
+                        path="http://192.168.10.44:7070"+DataManager.DucomentRoomList.data.commentList.get(position).PATH;
+                        String [] hh= DataManager.DucomentRoomList.data.commentList.get(position).PATH.split("/");
                         namehz=hh[hh.length-1];
-                    }else{
-                        path=DataManager.DucomentRoomList.data.commentList.get(position).PATH;
-                        String [] hh=DataManager.DucomentRoomList.data.commentList.get(position).PATH.split("/");
-                        namehz=hh[hh.length-1];
-                    }
+//                    }else{
+//                        path=DataManager.DucomentRoomList.data.commentList.get(position).PATH;
+//                        String [] hh=DataManager.DucomentRoomList.data.commentList.get(position).PATH.split("/");
+//                        namehz=hh[hh.length-1];
+//                    }
 
                 }
-                startActivity(new Intent(FilesActivity.this,FileContentActivity.class).putExtra("name",DataManager.DucomentRoomList.data.commentList.get(position).NAME).putExtra("path",path).putExtra("size", FileUtils.FormentFileSize(DataManager.DucomentRoomList.data.commentList.get(position).SIZE)).putExtra("namehz",namehz));
+                startActivity(new Intent(FilesActivity.this,FileContentActivity.class).putExtra("name",DataManager.DucomentRoomList.data.commentList.get(position).NAME).putExtra("path",path).putExtra("size", FileUtils.FormentFileSize(DataManager.DucomentRoomList.data.commentList.get(position).SIZE)).putExtra("namehz",namehz).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
     }

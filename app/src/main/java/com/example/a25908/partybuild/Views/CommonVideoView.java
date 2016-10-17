@@ -20,6 +20,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -41,7 +42,7 @@ public class CommonVideoView extends FrameLayout implements MediaPlayer.OnPrepar
     private FrameLayout viewBox;
     private MyVideoView videoView;
     private LinearLayout videoPauseBtn;
-    private LinearLayout screenSwitchBtn;
+    public LinearLayout screenSwitchBtn;
     private LinearLayout touchStatusView;
     private LinearLayout videoControllerLayout;
     private ImageView touchStatusImg;
@@ -59,6 +60,7 @@ public class CommonVideoView extends FrameLayout implements MediaPlayer.OnPrepar
 
     private Timer timer = new Timer();
 
+    private boolean bl=false;
     private float touchLastX;
     //定义用seekBar当前的位置，触摸快进的时候显示时间
     private int position;
@@ -101,11 +103,19 @@ public class CommonVideoView extends FrameLayout implements MediaPlayer.OnPrepar
         this.context = context;
     }
 
-    public void start(String url){
+    public void start(String url,RelativeLayout imageView){
         videoPauseBtn.setEnabled(false);
         videoSeekBar.setEnabled(false);
-        videoView.setVideoURI(Uri.parse(url));
-        videoView.start();
+
+        imageView.setVisibility(GONE);
+//        if (bl){
+            videoView.setVideoURI(Uri.parse(url));
+            videoView.start();
+
+//        }
+
+
+
     }
 
     public void setFullScreen(){
@@ -116,7 +126,10 @@ public class CommonVideoView extends FrameLayout implements MediaPlayer.OnPrepar
 
     public void setNormalScreen(){
         touchStatusImg.setImageResource(R.mipmap.iconfont_enter_32);
-        this.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,400));
+        LinearLayout.LayoutParams ls = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,400);
+        ls.leftMargin=10;
+        ls.rightMargin=10;
+        this.setLayoutParams(ls);
         videoView.requestLayout();
     }
 
@@ -263,6 +276,7 @@ public class CommonVideoView extends FrameLayout implements MediaPlayer.OnPrepar
                 videoView.start();
                 videoPlayImg.setVisibility(View.INVISIBLE);
                 videoPauseImg.setImageResource(R.mipmap.icon_video_pause);
+                bl = true;
                 break;
             case R.id.videoPauseBtn:
                 if (videoView.isPlaying()) {
@@ -343,5 +357,12 @@ public class CommonVideoView extends FrameLayout implements MediaPlayer.OnPrepar
         videoView.start();
         videoPlayImg.setVisibility(View.INVISIBLE);
         videoPauseImg.setImageResource(R.mipmap.icon_video_pause);
+    }
+
+    public void cpause(){
+        videoView.pause();
+    }
+    public void cstrart(){
+        videoView.start();
     }
 }

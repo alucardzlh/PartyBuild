@@ -60,10 +60,10 @@ public class Fragment1 extends Fragment {
     //    @ViewInject(R.id.gridview)
 //    GridView gridView;
     View v;
-    int[] imgs={R.mipmap.item1,R.mipmap.item2,R.mipmap.item3,R.mipmap.item4,
+    int[] imgs={R.mipmap.item1,R.mipmap.item2,R.mipmap.item1,R.mipmap.item3,R.mipmap.item4,
             R.mipmap.item5,R.mipmap.item6,R.mipmap.item7,R.mipmap.item8,
             R.mipmap.item9};
-    String[] text1={"党委通知","掌上党校","党费缴纳","党建视频",
+    String[] text1={"党委通知","掌上党校","支部活动","党费缴纳","党建视频",
             "学习园地","在线答疑","党员扶持","文档中心",
             "问卷调查"};
 
@@ -94,7 +94,7 @@ public class Fragment1 extends Fragment {
         ImageCycleView mImageCycleView= (ImageCycleView) v.findViewById(R.id.icv_topView);//轮播控件
         List<ImageCycleView.ImageInfo> list = new ArrayList<>();
         list.add(new ImageCycleView.ImageInfo(R.mipmap.banner, "", ""));
-        list.add(new ImageCycleView.ImageInfo(R.mipmap.banner, "", ""));
+        list.add(new ImageCycleView.ImageInfo(R.mipmap.banner123, "", ""));
         mImageCycleView.loadData(list, new ImageCycleView.LoadImageCallBack() {
             @Override
             public ImageView loadAndDisplay(ImageCycleView.ImageInfo imageInfo) {
@@ -150,10 +150,16 @@ public class Fragment1 extends Fragment {
                             startActivity(new Intent(getActivity(), QuestionSurvey2Activity.class));
 //                        break;
                     case 9://问卷调查
+                        wd.dismiss();
                         builder = new AlertDialog.Builder(getActivity());
                             builder.setTitle("提示");
                             builder.setMessage("您已经回答过了");
                             builder.setPositiveButton("确认", null);
+                        builder.show();
+                        break;
+                    case 10://支部活动
+                        wd.dismiss();
+                        startActivity(new Intent(getActivity(), PartyCommitteeActivity.class).putExtra("fl",10));
                         break;
                     case 500:
                         wd.dismiss();
@@ -188,10 +194,22 @@ public class Fragment1 extends Fragment {
                     case 1://掌上党校
                         startActivity(new Intent(getActivity(), PalmPartySchoolActivity.class));
                         break;
-                    case 2: //党费缴纳
+                    case 2: //支部活动
+//                        Toast.show("此模块开发中...!");
+                        wd.show();
+                        Request= new GsonRequest(URLINSER +PARTYCOMM, RequestMethod.GET);
+                        Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                        Request.add("KeyNo", psp.getUSERID());
+                        Request.add("deviceId", new Build().MODEL);
+                        Request.add("type", 4);
+//                        Request.add("PageIndex",);
+//                        Request.add("PageSize",);
+                        CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x0124, true, false, true);
+                        break;
+                    case 3: //党费缴纳
                         startActivity(new Intent(getActivity(), PartyPayActivity.class));
                         break;
-                    case 3: //党建视频
+                    case 4: //党建视频
                         wd.show();
                         Request = new GsonRequest(URLINSER +PARTYVIDEO, RequestMethod.POST);
                         Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
@@ -203,7 +221,7 @@ public class Fragment1 extends Fragment {
                         CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x009, true, false, true);
 
                         break;
-                    case 4://学习园地
+                    case 5://学习园地
                         wd.show();
                         Request = new GsonRequest(URLINSER +PARTYCOMM, RequestMethod.GET);
                         Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
@@ -215,7 +233,7 @@ public class Fragment1 extends Fragment {
                         CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x005, true, false, true);
 
                         break;
-                    case 5: //在线答疑
+                    case 6: //在线答疑
                         wd.show();
                         Request= new GsonRequest(URLINSER +FAQ, RequestMethod.GET);
                         Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
@@ -225,7 +243,7 @@ public class Fragment1 extends Fragment {
 //                        Request.add("PageSize",);
                         CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x0010, true, false, true);
                         break;
-                    case 6: //党员扶持
+                    case 7: //党员扶持
                         wd.show();
                         Request= new GsonRequest(URLINSER +PARTYCOMM, RequestMethod.GET);
                         Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
@@ -236,7 +254,7 @@ public class Fragment1 extends Fragment {
 //                        Request.add("PageSize",);
                         CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x006, true, false, true);
                         break;
-                    case 7://文档中心
+                    case 8://文档中心
                         wd.show();
                         Request= new GsonRequest(URLINSER +DOCUMENTROOM, RequestMethod.GET);
                         Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
@@ -247,7 +265,7 @@ public class Fragment1 extends Fragment {
                         CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x008, true, false, true);
 
                         break;
-                    case 8: //问卷调查
+                    case 9: //问卷调查
 //                        Toast.show("此模块开发中...!");
                         wd.show();
                         Request= new GsonRequest(URLINSER +SURVEY, RequestMethod.GET);
@@ -256,6 +274,7 @@ public class Fragment1 extends Fragment {
                         Request.add("deviceId", new Build().MODEL);
                         CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x0011, true, false, true);
                         break;
+
 
                 }
             }

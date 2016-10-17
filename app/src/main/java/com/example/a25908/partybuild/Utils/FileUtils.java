@@ -102,9 +102,6 @@ public class FileUtils {
     public static List<String> getFile(File file){
         List<String> list=new ArrayList<>();
         File[] files=file.listFiles(filter);
-        //版本大于6.0的情况
-        if (!file.exists()) {
-            file.mkdirs();
             for(File f:files){
                 if(f.isDirectory()){
                     getFile(f);
@@ -114,7 +111,6 @@ public class FileUtils {
                     System.out.println("文件名："+f.getName()+">>>路径："+f.getPath());
                 }
             }
-        }
 
         return list;
     }
@@ -283,4 +279,32 @@ public class FileUtils {
         }
         return true;
     }
+
+    /**
+     * 解决图片内存溢出问题方法
+     *
+     * @param path
+     * @param screenWidth
+     * @param screenHeight
+     * @return
+     */
+    public static Bitmap decodeBitmap(String path, int screenWidth, int screenHeight) {
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inJustDecodeBounds = true; //设置为true, 加载器不会返回图片, 而是设置Options对象中以out开头的字段.即仅仅解码边缘区域
+        BitmapFactory.decodeFile(path, opts);
+        // 得到图片的宽和高
+        int imageWidth = opts.outWidth;
+        int imageHeight = opts.outHeight;
+        // 计算缩放比例
+        int widthScale = imageWidth / screenWidth;
+        int heightScale = imageHeight / screenHeight;
+        int scale = widthScale > heightScale ? widthScale : heightScale;
+        // 指定加载可以加载出图片.
+        opts.inJustDecodeBounds = false;
+        // 使用计算出来的比例进行缩放
+        opts.inSampleSize = scale;
+        Bitmap bmp = BitmapFactory.decodeFile(path, opts);
+        return bmp;
+    }
+
 }

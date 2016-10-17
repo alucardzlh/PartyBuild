@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.a25908.partybuild.Adapters.SupportAdapter;
+import com.example.a25908.partybuild.Dialogs.WaitDialog;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.Model.DataManager;
@@ -22,11 +23,6 @@ import com.example.a25908.partybuild.Utils.PartySharePreferences;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yolanda.nohttp.RequestMethod;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYDETAILS;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
@@ -45,6 +41,7 @@ public class SupportActivity extends BaseActivity {
     private SupportAdapter adapter;
     public static Handler handler;
     PartySharePreferences psp;
+    WaitDialog wd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +57,7 @@ public class SupportActivity extends BaseActivity {
                 finish();
             }
         });
+        wd = new WaitDialog(this);
 
         init();
         handler=new Handler(){
@@ -68,7 +66,8 @@ public class SupportActivity extends BaseActivity {
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 0:
-                        startActivity(new Intent(SupportActivity.this,DetailsPageActivity.class));
+                        wd.dismiss();
+                        startActivity(new Intent(SupportActivity.this,DetailsPageActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         break;
                 }
             }
@@ -81,6 +80,7 @@ public class SupportActivity extends BaseActivity {
         list_sa.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                wd.show();
                 GsonRequest Request = new GsonRequest(URLINSER +PARTYDETAILS, RequestMethod.GET);
                 Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
                 Request.add("KeyNo", psp.getUSERID());

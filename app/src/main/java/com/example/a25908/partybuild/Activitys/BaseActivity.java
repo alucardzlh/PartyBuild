@@ -1,18 +1,14 @@
 package com.example.a25908.partybuild.Activitys;
 
 import android.app.Activity;
-import android.os.Build;
 import android.view.KeyEvent;
-import android.view.View;
 
 import com.example.a25908.partybuild.R;
 
-/**
- * Created by 25908 on 2016/8/29.
- */
-/**
+
+/**acticity 继承类
  * @author lilonghai
- * acticity 继承类
+ *
  */
 public class BaseActivity extends Activity {
     @Override

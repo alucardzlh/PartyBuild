@@ -1,8 +1,10 @@
 package com.example.a25908.partybuild;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.a25908.partybuild.Utils.FileUtils;
+import com.example.a25908.partybuild.Utils.PartySharePreferences;
 import com.igexin.sdk.PushManager;
 import com.yolanda.nohttp.Logger;
 import com.yolanda.nohttp.NoHttp;
@@ -15,6 +17,7 @@ import com.yolanda.nohttp.NoHttp;
 public class Application extends android.app.Application {
     private static Application instance;
     private static Context mContext;
+    PartySharePreferences psp;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -28,6 +31,7 @@ public class Application extends android.app.Application {
         PushManager.getInstance().initialize(this);
         //判定文件夹是否存在
         FileUtils.FileNewsExists();
+        psp = new PartySharePreferences();
 
     }
 
@@ -44,4 +48,14 @@ public class Application extends android.app.Application {
         return mContext;
     }
 
+    @Override
+    public void onTerminate() {
+//        GsonRequest Request= new GsonRequest(URLINSER +Quit, RequestMethod.GET);
+//        Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+//        Request.add("KeyNo", psp.getUSERID());
+//        Request.add("deviceId", new Build().MODEL);
+//        CallServer.getInstance().add(mContext, Request, GsonCallBack.getInstance(), 0x02999, true, false, true);
+        Log.e("=sssss","ssss==============================================================================================================");
+        super.onTerminate();
+    }
 }

@@ -14,14 +14,18 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.telephony.SmsManager;
+import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.a25908.partybuild.Dialogs.WaitDialog;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.Model.DataManager;
@@ -38,12 +42,13 @@ import com.yolanda.nohttp.RequestMethod;
 
 import java.util.ArrayList;
 
+import static com.example.a25908.partybuild.Utils.URLconstant.PARTYRTLISTEWM;
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYRTNOTESURL;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
-/**
+/**党员详情
  * @author yusi
- * 党员详情
+ *
  */
 public class PartymembersdetailsActivity extends BaseActivity {
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 0;
@@ -52,6 +57,10 @@ public class PartymembersdetailsActivity extends BaseActivity {
     private ImageView back;
     @ViewInject(R.id.title)
     private TextView title;
+    @ViewInject(R.id.ewm)
+    public static ImageView ewm;
+    @ViewInject(R.id.linssss)
+    LinearLayout linssss;
 
     @ViewInject(R.id.pbd_name)
     private TextView pbd_name;
@@ -97,7 +106,12 @@ public class PartymembersdetailsActivity extends BaseActivity {
 
     PartySharePreferences psp;
 
+    WaitDialog wd;
+
     String pid,phone;
+
+    // 声明PopupWindow对象的引用
+    private PopupWindow popupWindow;
 
     public static Handler handler;
     @Override
@@ -105,14 +119,28 @@ public class PartymembersdetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partymembersdetails);
         ViewUtils.inject(this);
+        wd = new WaitDialog(this);
         psp=PartySharePreferences.getLifeSharedPreferences();
         title.setText(getResources().getString(R.string.pbd_title));
+        ewm.setVisibility(View.VISIBLE);
+        ewm.setImageResource(R.mipmap.ewm2);
         title.setVisibility(View.VISIBLE);
         back.setVisibility(View.VISIBLE);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        ewm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                wd.show();
+                GsonRequest Request= new GsonRequest(URLINSER +PARTYRTLISTEWM, RequestMethod.GET);
+                Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                Request.add("KeyNo", psp.getUSERID());
+                Request.add("deviceId", new Build().MODEL);
+                CallServer.getInstance().add(PartymembersdetailsActivity.this, Request, GsonCallBack.getInstance(), 0x0299, true, false, true);
             }
         });
         Intent i=getIntent();
@@ -123,15 +151,49 @@ public class PartymembersdetailsActivity extends BaseActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                switch (msg.what){
+                switch (msg.what) {
                     case 0:
-                        pbd_Notes.setText("【备注： "+et.getText().toString()+" 】");
+                        pbd_Notes.setText("【备注： " + et.getText().toString() + " 】");
                         DataManager.PartyerList.data.UserlistPage.clear();//清空数据集合，以便某些判断执行
                         break;
                     case 1:
                         Toast.show("备注修改失败!");
                         break;
+                    case 10:
+                        wd.dismiss();
+                        View popupWindow_view = getLayoutInflater().inflate(R.layout.popwindos, null,
+                                false);
+                        ImageView imageView = (ImageView) popupWindow_view.findViewById(R.id.iv_pop);
+                        imageView.setImageBitmap(FileUtils.stringtoBitmap(DataManager.messageMar.head_img));
+                        // 创建PopupWindow实例,200,LayoutParams.MATCH_PARENT分别是宽度和高度
+                        popupWindow = new PopupWindow(popupWindow_view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
+                        // 这里是位置显示方式,在屏幕的左侧
+                        popupWindow.showAtLocation(linssss, Gravity.CENTER, 0, 0);
+                        // 点击其他地方消失
+                        popupWindow_view.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                // TODO Auto-generated method stub
+                                if (popupWindow != null && popupWindow.isShowing()) {
+                                    popupWindow.dismiss();
+                                    popupWindow = null;
+                                }
+                                return false;
+                            }
+                        });
+
+                    break;
+                    case 11:
+                        wd.dismiss();
+                        android.app.AlertDialog.Builder builder233 = new android.app.AlertDialog.Builder(PartymembersdetailsActivity.this);
+                        builder233.setTitle("提示");
+                        builder233.setMessage("服务器出错");
+                        builder233.setPositiveButton(R.string.button_ok, null);
+                        builder233.setOnCancelListener(null);
+                        builder233.show();
+                        break;
                 }
+
             }
         };
 
@@ -141,7 +203,7 @@ public class PartymembersdetailsActivity extends BaseActivity {
         for (int i=0;i<DataManager.PartyerList.data.UserlistPage.size();i++){
             if(DataManager.PartyerList.data.UserlistPage.get(i).USERNAME.equals(name)){
                 try{
-                    if(!DataManager.PartyerList.data.UserlistPage.get(i).HEAD_IMG.equals("")){
+                    if(!TextUtils.isEmpty(DataManager.PartyerList.data.UserlistPage.get(i).HEAD_IMG)){
                         pmd_img.setImageBitmap(FileUtils.stringtoBitmap(DataManager.PartyerList.data.UserlistPage.get(i).HEAD_IMG));
                     }else{
                         pmd_img.setImageResource(R.mipmap.appicon);
@@ -160,7 +222,7 @@ public class PartymembersdetailsActivity extends BaseActivity {
                 pid=DataManager.PartyerList.data.UserlistPage.get(i).USERID;
                 phone=DataManager.PartyerList.data.UserlistPage.get(i).MOBILE;
                 try{
-                    if(!DataManager.PartyerList.data.UserlistPage.get(i).note.equals("")){
+                    if(!TextUtils.isEmpty(DataManager.PartyerList.data.UserlistPage.get(i).note)){
                         pbd_Notes.setText("【备注： "+DataManager.PartyerList.data.UserlistPage.get(i).note+" 】");
                     }
                 }catch (NullPointerException e){
@@ -234,7 +296,7 @@ public class PartymembersdetailsActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                GsonRequest Request = new GsonRequest(URLINSER +PARTYRTNOTESURL, RequestMethod.GET);
+                GsonRequest Request = new GsonRequest(URLINSER + PARTYRTNOTESURL, RequestMethod.GET);
                 Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
                 Request.add("KeyNo", psp.getUSERID());
                 Request.add("udid", pid);
@@ -256,7 +318,7 @@ public class PartymembersdetailsActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 //                //启动
-                startActivity(new Intent("android.intent.action.CALL",Uri.parse("tel:"+phone)));
+                startActivity(new Intent("android.intent.action.CALL", Uri.parse("tel:"+phone)));
 //                Toast.show("此功能正在施工中...");
             }
         });
@@ -316,7 +378,7 @@ public class PartymembersdetailsActivity extends BaseActivity {
 //                        it.putExtra(android.provider.ContactsContract.Intents.Insert.SECONDARY_PHONE, "18600001111");
 //                        // 住宅电话
 //                        it.putExtra(android.provider.ContactsContract.Intents.Insert.TERTIARY_PHONE, "010-7654321");
-                        if (!DataManager.PartyerList.data.UserlistPage.get(i).note.equals("")) {
+                        if (!TextUtils.isEmpty(DataManager.PartyerList.data.UserlistPage.get(i).note)) {
                             // 备注信息
                             it.putExtra(android.provider.ContactsContract.Intents.Insert.JOB_TITLE, DataManager.PartyerList.data.UserlistPage.get(i).note);
                         }

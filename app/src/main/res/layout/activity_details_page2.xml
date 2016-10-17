@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_details_page"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="#F6F6F6"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.example.a25908.partybuild.Activitys.DetailsPageActivity">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+        <include layout="@layout/headbar"/>
+
+        <com.example.a25908.partybuild.Views.ListenedScrollView
+            android:id="@+id/dp_slv"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport="true">
+            <LinearLayout
+                android:layout_alignBottom="@+id/s2333333"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:id="@+id/im_dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/title_xiangqin"/>
+                <TextView
+                    android:id="@+id/ptitle"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:paddingLeft="15dp"
+                    android:gravity="bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="新建区举行脱贫攻坚政策学习及业务培训工作会"
+                    />
+
+                <LinearLayout
+                    android:layout_marginLeft="13dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:id="@+id/dp_time"
+                    android:orientation="horizontal">
+                    <!--时间图片-->
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_history_record"
+                        android:id="@+id/imageView" />
+                    <TextView
+                        android:id="@+id/ptime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:textSize="13sp"
+                        android:text="08-27 17:56"
+                        />
+                </LinearLayout>
+                <!--<ImageView
+                    android:id="@+id/imageView_dp"
+                    android:layout_margin="10dp"
+                    android:visibility="gone"
+                    android:src="@mipmap/banner"
+                    android:scaleType="fitCenter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />-->
+                <com.example.a25908.partybuild.Views.CommonVideoView
+                    android:id="@+id/common_videoView"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="400px" />
+
+                <WebView
+                    android:id="@+id/pcontent"
+                    android:layout_marginTop="15dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+                <com.example.a25908.partybuild.Views.MyListView
+                    android:id="@+id/mylist_comm"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </com.example.a25908.partybuild.Views.ListenedScrollView>
+    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        app:backgroundTint="@color/red"
+        app:rippleColor="#ff87ffeb"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        android:src="@drawable/ic_add_black_24dp"
+        />
+</android.support.design.widget.CoordinatorLayout>

@@ -53,6 +53,55 @@
 十六大以来，以胡锦涛同志为主要代表的中国共产党人，坚持以邓小平理论和“三个代表”重要思想为指导，根据新的发展要求，深刻认识和回答了新形势下实现什么样的发展、怎样发展等重大问题，形成了以人为本、全面协调可持续发展的科学发展观。科学发展观，是同马克思列宁主义、毛泽东思想、邓小平理论、“三个代表”重要思想既一脉相承又与时俱进的科学理论，是马克思主义关于发展的世界观和方法论的集中体现，是马克思主义中国化最新成果，是中国共产党集体智慧的结晶，是发展中国特色社会主义必须坚持和贯彻的指导思想。
 改革开放以来我们取得一切成绩和进步的根本原因，归结起来就是：开辟了中国特色社会主义道路，形成了中国特色社会主义理论体系，确立了中国特色社会主义制度。全党同志要倍加珍惜、长期坚持和不断发展党历经艰辛开创的这条道路、这个理论体系、这个制度，高举中国特色社会主义伟大旗帜，为实现推进现代化建设、完成祖国统一、维护世界和平与促进共同发展这三大历史任务而奋斗。
 我国正处于并将长期处于社会主义初级阶段。这是在经济文化落后的中国建设社会主义现代化不可逾越的历史阶段，需要上百年的时间。我国的社会主义建设，必须从我国的国情出发，走中国特色社会主义道路。在现阶段，我国社会的主要矛盾是人民日益增长的物质文化需要同落后的社会生产之间的矛盾。由于国内的因素和国际的影响，阶级斗争还在一定范围内长期存在，在某种条件下还有可能激化，但已经不是主要矛盾。我国社会主义建设的根本任务，是进一步解放生产力，发展生产力，逐步实现社会主义现代化，并且为此而改革生产关系和上层建筑中不适应生产力发展的方面和环节。必须坚持和完善公有制为主体、多种所有制经济共同发展的基本经济制度，坚持和完善按劳分配为主体、多种分配方式并存的分配制度，鼓励一部分地区和一部分人先富起来，逐步消灭贫穷，达到共同富裕，在生产发展和社会财富增长的基础上不断满足人民日益增长的物质文化需要，促进人的全面发展。发展是我们党执政兴国的第一要务。各项工作都要把有利于发展社会主义社会的生产力，有利于增强社会主义国家的综合国力，有利于提高人民的生活水平，作为总的出发点和检验标准，尊重劳动、尊重知识、尊重人才、尊重创造，做到发展为了人民、发展依靠人民、发展成果由人民共享。跨入新世纪，我国进入全面建设小康社会、加快推进社会主义现代化的新的发展阶段。必须按照中国特色社会主义事业总体布局，全面推进经济建设、政治建设、文化建设、社会建设、生态文明建设。在新世纪新阶段，经济和社会发展的战略目标是，巩固和发展已经初步达到的小康水平，到建党一百年时，建成惠及十几亿人口的更高水平的小康社会；到建国一百年时，人均国内生产总值达到中等发达国家水平，基本实现现代化。</string>
+
+
+    <!--二维码-->
+    <string name="app_version">for Android V</string>
+    <string name="menu_settings">Settings</string>
+    <string name="home_right_title">Categories</string>
+    <string name="button_download_text">Download</string>
+    <string name="button_done_text">Done</string>
+    <string name="button_confirm">Confirm</string>
+    <string name="button_cancel_text">Cancel</string>
+    <string name="button_yes">Yes</string>
+    <string name="button_delete">Delete</string>
+    <string name="bookmark_warning">Bookmarks attached to the magazine will be deleted simultaneously</string>
+    <string name="button_ok">OK</string>
+    <string name="login">Login</string>
+    <string name="waiting">Please wait. . .</string>
+    <string name="contents_contact">Contact info</string>
+    <string name="contents_email">Email address</string>
+    <string name="contents_location">Geographic coordinates</string>
+    <string name="contents_phone">Phone number</string>
+    <string name="contents_sms">SMS address</string>
+    <string name="contents_text">Plain text</string>
+    <string name="msg_bulk_mode_scanned">Bulk mode: barcode scanned and saved</string>
+    <string name="msg_camera_framework_bug">权限获取失败，无法打开相机，请到设置中开放相机权限</string>
+    <string name="msg_default_format">Format</string>
+    <string name="msg_default_meta">Metadata</string>
+    <string name="msg_default_status">Place a barcode inside the viewfinder rectangle to scan it.</string>
+    <string name="msg_default_time">Time</string>
+    <string name="msg_default_type">Type</string>
+    <string name="preferences_actions_title">When a barcode is found\u2026</string>
+    <string name="preferences_copy_to_clipboard_title">Copy to clipboard</string>
+    <string name="preferences_decode_1D_title">1D barcodes</string>
+    <string name="preferences_decode_Data_Matrix_title">Data Matrix</string>
+    <string name="preferences_decode_QR_title">QR Codes</string>
+    <string name="preferences_play_beep_title">Beep</string>
+    <string name="preferences_remember_duplicates_summary">Store multiple scans of the same barcode in History</string>
+    <string name="preferences_remember_duplicates_title">Remember duplicates</string>
+    <string name="preferences_scanning_title">When scanning for barcodes, decode\u2026</string>
+    <string name="preferences_supplemental_summary">Try to retrieve more information about the barcode contents</string>
+    <string name="preferences_supplemental_title">Retrieve more info</string>
+    <string name="preferences_vibrate_title">Vibrate</string>
+    <string name="preview_msg">&#160;preview pages available,click Download for more.</string>
+    <string name="onsite_checked">Onsite Checked</string>
+    <string name="license_verified">License Verified</string>
+    <string name="share_linkedin">Share on Linkedin</string>
+    <string name="share_twitter">Share on Twitter</string>
+    <string name="times">Times</string>
+    <string name="time">Time</string>
+    <string name="scan_text">放入框中即可进行二维码扫描</string>
 </resources>
 
 

@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,9 +25,9 @@ import com.yolanda.nohttp.RequestMethod;
 import static com.example.a25908.partybuild.Utils.URLconstant.OPINION;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
-/**
+/**意见反馈
  * @author yusi
- * 意见反馈
+ *
  */
 public class OpinionActivity extends BaseActivity {
     @ViewInject(R.id.returnT)
@@ -57,20 +58,24 @@ public class OpinionActivity extends BaseActivity {
                 finish();
             }
         });
-        String content = op_et.getText().toString();
         //提交
         oksend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                new WaitDialog(OpinionActivity.this).show();
-                GsonRequest OpinionRequest = new GsonRequest(URLINSER + OPINION, RequestMethod.GET);
-                OpinionRequest.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
-                OpinionRequest.add("deviceId",new Build().MODEL);
-                OpinionRequest.add("username",psp.getUSERNAME());
-                OpinionRequest.add("content",op_et.getText().toString());
-                OpinionRequest.add("mobile",op_phone.getText().toString());
-                OpinionRequest.add("KeyNo",psp.getUSERID());
-                CallServer.getInstance().add(OpinionActivity.this,OpinionRequest, GsonCallBack.getInstance(),0x102,true,false,true);
+                if (TextUtils.isEmpty(op_et.getText().toString())){
+                    Toast.show("请输入内容");
+                }else{
+                    GsonRequest OpinionRequest = new GsonRequest(URLINSER + OPINION, RequestMethod.GET);
+                    OpinionRequest.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                    OpinionRequest.add("deviceId",new Build().MODEL);
+                    OpinionRequest.add("username",psp.getUSERNAME());
+                    OpinionRequest.add("content",op_et.getText().toString());
+                    OpinionRequest.add("mobile",op_phone.getText().toString());
+                    OpinionRequest.add("KeyNo",psp.getUSERID());
+                    CallServer.getInstance().add(OpinionActivity.this,OpinionRequest, GsonCallBack.getInstance(),0x102,true,false,true);
+                }
+
             }
         });
 

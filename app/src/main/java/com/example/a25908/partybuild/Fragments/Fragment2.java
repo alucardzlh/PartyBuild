@@ -3,6 +3,7 @@ package com.example.a25908.partybuild.Fragments;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,11 +24,13 @@ import android.widget.Toast;
 
 import com.example.a25908.partybuild.Activitys.OrganizationalActivity;
 import com.example.a25908.partybuild.Activitys.PartymembersdetailsActivity;
+import com.example.a25908.partybuild.Adapters.ParentAdapter;
 import com.example.a25908.partybuild.Contacts.PinYinKit;
 import com.example.a25908.partybuild.Contacts.PinyinComparator;
 import com.example.a25908.partybuild.Contacts.SearchEditText;
 import com.example.a25908.partybuild.Contacts.SideBar;
 import com.example.a25908.partybuild.Contacts.SortAdapter;
+import com.example.a25908.partybuild.Dialogs.WaitDialog;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.Model.DataManager;
@@ -44,14 +48,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.example.a25908.partybuild.R.id.sild_bar;
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYRTLISTURL;
+import static com.example.a25908.partybuild.Utils.URLconstant.PARTYRTLISTURL2;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
 /**
  * @author
  * 党员名册
  */
-public class Fragment2 extends Fragment  {
+public class Fragment2 extends Fragment implements ExpandableListView.OnGroupExpandListener, ParentAdapter.OnChildTreeViewClickListener {
     public PinyinComparator comparator = new PinyinComparator();
     //    @ViewInject(R.id.txt_user_list_user_num)
     private TextView userListNumTxt;
@@ -70,6 +76,12 @@ public class Fragment2 extends Fragment  {
     //    private SearchEditText mSearchEditText;
     private SortAdapter adapter;
 
+    private TextView text;
+
+    private View headerView;
+    private View headerView2;
+
+    private ExpandableListView eList;
 
     public static SearchEditText mSearchEditText;
 
@@ -78,19 +90,77 @@ public class Fragment2 extends Fragment  {
 
     public static Handler handler;
     PartySharePreferences psp;
+    WaitDialog waitDialog;
+    private LinearLayout lin_js;
+
+    boolean cx=false;
+
+    private ParentAdapter adapter2;//ExpandableListView的适配器
+    private List<DataManager.ZZplayer.DataBean.UserlistPageBean> parents;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_fragment2, container, false);
         ViewUtils.inject(getActivity());
+        waitDialog = new WaitDialog(getActivity());
         psp=PartySharePreferences.getLifeSharedPreferences();
         mSearchEditText = (SearchEditText) v.findViewById(R.id.txt_filter_edit);
+        lin_js = (LinearLayout) v.findViewById(R.id.lin_js);
         zzjg= (LinearLayout) v.findViewById(R.id.zzjg);
         userListNumTxt= (TextView) v.findViewById(R.id.txt_user_list_user_num);
-        sideBar= (SideBar) v.findViewById(R.id.sild_bar);
+        sideBar= (SideBar) v.findViewById(sild_bar);
         sortListView= (ListView) v.findViewById(R.id.list_view_user_list);
         dialogTxt= (TextView) v.findViewById(R.id.txt_dialog);
         userListNumTxt= (TextView) v.findViewById(R.id.txt_user_list_user_num);
+        eList = (ExpandableListView) v.findViewById(R.id.expandable_list);
+
+        //模糊查询
+        headerView2 = LayoutInflater.from(getActivity()).inflate(R.layout.headview,null);
+        text = (TextView) headerView2.findViewById(R.id.headview2);
+        Drawable drawable= getResources().getDrawable(R.drawable.ic_search_black_24dp);
+/// 这一步必须要做,否则不会显示.
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        text.setCompoundDrawables(drawable,null,null,null);
+        text.setText("模糊查询");
+        text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sideBar.setVisibility(View.VISIBLE);
+                lin_js.setVisibility(View.VISIBLE);
+                eList.setVisibility(View.GONE);
+                sortListView.setVisibility(View.VISIBLE);
+            }
+        });
+        //结构查询
+        headerView = LayoutInflater.from(getActivity()).inflate(R.layout.headview,null);
+        text = (TextView) headerView.findViewById(R.id.headview2);
+        Drawable drawable2 = getResources().getDrawable(R.mipmap.zuzhichaxun);
+/// 这一步必须要做,否则不会显示.
+        drawable2.setBounds(0, 0, drawable2.getMinimumWidth(), drawable2.getMinimumHeight());
+        text.setCompoundDrawables(drawable2,null,null,null);
+        text.setText("结构查询");
+        text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (cx){
+                    sideBar.setVisibility(View.GONE);
+                    lin_js.setVisibility(View.GONE);
+                    eList.setVisibility(View.VISIBLE);
+                    sortListView.setVisibility(View.GONE);
+
+                }else {
+                    waitDialog.show();
+                    GsonRequest Request = new GsonRequest(URLINSER +PARTYRTLISTURL2, RequestMethod.POST);
+                    Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                    Request.add("KeyNo", psp.getUSERID());
+                    Request.add("deviceId", new Build().MODEL);
+                    CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x00323, true, false, true);
+                }
+
+            }
+        });
 
         try{
             if(DataManager.PartyerList.data.UserlistPage.size()>0 && DataManager.PartyerList.data.UserlistPage!=null){
@@ -149,8 +219,9 @@ public class Fragment2 extends Fragment  {
 
                                     public void onItemClick(AdapterView<?> parent, View view, int position,
                                                             long id) {
-                                        Toast.makeText(getActivity(), ((SortModel) adapter.getItem(position)).name, Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(getActivity(), PartymembersdetailsActivity.class).putExtra("name", ((SortModel) adapter.getItem(position)).name));
+                                        //position 如果有headview  position =0 的第一个为headview
+                                        Toast.makeText(getActivity(), ((SortModel) adapter.getItem(position-1)).name, Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getActivity(), PartymembersdetailsActivity.class).putExtra("name", ((SortModel) adapter.getItem(position-1)).name));
                                     }
                                 });
 
@@ -166,6 +237,7 @@ public class Fragment2 extends Fragment  {
 
                                 // sort by a-z
                                 Collections.sort(sortModelList, comparator);
+                                sortListView.addHeaderView(headerView);
                                 adapter = new SortAdapter(getActivity(), sortModelList);
                                 sortListView.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
@@ -179,7 +251,7 @@ public class Fragment2 extends Fragment  {
                                     {
                                         try{
                                             filerData(str.toString());
-                                            if(mSearchEditText.getText().toString().equals("")){
+                                            if(TextUtils.isEmpty(mSearchEditText.getText().toString())){
                                                 zzjg.setVisibility(View.VISIBLE);
                                             }else{
                                                 zzjg.setVisibility(View.GONE);
@@ -201,7 +273,10 @@ public class Fragment2 extends Fragment  {
                             e.printStackTrace();
                         }
                         break;
-                    case 1:
+                    case 1://组织查询
+                        waitDialog.dismiss();
+                        loadData();
+                        initEList();
                         break;
                 }
             }
@@ -270,6 +345,74 @@ public class Fragment2 extends Fragment  {
 
         Collections.sort(mSortList, comparator);
         adapter.updateListView(mSortList);
+    }
+
+
+    /**
+     * @author weixaun
+     *
+     *         初始化菜单数据源
+     * */
+    private void loadData() {
+
+        parents = new ArrayList<DataManager.ZZplayer.DataBean.UserlistPageBean>();
+        parents = DataManager.zzPlayerList.data.UserlistPage;
+    }
+
+    /**
+     * @author weixuan
+     *
+     *         初始化ExpandableListView
+     * */
+    private void initEList() {
+        eList.setOnGroupExpandListener(this);
+
+        adapter2 = new ParentAdapter(getActivity(), parents);
+        eList.addHeaderView(headerView2);
+        eList.setAdapter(adapter2);
+
+        adapter2.setOnChildTreeViewClickListener(this);
+
+        sideBar.setVisibility(View.GONE);
+        lin_js.setVisibility(View.GONE);
+        eList.setVisibility(View.VISIBLE);
+        sortListView.setVisibility(View.GONE);
+        cx = true;
+    }
+    /**
+     * @author weixuan
+     *
+     *         点击子ExpandableListView的子项时，回调本方法，根据下标获取值来做相应的操作
+     * */
+    @Override
+    public void onClickPosition(int parentPosition, int groupPosition,
+                                int childPosition) {
+        // do something
+//        String childName = parents.get(parentPosition).Departmentlist
+//                .get(groupPosition).Userlist.get(childPosition)
+//                .toString();
+//        Toast.makeText(
+//                getActivity(),
+//                "点击的下标为： parentPosition=" + parentPosition
+//                        + "   groupPosition=" + groupPosition
+//                        + "   childPosition=" + childPosition + "\n点击的是："
+//                        + childName, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), DataManager.zzPlayerList.data.UserlistPage.get(parentPosition).Departmentlist.get(groupPosition).Userlist.get(childPosition).USERNAME, Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getActivity(), PartymembersdetailsActivity.class).putExtra("name", DataManager.zzPlayerList.data.UserlistPage.get(parentPosition).Departmentlist.get(groupPosition).Userlist.get(childPosition).USERNAME));
+    }
+
+    /**
+     * @author weixaun
+     *
+     *         展开一项，关闭其他项，保证每次只能展开一项
+     * */
+    @Override
+    public void onGroupExpand(int groupPosition) {
+        for (int i = 0; i < parents.size(); i++) {
+            if (i != groupPosition) {
+                eList.collapseGroup(i);
+            }
+        }
     }
 }
 

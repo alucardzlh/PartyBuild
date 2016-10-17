@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -46,6 +47,8 @@ public class Fragment3 extends Fragment{
     public static Handler handler;
     protected boolean isVisible;
 
+    private boolean touthis = false;//禁止滚动判定
+
     private boolean scrolled=false;//判断是否有滚动位移
     /**
      * 当Fragment可见时加载数据
@@ -82,19 +85,22 @@ public class Fragment3 extends Fragment{
                         rvinit();
                         break;
                    case 2://评论失败
-                       Toast.show("服务器出错");
+                       Toast.show("评论失败");
                         break;
                     case 3://删除成功
                         addData2(psp);
                         Toast.show("删除成功");
                         break;
                     case 4://刷新
+                        list_dy.clear();
                         rvinit();
                        break;
                     case 5://加载
+                        recyclerView.showMoreProgress();
                         list_dy.addAll(mydynamic.data.DynamiclistPage);
                         adapters.setDatas(list_dy);
                         adapters.notifyDataSetChanged();
+                        touthis = false;
                         break;
                     case 6://发布成功
                         HairDynamicActivity.wd.dismiss();
@@ -122,7 +128,12 @@ public class Fragment3 extends Fragment{
         adapters = new DynamicAdapters(getActivity(), list_dy);
         recyclerView.setAdapter(adapters);
         adapters.notifyDataSetChanged();
-
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return touthis;
+            }
+        });
 
         //下拉刷新
         recyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -141,13 +152,15 @@ public class Fragment3 extends Fragment{
         recyclerView.setupMoreListener(new OnMoreListener() {
             @Override
             public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxastVisiblePosition) {
-                recyclerView.showMoreProgress();
+
                 if (Integer.valueOf(DataManager.mydynamic.data.Paging.TotalPage)>Integer.valueOf(DataManager.mydynamic.data.Paging.CurrentPage)) {
+                    recyclerView.showMoreProgress();
+                    touthis = true;
                     GsonRequest TCTPRequest = new GsonRequest(URLINSER + DONGTAI, RequestMethod.GET);
                     TCTPRequest.add("KeyNo", psp.getUSERID());
                     TCTPRequest.add("deviceId", new Build().MODEL);
                     TCTPRequest.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
-                    TCTPRequest.add("PageSize",5);
+                    TCTPRequest.add("PageSize",6);
                     TCTPRequest.add("PageIndex",Integer.valueOf(DataManager.mydynamic.data.Paging.CurrentPage)+1);
                     CallServer.getInstance().add(getActivity(), TCTPRequest, GsonCallBack.getInstance(), 0x3022, true, false, true);
                 }

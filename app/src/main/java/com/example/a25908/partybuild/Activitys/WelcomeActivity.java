@@ -1,12 +1,14 @@
 package com.example.a25908.partybuild.Activitys;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Utils.PartySharePreferences;
 
+/**
+ * loading界面
+ */
 public class WelcomeActivity extends BaseActivity {
     PartySharePreferences psp;
     @Override

@@ -1,6 +1,7 @@
 package com.example.a25908.partybuild.Activitys;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,7 +10,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,8 +37,9 @@ import static com.example.a25908.partybuild.Utils.IntentFile.getTextFileIntent;
 import static com.example.a25908.partybuild.Utils.IntentFile.getWordFileIntent;
 
 /**
- * @author yusi
  * 我的文档
+ * @author yusi
+ *
  */
 public class MyFilesActivity extends BaseActivity {
     private static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 0;
@@ -82,7 +83,6 @@ public class MyFilesActivity extends BaseActivity {
                 dialog.show();
             }
         });
-        File file=new File(Environment.getExternalStorageDirectory() + "/PartyBuild/Documents");
         if (Build.VERSION.SDK_INT >= 23) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
@@ -92,6 +92,7 @@ public class MyFilesActivity extends BaseActivity {
                 return;
             }
         }
+        File file=new File(Environment.getExternalStorageDirectory() + "/PartyBuild/Documents");
         list=getFile(file);
         list1=new ArrayList<>();//文件名
         list2=new ArrayList<>();//文件路径
@@ -173,7 +174,61 @@ public class MyFilesActivity extends BaseActivity {
         Log.e("asas",requestCode+"");//拒绝为0
         if (requestCode==0){
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-
+                File file=new File(Environment.getExternalStorageDirectory() + "/PartyBuild/Documents");
+                list=getFile(file);
+                list1=new ArrayList<>();//文件名
+                list2=new ArrayList<>();//文件路径
+                list3=new ArrayList<>();//文件大小
+                for(int i=0;i<list.size();i++){
+                    String[] str=list.get(i).split("&");
+                    list1.add(str[0]);
+                    list2.add(str[1]);
+                }
+                for(int j=0;j<list2.size();j++){
+                    File files=new File(list2.get(j));
+                    FileUtils g = new FileUtils();
+                    try {
+                        l = g.getFileSizes(files);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    list3.add(g.FormentFileSize(l));
+                    System.out.println( "文件的大小为：" + g.FormentFileSize(l));
+                }
+                adapter=new MysFilesListAdapter(MyFilesActivity.this,list1,list3);
+                files_list.setAdapter(adapter);
+                files_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String[] str=list1.get(position).split("\\.");
+                        Intent i;
+                        switch (str[1]){
+                            case "txt":
+                                i=getTextFileIntent(list2.get(position),false);
+                                startActivity(i);
+                                break;
+                            case "chm":
+                                i=getChmFileIntent(list2.get(position));
+                                startActivity(i);
+                                break;
+                            case "doc":
+                                i=getWordFileIntent(list2.get(position));
+                                startActivity(i);
+                                break;
+                            case "ppt":
+                                i=getPptFileIntent(list2.get(position));
+                                startActivity(i);
+                                break;
+                            case "xls":
+                                i=getExcelFileIntent(list2.get(position));
+                                startActivity(i);
+                                break;
+                            default:
+                                Toast.show("此文件无法打开...");
+                                break;
+                        }
+                    }
+                });
             }
             else {
                 Toast.show("权限获取失败，部分功能无法使用，请到设置中开放权限");

@@ -1,7 +1,13 @@
 package com.example.a25908.partybuild.Activitys;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,11 +16,18 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.alipay.sdk.app.AuthTask;
+import com.alipay.sdk.app.H5PayActivity;
+import com.alipay.sdk.app.PayTask;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Services.CallServer;
+import com.example.a25908.partybuild.Utils.AuthResult;
+import com.example.a25908.partybuild.Utils.OrderInfoUtil2_0;
+import com.example.a25908.partybuild.Utils.PayResult;
+import com.example.a25908.partybuild.Utils.SignUtils;
 import com.example.a25908.partybuild.Views.Toast;
 import com.example.a25908.partybuild.wxapi.Constants;
 import com.example.a25908.partybuild.wxapi.WXPayEntryActivity;
@@ -25,6 +38,14 @@ import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.yolanda.nohttp.RequestMethod;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * 支付详情页
@@ -49,6 +70,19 @@ public class PayDetailsActivity extends BaseActivity {
     private Intent intent;
     private int pay;
     private int type = -1;//-1未选择0支付宝1微信
+    // 商户PID
+    public static final String PID = "2088121879452764";
+    //APPID
+    public static final String APPID = "2016101202114397";
+    // 商户收款账号
+    public static final String TARGET_ID ="13979151616"; //"13979151616@139.com";
+    // 商户私钥，pkcs8格式
+    public static final String RSA_PRIVATE = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAKhbK1zVwtyg9gxr+zg4BmV7Rza3WxzAxroTKedZRZPd+JioK43goy10hTAV15e9hXZVsf2bCssY4/t5RKkI5/HNd6Jc0LsMMMtCJmQ3K5GqSQTxa2GxrWvV4RBKjZ3Yc89JaNdrHmDV9eG6ukJhowWUz3nyq+iV8WMZjsmw3R3/AgMBAAECgYAFMRKMQVdKAHi191p+6FNiK8QNbugTYep+8HpZVQptPeodown8zRGbJD27NuE4H7MO7COaA374tmLJbXrtj4W/hVlStLEF/t2x8Zy6dgWoWz1yV4HPDUKhhcnJAyV61K7dwjPnk6A/WKfPUBtiX+8Fyc+FuGPD8HvVx0MHMIyE6QJBANqXqlnMwxViGHotjWrus2U/zsAWYhOvBZNg8rhcAH7+J6cRVwTJM8Na9d26jYwX7Dj9Hl4K4jb2eQUUdmJR5QUCQQDFKrJ31unq8IsYMhWoYAjX/4LVeisu0VUbMZr7pcYd1h8TP1Xl6WIo4Rm6dNCpSQM2airzUQ3wjXA2EeRlwuYzAkBnEhibGzfpf0W3Zn9GKqOgXEPqwyMf0Ok6Iv6P+6GoP8MGveBgO1cTCHLiSDKyGh2iiYemJE+iRvmtcYaYubDZAkAsKJHsETA2tEUS2DTNjySr68gLs970D2I2QvfpIImsqQYws2Czq3+WlEPE5ODO6VFU4JZaBG9Qzvywv3Ud7XbNAkEAuixHH7PyedKfhwyi+svzS/TbZWSApDoB4lcVOLIv4d8DRnKmlcs33S2SPN80GeIANvG9vXBBLPvVBx2uoG7nFw==";
+    // 支付宝公钥
+    public static final String RSA_PUBLIC = "";//可不填
+    private static final int SDK_PAY_FLAG = 1;//支付宝支付判定
+    private static final int SDK_AUTH_FLAG = 2;//支付宝授权判定
+    String 缴费金额="0.01",缴费类型="党费支付",缴费时间,缴费地址,订单编号;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,9 +127,11 @@ public class PayDetailsActivity extends BaseActivity {
                     case -1:
                         Toast.show("请选择支付方式");
                         break;
-                    case 0:
+                    case 0://支付宝
+                        //pay(view);
+                        payV2(view);
                         break;
-                    case 1:
+                    case 1://微信
                         weChatPay();
                         break;
                 }
@@ -103,6 +139,9 @@ public class PayDetailsActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 微信支付方法
+     */
     private void weChatPay() {
         String url = "http://wxpay.weixin.qq.com/pub_v2/app/app_pay.php?plat=android";//生成测试订单地址
         GsonRequest PayRequest= new GsonRequest(url, RequestMethod.GET);
@@ -129,6 +168,185 @@ public class PayDetailsActivity extends BaseActivity {
             Log.e("PAY_GET", "异常："+e.getMessage());
             android.widget.Toast.makeText(PayDetailsActivity.this, "异常："+e.getMessage(), android.widget.Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @SuppressWarnings("unused")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SDK_PAY_FLAG: {
+                    @SuppressWarnings("unchecked")
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    /**
+                     对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
+                     */
+                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为9000则代表支付成功
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                        android.widget.Toast.makeText(PayDetailsActivity.this, "支付成功", android.widget.Toast.LENGTH_SHORT).show();
+                    } else {
+                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                        android.widget.Toast.makeText(PayDetailsActivity.this, "支付失败", android.widget.Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                }
+                case SDK_AUTH_FLAG: {
+                    @SuppressWarnings("unchecked")
+                    AuthResult authResult = new AuthResult((Map<String, String>) msg.obj, true);
+                    String resultStatus = authResult.getResultStatus();
+
+                    // 判断resultStatus 为“9000”且result_code
+                    // 为“200”则代表授权成功，具体状态码代表含义可参考授权接口文档
+                    if (TextUtils.equals(resultStatus, "9000") && TextUtils.equals(authResult.getResultCode(), "200")) {
+                        // 获取alipay_open_id，调支付时作为参数extern_token 的value
+                        // 传入，则支付账户为该授权账户
+                        android.widget.Toast.makeText(PayDetailsActivity.this,
+                                "授权成功\n" + String.format("authCode:%s", authResult.getAuthCode()), android.widget.Toast.LENGTH_SHORT)
+                                .show();
+                    } else {
+                        // 其他状态值则为授权失败
+                        android.widget.Toast.makeText(PayDetailsActivity.this,
+                                "授权失败" + String.format("authCode:%s", authResult.getAuthCode()), android.widget.Toast.LENGTH_SHORT).show();
+
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        };
+    };
+
+
+    /**
+     * 支付宝支付业务
+     *
+     * @param v
+     */
+    public void payV2(View v) {
+        if (TextUtils.isEmpty(APPID) || TextUtils.isEmpty(RSA_PRIVATE)) {
+            new AlertDialog.Builder(this).setTitle("警告").setMessage("需要配置APPID | RSA_PRIVATE")
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialoginterface, int i) {
+                            //
+                            finish();
+                        }
+                    }).show();
+            return;
+        }
+
+        /**
+         * 这里只是为了方便直接向商户展示支付宝的整个支付流程；所以Demo中加签过程直接放在客户端完成；
+         * 真实App里，privateKey等数据严禁放在客户端，加签过程务必要放在服务端完成；
+         * 防止商户私密数据泄露，造成不必要的资金损失，及面临各种安全风险；
+         *
+         * orderInfo的获取必须来自服务端；
+         */
+        Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(APPID);
+        String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
+        String sign = OrderInfoUtil2_0.getSign(params, RSA_PRIVATE);
+        final String orderInfo = orderParam + "&" + sign;
+
+        Runnable payRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                PayTask alipay = new PayTask(PayDetailsActivity.this);
+                Map<String, String> result = alipay.payV2(orderInfo, true);
+                Log.i("msp", result.toString());
+
+                Message msg = new Message();
+                msg.what = SDK_PAY_FLAG;
+                msg.obj = result;
+                mHandler.sendMessage(msg);
+            }
+        };
+
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
+    }
+
+    /**
+     * 支付宝账户授权业务
+     *
+     * @param v
+     */
+    public void authV2(View v) {
+        if (TextUtils.isEmpty(PID) || TextUtils.isEmpty(APPID) || TextUtils.isEmpty(RSA_PRIVATE)
+                || TextUtils.isEmpty(TARGET_ID)) {
+            new AlertDialog.Builder(this).setTitle("警告").setMessage("需要配置PARTNER |APP_ID| RSA_PRIVATE| TARGET_ID")
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialoginterface, int i) {
+                        }
+                    }).show();
+            return;
+        }
+
+        /**
+         * 这里只是为了方便直接向商户展示支付宝的整个支付流程；所以Demo中加签过程直接放在客户端完成；
+         * 真实App里，privateKey等数据严禁放在客户端，加签过程务必要放在服务端完成；
+         * 防止商户私密数据泄露，造成不必要的资金损失，及面临各种安全风险；
+         *
+         * authInfo的获取必须来自服务端；
+         */
+        Map<String, String> authInfoMap = OrderInfoUtil2_0.buildAuthInfoMap(PID, APPID, TARGET_ID);
+        String info = OrderInfoUtil2_0.buildOrderParam(authInfoMap);
+        String sign = OrderInfoUtil2_0.getSign(authInfoMap, RSA_PRIVATE);
+        final String authInfo = info + "&" + sign;
+        Runnable authRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                // 构造AuthTask 对象
+                AuthTask authTask = new AuthTask(PayDetailsActivity.this);
+                // 调用授权接口，获取授权结果
+                Map<String, String> result = authTask.authV2(authInfo, true);
+
+                Message msg = new Message();
+                msg.what = SDK_AUTH_FLAG;
+                msg.obj = result;
+                mHandler.sendMessage(msg);
+            }
+        };
+
+        // 必须异步调用
+        Thread authThread = new Thread(authRunnable);
+        authThread.start();
+    }
+
+    /**
+     * get the sdk version. 获取SDK版本号
+     *
+     */
+    public void getSDKVersion() {
+        PayTask payTask = new PayTask(this);
+        String version = payTask.getVersion();
+        android.widget.Toast.makeText(this, version, android.widget.Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 原生的H5（手机网页版支付切natvie支付） 【对应页面网页支付按钮】
+     *
+     * @param v
+     */
+    public void h5Pay(View v) {
+        Intent intent = new Intent(this, H5PayActivity.class);
+        Bundle extras = new Bundle();
+        /**
+         * url是测试的网站，在app内部打开页面是基于webview打开的，demo中的webview是H5PayDemoActivity，
+         * demo中拦截url进行支付的逻辑是在H5PayDemoActivity中shouldOverrideUrlLoading方法实现，
+         * 商户可以根据自己的需求来实现
+         */
+        String url = "http://m.taobao.com";
+        // url可以是一号店或者淘宝等第三方的购物wap站点，在该网站的支付过程中，支付宝sdk完成拦截支付
+        extras.putString("url", url);
+        intent.putExtras(extras);
+        startActivity(intent);
     }
 
 

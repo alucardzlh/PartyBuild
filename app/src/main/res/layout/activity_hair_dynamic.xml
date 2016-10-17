@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <com.example.a25908.partybuild.Views.ContainsEmojiEditText
+        <EditText
             android:id="@+id/dt_et_con"
             android:background="#fff"
             android:layout_width="match_parent"

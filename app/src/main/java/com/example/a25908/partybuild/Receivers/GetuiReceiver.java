@@ -9,11 +9,13 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.example.a25908.partybuild.Activitys.DetailsPageActivity;
+import com.example.a25908.partybuild.Activitys.QuestionSurvey2Activity;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.Services.CallServer;
 import com.example.a25908.partybuild.Utils.MD5;
 import com.example.a25908.partybuild.Utils.PartySharePreferences;
+import com.example.a25908.partybuild.Views.Toast;
 import com.igexin.sdk.PushConsts;
 import com.yolanda.nohttp.RequestMethod;
 
@@ -40,14 +42,26 @@ public class GetuiReceiver extends BroadcastReceiver {
                     case 0:
                         context.startActivity(new Intent(context, DetailsPageActivity.class).putExtra("fl",110).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
-                    case 1:
-                        context.startActivity(new Intent(context, DetailsPageActivity.class).putExtra("fl",110).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+//                    case 1:
+//                        context.startActivity(new Intent(context, DetailsPageActivity.class).putExtra("fl",110).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+//                        break;
+//                    case 2:
+//                        context.startActivity(new Intent(context, DetailsPageActivity.class).putExtra("fl",110).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+//                        break;
+//                    case 3:
+//                        context.startActivity(new Intent(context, DetailsPageActivity.class).putExtra("fl",110).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+//                        break;
+//                    case 4:
+//                        context.startActivity(new Intent(context, DetailsPageActivity.class).putExtra("fl",110).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+//                        break;
+                    case 5:
+                        context.startActivity(new Intent(context, QuestionSurvey2Activity.class).putExtra("fl",110).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                         break;
-                    case 2:
-                        context.startActivity(new Intent(context, DetailsPageActivity.class).putExtra("fl",110).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    case 6:
+                        Toast.show("您已经回答过此问卷");
                         break;
-                    case 3:
-                        context.startActivity(new Intent(context, DetailsPageActivity.class).putExtra("fl",110).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    case 8:
+                        Toast.show("内容不存在");
                         break;
                 }
             }
@@ -75,7 +89,7 @@ public class GetuiReceiver extends BroadcastReceiver {
 
                             break;
                         case "1":
-                            //党委通知、学习园地、党员扶持、人物长廊
+                            //党委通知、学习园地、党员扶持、人物长廊、支部活动
                             GsonRequest Request2 = new GsonRequest(URLINSER +PARTYDETAILS, RequestMethod.GET);
                             Request2.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
                             Request2.add("KeyNo", psp.getUSERID());
@@ -83,23 +97,33 @@ public class GetuiReceiver extends BroadcastReceiver {
                             Request2.add("username", psp.getUSERNAME());
                             Request2.add("newsid", strs[2]);
                             Request2.add("type", strs[1]);
-                            if (strs[1].equals("0")){
-                                CallServer.getInstance().add(context, Request2, GsonCallBack.getInstance(), 0x00411, true, false, true);
-                            }
-                            else if(strs[1].equals("1")){
-                                CallServer.getInstance().add(context, Request2, GsonCallBack.getInstance(), 0x00511, true, false, true);
-                            }
-                            else if(strs[1].equals("2")){
-                                CallServer.getInstance().add(context, Request2, GsonCallBack.getInstance(), 0x00611, true, false, true);
-                            }
-                            else if(strs[1].equals("3")){
-                                CallServer.getInstance().add(context,Request2, GsonCallBack.getInstance(),0x20213,true,false,true);
-                            }
+                            CallServer.getInstance().add(context, Request2, GsonCallBack.getInstance(), 0x00411, true, false, true);
+//                            if (strs[1].equals("0")){
+//                                CallServer.getInstance().add(context, Request2, GsonCallBack.getInstance(), 0x00411, true, false, true);
+//                            }
+//                            else if(strs[1].equals("1")){
+//                                CallServer.getInstance().add(context, Request2, GsonCallBack.getInstance(), 0x00511, true, false, true);
+//                            }
+//                            else if(strs[1].equals("2")){
+//                                CallServer.getInstance().add(context, Request2, GsonCallBack.getInstance(), 0x00611, true, false, true);
+//                            }
+//                            else if(strs[1].equals("3")){
+//                                CallServer.getInstance().add(context,Request2, GsonCallBack.getInstance(),0x20213,true,false,true);
+//                            }
+//                            else if(strs[1].equals("4")){
+//                                CallServer.getInstance().add(context,Request2, GsonCallBack.getInstance(),0x01245,true,false,true);
+//                            }
 
                             break;
                         case "2":
                             //党建视频
-
+//                            GsonRequest Request3 = new GsonRequest(URLINSER +PARTYVIDEOCOMN, RequestMethod.GET);
+//                            Request3.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+//                            Request3.add("KeyNo", psp.getUSERID());
+//                            Request3.add("deviceId", new Build().MODEL);
+//                            Request3.add("username", psp.getUSERNAME());
+//                            Request3.add("videoid", DataManager.partyvideoList.data.videolistPage.get(i).videoid);
+//                            CallServer.getInstance().add(context, Request3, GsonCallBack.getInstance(), 0x00912, true, false, true);
                             break;
                         case "3":
 //                            //问卷调查
@@ -107,7 +131,7 @@ public class GetuiReceiver extends BroadcastReceiver {
                             Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
                             Request.add("KeyNo", psp.getUSERID());
                             Request.add("deviceId", new Build().MODEL);
-                            CallServer.getInstance().add(context, Request, GsonCallBack.getInstance(), 0x0011, true, false, true);
+                            CallServer.getInstance().add(context, Request, GsonCallBack.getInstance(), 0x001221, true, false, true);
                             break;
 
                     }

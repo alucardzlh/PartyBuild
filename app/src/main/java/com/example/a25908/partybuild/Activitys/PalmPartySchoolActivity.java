@@ -25,9 +25,9 @@ import static com.example.a25908.partybuild.Utils.URLconstant.PALMPARTY;
 import static com.example.a25908.partybuild.Utils.URLconstant.TCOP;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
-/**
+/**掌上党校
  * @author  yusi
- * 掌上党校
+ *
  */
 public class PalmPartySchoolActivity extends BaseActivity {
     @ViewInject(R.id.returnT)
@@ -71,15 +71,15 @@ public class PalmPartySchoolActivity extends BaseActivity {
                 switch (msg.what){
                     case 1:
                         waitDialog.dismiss();
-                        startActivity(new Intent(PalmPartySchoolActivity.this, PeopleGalleryActivity.class));
+                        startActivity(new Intent(PalmPartySchoolActivity.this, PeopleGalleryActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         break;
                     case 2:
                         waitDialog.dismiss();
-                        startActivity(new Intent(PalmPartySchoolActivity.this, TheConstitutionOfThePartyActivity.class));
+                        startActivity(new Intent(PalmPartySchoolActivity.this, TheConstitutionOfThePartyActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         break;
                     case 3:
                         waitDialog.dismiss();
-                        startActivity(new Intent(PalmPartySchoolActivity.this, TheConstitutionOfThePartyActivity.class).putExtra("falg",1));
+                        startActivity(new Intent(PalmPartySchoolActivity.this, TheConstitutionOfThePartyActivity.class).putExtra("falg",1).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         break;
                 }
             }

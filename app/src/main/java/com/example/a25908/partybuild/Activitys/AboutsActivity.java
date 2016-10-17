@@ -1,6 +1,5 @@
 package com.example.a25908.partybuild.Activitys;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,11 +8,10 @@ import android.widget.TextView;
 import com.example.a25908.partybuild.R;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-
-import java.util.ArrayList;
 /**
- * @author yusi
  * 关于我们
+ * @author yusi
+ *
  */
 public class AboutsActivity extends BaseActivity {
     @ViewInject(R.id.returnT)

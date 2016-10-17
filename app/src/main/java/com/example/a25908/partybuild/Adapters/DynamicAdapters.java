@@ -28,6 +28,7 @@ import com.example.a25908.partybuild.Utils.MD5;
 import com.example.a25908.partybuild.Utils.PartySharePreferences;
 import com.example.a25908.partybuild.Views.CommentListView;
 import com.example.a25908.partybuild.Views.ExpandTextView;
+import com.example.a25908.partybuild.Views.FormatCurrentData;
 import com.example.a25908.partybuild.Views.MultiImageView;
 import com.example.a25908.partybuild.Views.RoundImageView;
 import com.yolanda.nohttp.RequestMethod;
@@ -106,7 +107,7 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
                         CallServer.getInstance().add(context,PLRequest, GsonCallBack.getInstance(),0x303,true,false,true);
                         list.get(position).commentslist.add(addpinglun(pinlun,psp));
                         viewHolder.commentList.setDatas(list.get(position).commentslist);
-                        Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT).show();
                         viewHolder.item_dt_pinglun.setText("");
                     }
                     else {
@@ -150,7 +151,7 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
                                     CallServer.getInstance().add(context,PLRequest, GsonCallBack.getInstance(),0x303,true,false,true);
                                     list.get(position).commentslist.add(addpinglun2(pinlun1,psp,id,name));
                                     viewHolder.commentList.setDatas(list.get(position).commentslist);;
-                                    Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context,"评论成功",Toast.LENGTH_SHORT).show();
                                     viewHolder.item_dt_pinglun.clearFocus();//取消焦点
                                     //关闭软键盘
                                     imm.hideSoftInputFromWindow(viewHolder.item_dt_pinglun.getWindowToken(), 0);
@@ -188,7 +189,7 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
 
         viewHolder.item_dt_name.setText(list.get(position).username);
         viewHolder.item_dt_context.setText(list.get(position).content);
-        viewHolder.item_dt_time.setText(list.get(position).add_time);
+        viewHolder.item_dt_time.setText(FormatCurrentData.getTimeRange(list.get(position).add_time));
         viewHolder.item_dt_zanshu.setText(list.get(position).praise+"人觉的很赞");
 
         //删除,判定是否是自己的动态
@@ -438,4 +439,7 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
             }
         }
     }
-}
+
+
+
+    }

@@ -138,4 +138,9 @@ public class SideBar extends View
 	{
 		public void onTouchingLetterChanged(String str);
 	}
+
+	@Override
+	public void setVisibility(int visibility) {
+		super.setVisibility(visibility);
+	}
 }

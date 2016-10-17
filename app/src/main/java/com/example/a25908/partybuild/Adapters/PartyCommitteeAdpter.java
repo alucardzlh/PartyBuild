@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
+import com.example.a25908.partybuild.Views.FormatCurrentData;
 
 import java.io.IOException;
 import java.util.List;
@@ -56,6 +57,7 @@ public class PartyCommitteeAdpter extends BaseAdapter {
             viewHolder.context = (TextView) view.findViewById(R.id.item_pc_context);
             viewHolder.browse = (TextView) view.findViewById(R.id.item_liulan);
             viewHolder.time = (TextView) view.findViewById(R.id.item_time);
+            viewHolder.faburen = (TextView) view.findViewById(R.id.faburen);
 
             view.setTag(viewHolder);
         }
@@ -72,7 +74,8 @@ public class PartyCommitteeAdpter extends BaseAdapter {
         viewHolder.title.setText(list.get(i).title);
         viewHolder.context.setText(list.get(i).describes);
         viewHolder.browse.setText("浏览 "+list.get(i).browse+" ");
-        viewHolder.time.setText(list.get(i).add_time);
+        viewHolder.time.setText(FormatCurrentData.getTimeRange(list.get(i).add_time));
+        viewHolder.faburen.setText("发布人："+list.get(i).username);
         return view;
     }
 
@@ -82,6 +85,7 @@ public class PartyCommitteeAdpter extends BaseAdapter {
         private TextView context;//内容
         private TextView  browse;//浏览数
         private TextView time;//时间
+        private TextView faburen;//发布人
 
     }
 }

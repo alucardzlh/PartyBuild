@@ -3,20 +3,20 @@ package com.example.a25908.partybuild.Activitys;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.InputFilter;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ImageView;
 
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
@@ -33,14 +33,11 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yolanda.nohttp.RequestMethod;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
-import static com.example.a25908.partybuild.Utils.URLconstant.PARTYRTNOTESURL;
 import static com.example.a25908.partybuild.Utils.URLconstant.UPDATEUSERDATEURL;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
@@ -54,6 +51,8 @@ public class MydataActivity extends BaseActivity {
     private ImageView back;
     @ViewInject(R.id.title)
     private TextView title;
+    @ViewInject(R.id.fileclear)
+    private TextView fileclear;
 
     /**
      * textview 参数 控件
@@ -129,6 +128,8 @@ public class MydataActivity extends BaseActivity {
     PartySharePreferences psp;
     public static Handler handler;
 
+    private boolean xg = false;//判断是否有修改
+
     /**
      * 日期选择器
      */
@@ -156,6 +157,7 @@ public class MydataActivity extends BaseActivity {
             dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             //将页面TextView的显示更新为最新时间
             upDateDate();
+            fileclear.setVisibility(View.VISIBLE);
         }
     };
 
@@ -168,6 +170,8 @@ public class MydataActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mydata);
         ViewUtils.inject(this);
+        fileclear.setText("保存");
+        fileclear.setVisibility(View.GONE);
         psp=PartySharePreferences.getLifeSharedPreferences();
         title.setText("个人资料");
         title.setVisibility(View.VISIBLE);
@@ -225,6 +229,7 @@ public class MydataActivity extends BaseActivity {
 
         md_sphone.setText(DataManager.MyDataList.data.partyMemberlist.MOBILE+"");
 
+        fileclear.setOnClickListener(listener);
         back.setOnClickListener(listener);
         mmdd_name.setOnClickListener(listener);
         mmdd_sex.setOnClickListener(listener);
@@ -244,7 +249,7 @@ public class MydataActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.returnT:
+                case R.id.fileclear:
                     GsonRequest Request = new GsonRequest(URLINSER +UPDATEUSERDATEURL, RequestMethod.GET);
                     Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
                     Request.add("KeyNo", psp.getUSERID());
@@ -278,6 +283,9 @@ public class MydataActivity extends BaseActivity {
 //                            Request.add("state", md_name.getText().toString());//状态（0正常 1退党 2开除 默认为0）
 
                     CallServer.getInstance().add(MydataActivity.this, Request, GsonCallBack.getInstance(), 0x0021, true, false, true);
+                    finish();
+                    break;
+                case R.id.returnT:
                     finish();
                     break;
                 case R.id.mmdd_name:
@@ -382,7 +390,7 @@ public class MydataActivity extends BaseActivity {
         wv.setOffset(2);
         wv.setItems(Arrays.asList(con));
         for(int i=0;i<Arrays.asList(con).size();i++){
-            if(!state.equals("")){
+            if(!TextUtils.isEmpty(state)){
                 if(Arrays.asList(con).get(i).equals(state)){
                     wv.setSeletion(i);
                 }
@@ -396,6 +404,7 @@ public class MydataActivity extends BaseActivity {
             public void onSelected(int selectedIndex, String item) {
 //                Toast.show("[Dialog]selectedIndex: " + selectedIndex + ", item: " + item);
                 str=item;
+                fileclear.setVisibility(View.VISIBLE);
             }
         });
 
@@ -405,7 +414,8 @@ public class MydataActivity extends BaseActivity {
                 .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(!str.equals("")){
+                        fileclear.setVisibility(View.VISIBLE);
+                        if(!TextUtils.isEmpty(str)){
                             tv.setText(str+"");
                         }else{
                             tv.setText(con[0]+"");
@@ -417,6 +427,7 @@ public class MydataActivity extends BaseActivity {
                                 md_zhiweu.setText("");
                             }
                         }
+
                     }
                 })
                 .setNegativeButton("取消", null)
@@ -449,6 +460,7 @@ public class MydataActivity extends BaseActivity {
                 .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        fileclear.setVisibility(View.VISIBLE);
                         switch (title) {
                             case "姓名":
                                 if (FileUtils.checkNameChese(et.getText().toString()) && et.getText().toString().length() <= 6) {
@@ -477,6 +489,7 @@ public class MydataActivity extends BaseActivity {
                                 tv.setText(et.getText().toString());
                                 break;
                         }
+
 
                     }
                 })

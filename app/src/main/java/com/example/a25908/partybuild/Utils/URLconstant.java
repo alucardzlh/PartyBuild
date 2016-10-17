@@ -16,7 +16,9 @@ public class URLconstant {
 
     public static final String IMGURL = "http://192.168.10.44:7070";//富文本图片前缀
 
-//    public static final String URLINSER = "http://192.168.10.139:8080/zhirong.partybuild/Interface/";
+//    public static final String IMGURL = "http://192.168.10.117:8080";//富文本图片前缀
+
+//    public static final String URLINSER = "http://192.168.100.170:8080/zhirong.partybuild/Interface/";
 
     /**
      * Fragment 1 主界面
@@ -54,6 +56,11 @@ public class URLconstant {
 
     public static final String PARTYRTNOTESURL = "userDateListControllerInterface/saveNote";//修改党员信息备注
 
+    public static final String  PARTYRTLISTEWM = "userDateListControllerInterface/queryImg";//生成ewm
+
+    public static final String  PARTYRTLISTURL2 = "userDateListControllerInterface/queryuserUnitlist";//党员名册资料(以部门为主)
+
+
     /**
      * Fragment 3 主界面
      */
@@ -85,12 +92,16 @@ public class URLconstant {
 
     public static final String PARTYPAY = "partyMembershipDuesController/querypartyMemberByOne";//我的党费
 
+    public static final String Quit = "quiltControllerInterface/updateQuilt";//退出
+
 
 //    ===================================测      试==============================================
 
     public static final String NEWSURL ="newsController/getNewslistPage";//新闻URLObeyed
 
-    public static final String videourl ="https://sec.ch9.ms/ch9/82d9/de312353-af35-48b7-a20a-e648489f82d9/Win10UpdateForDevs_high.mp4";//视频
+//    public static final String videourl ="https://sec.ch9.ms/ch9/82d9/de312353-af35-48b7-a20a-e648489f82d9/Win10UpdateForDevs_high.mp4";//视频
+
+public static final String videourl ="http://192.168.100.171:8080/zhirong.partybuild/file_path/1476343510105-[邓紫棋]喜欢你_bd.mp4";//视频
 
     public static final String url1="http://dzs.qisuu.com/txt/明末边军一小兵.txt";//下载地址
 

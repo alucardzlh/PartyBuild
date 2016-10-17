@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
+import com.example.a25908.partybuild.Views.FormatCurrentData;
 
 import java.io.IOException;
 import java.util.List;
@@ -73,7 +74,7 @@ public class StudyListAdapter extends BaseAdapter {
 //        vh.study_img.setImageBitmap(FileUtils.stringtoBitmap(list.get(position).title_img));
         vh.study_txt1.setText(list.get(position).title+"");
         vh.study_txt2.setText(list.get(position).describes+"");
-        vh.study_time.setText(list.get(position).add_time+"");
+        vh.study_time.setText(FormatCurrentData.getTimeRange(list.get(position).add_time));
 
         vh.study_bt1.setText("浏览 "+list.get(position).browse+" ");
 

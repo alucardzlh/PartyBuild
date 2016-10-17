@@ -124,9 +124,6 @@ public class HairDynamicActivity extends BaseActivity {
                 finish();
             }
         });
-        builder= new AlertDialog.Builder(this);
-        builder.setTitle("请选择上传方式：");
-        final String[] items = new String[]{"本地", "拍照"};
         fileclear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,7 +145,9 @@ public class HairDynamicActivity extends BaseActivity {
                 }
             }
         });
-
+        builder= new AlertDialog.Builder(this);
+        builder.setTitle("请选择上传方式：");
+        final String[] items = new String[]{"本地", "拍照"};
         builder.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -211,10 +210,10 @@ public class HairDynamicActivity extends BaseActivity {
 
 
         if (Build.VERSION.SDK_INT >= 23) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                     != PackageManager.PERMISSION_GRANTED) {
                 //READ_EXTERNAL_STORAGE
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
                         READ_EXTERNAL_STORAGE_REQUEST_CODE);
                 return;
             }

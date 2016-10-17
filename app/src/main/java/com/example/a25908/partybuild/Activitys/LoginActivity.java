@@ -27,12 +27,12 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yolanda.nohttp.RequestMethod;
 
 import static com.example.a25908.partybuild.Utils.URLconstant.LOGINURL;
-import static com.example.a25908.partybuild.Utils.URLconstant.PARTYRTLISTURL;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
 /**
- * @author yusi
  * 用户登录界面
+ * @author yusi
+ *
  */
 public class LoginActivity extends BaseActivity {
     AlertDialog.Builder builder;
@@ -87,7 +87,8 @@ public class LoginActivity extends BaseActivity {
                 } else {
                     wd.show();
                     flag=true;
-                    GsonRequest LoginRequest = new GsonRequest(URLINSER +LOGINURL, RequestMethod.GET);
+                    GsonRequest LoginRequest = new GsonRequest(URLINSER +LOGINURL, RequestMethod.POST);
+//                    LoginRequest.setConnectTimeout(100000);
                     LoginRequest.add("token", MD5.MD5s(login_user.getText().toString() + new Build().MODEL));
                     LoginRequest.add("KeyNo", login_user.getText().toString());
                     LoginRequest.add("deviceId", new Build().MODEL);
@@ -111,6 +112,9 @@ public class LoginActivity extends BaseActivity {
                         break;
                     case 1:
                         Toast.show("登陆失败!");
+                        break;
+                    case 2:
+                        Toast.show("账号或密码错误");
                         break;
                 }
             }

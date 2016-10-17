@@ -12,9 +12,9 @@ import com.example.a25908.partybuild.R;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
-/**
+/**党规党纪界面、与党的章程详情
  * @author yusi
- *党规党纪界面、与党的章程详情
+ *
  */
 public class PartydisciplineActivity extends BaseActivity {
     @ViewInject(R.id.returnT)

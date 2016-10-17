@@ -54,4 +54,8 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     compile files('libs/libammsdk.jar')
     compile files('libs/sun.misc.BASE64Decoder.jar')
+    compile files('libs/zxing.jar')
+    compile files('libs/alipaySdk-20161009.jar')
+    compile 'io.reactivex:rxjava:+'
+    compile 'io.reactivex:rxandroid:+'
 }

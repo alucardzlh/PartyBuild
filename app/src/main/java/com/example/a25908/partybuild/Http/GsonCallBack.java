@@ -59,7 +59,11 @@ public class GsonCallBack implements HttpCallBack {
                     psp.putUser(DataManager.userlist);
                     psp.getEMAIL();
                     LoginActivity.handler.sendEmptyMessage(0);
-                }else{
+                }
+                else if(DataManager.userlist.message.equals("账号或密码错误")){
+                    LoginActivity.handler.sendEmptyMessage(2);
+                }
+                else{
                     LoginActivity.handler.sendEmptyMessage(1);
                 }
                 break;
@@ -98,6 +102,14 @@ public class GsonCallBack implements HttpCallBack {
                 Fragment2.handler.sendEmptyMessage(0);
                 break;
             /**
+             * //党员名册(以部门为主)
+             */
+            case 0x00323:
+                jsonString = (String) response.get();
+                DataManager.zzPlayerList=gson.fromJson(jsonString,DataManager.ZZplayer.class);
+                Fragment2.handler.sendEmptyMessage(1);
+                break;
+            /**
              * //党员名册备注修改
              */
             case 0x0031:
@@ -108,6 +120,18 @@ public class GsonCallBack implements HttpCallBack {
                 }else{
                     PartymembersdetailsActivity.handler.sendEmptyMessage(1);
                 }
+                break;
+
+            case 0x0299://二维码生成
+                jsonString = (String) response.get();
+                DataManager.messageMar=gson.fromJson(jsonString,DataManager.message.class);
+                if (DataManager.messageMar.message.equals("success")){
+                    PartymembersdetailsActivity.handler.sendEmptyMessage(10);
+                }
+                else {
+                    PartymembersdetailsActivity.handler.sendEmptyMessage(11);
+                }
+
                 break;
             /**
              * //党委通知
@@ -130,15 +154,33 @@ public class GsonCallBack implements HttpCallBack {
                 PartyCommitteeActivity.handler.sendEmptyMessage(0);
                 break;
             /**
-             * //党委通知推送详情
+             * //党委通知、人物长廊、学习园地、支部活动、党员扶持推送详情
              */
             case 0x00411:
                 jsonString = (String) response.get();
                 DataManager.partyCommDetailsList=gson.fromJson(jsonString,DataManager.partyCommDetails.class);
-                if (DataManager.partyCommDetailsList.message.equals("success")){
+                if (DataManager.partyCommDetailsList.data.NewsList!=null){//DataManager.partyCommDetailsList.message.equals("success")
                     GetuiReceiver.handler.sendEmptyMessage(0);
+                }else {
+                    GetuiReceiver.handler.sendEmptyMessage(8);
                 }
 
+                break;
+            case 0x0124://支部活动
+                jsonString = (String) response.get();
+                DataManager.paertyCommList=gson.fromJson(jsonString,DataManager.paertyComm.class);
+                if(DataManager.paertyCommList.data.commentList.size()>0 && DataManager.paertyCommList.data.commentList!=null){
+                    Fragment1.handler.sendEmptyMessage(10);
+                }else{
+                    Fragment1.handler.sendEmptyMessage(500);
+                }
+                break;
+            case 0x01245://支部活动推送
+                jsonString = (String) response.get();
+                DataManager.partyCommDetailsList=gson.fromJson(jsonString,DataManager.partyCommDetails.class);
+                if(DataManager.partyCommDetailsList.message.equals("success")){
+                    GetuiReceiver.handler.sendEmptyMessage(4);
+                }
                 break;
             /**
              * //学习园地
@@ -212,6 +254,11 @@ public class GsonCallBack implements HttpCallBack {
                 DataManager.mypartyvideo=gson.fromJson(jsonString,DataManager.Mypartyvideo.class);
                 PartyVideoActivity.handler.sendEmptyMessage(0);
                 break;
+            case 0x00912://党建视频推送详情
+                jsonString = (String) response.get();
+                DataManager.mypartyvideo=gson.fromJson(jsonString,DataManager.Mypartyvideo.class);
+                PartyVideoActivity.handler.sendEmptyMessage(0);
+                break;
             case 0x0010://在线答疑
                 jsonString = (String) response.get();
                 DataManager.FAQmarList=gson.fromJson(jsonString,DataManager.FAQmar.class);
@@ -243,6 +290,19 @@ public class GsonCallBack implements HttpCallBack {
                     }
                 }else{
                     Fragment1.handler.sendEmptyMessage(500);
+                }
+
+                break;
+            case 0x001221://问卷调查推送
+                jsonString = (String) response.get();
+                DataManager.myQuestions=gson.fromJson(jsonString,DataManager.MyQuestions.class);
+                if(DataManager.myQuestions.message.equals("success")){
+                    if (DataManager.myQuestions.status.equals("repeated")){
+                        GetuiReceiver.handler.sendEmptyMessage(6);
+                    }
+                    else{
+                        GetuiReceiver.handler.sendEmptyMessage(5);
+                    }
                 }
 
                 break;
@@ -279,6 +339,15 @@ public class GsonCallBack implements HttpCallBack {
                 }
 
                 break;
+
+            case 0x02999://退出
+                jsonString = (String) response.get();
+                DataManager.messageMar=gson.fromJson(jsonString,DataManager.message.class);
+
+
+                break;
+
+
 
             case 0x201://人物长廊
                 jsonString = (String) response.get();
@@ -321,14 +390,14 @@ public class GsonCallBack implements HttpCallBack {
                     Fragment3.handler.sendEmptyMessage(1);
                 }
                 break;
-            case 0x3021://动态查看加载更多、刷新
+            case 0x3021://动态刷新
                 jsonString = (String) response.get();
                 DataManager.mydynamic = gson.fromJson(jsonString,DataManager.Mydynamic.class);
                 if (DataManager.mydynamic.message.equals("success")){
                     Fragment3.handler.sendEmptyMessage(4);
                 }
                 break;
-            case 0x3022://动态查看加载更多、刷新
+            case 0x3022://动态查看加载更多
                 jsonString = (String) response.get();
                 DataManager.mydynamic = gson.fromJson(jsonString,DataManager.Mydynamic.class);
                 if (DataManager.mydynamic.message.equals("success")){

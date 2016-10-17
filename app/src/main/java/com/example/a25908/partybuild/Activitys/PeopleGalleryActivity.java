@@ -30,9 +30,9 @@ import java.util.List;
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYDETAILS;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
-/**
+/**人物长廊
  * @author yusi
- *人物长廊
+ *
  */
 public class PeopleGalleryActivity extends BaseActivity {
     @ViewInject(R.id.returnT)
@@ -44,6 +44,7 @@ public class PeopleGalleryActivity extends BaseActivity {
     PartySharePreferences psp;
     private WaitDialog waitDialog;
     public static Handler handler;
+    WaitDialog wd;
 
     PeopleGalleryAdapter adapter;
     @Override
@@ -51,12 +52,14 @@ public class PeopleGalleryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_people_gallery);
         ViewUtils.inject(this);
+        wd = new WaitDialog(this);
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if (msg.what==1)
-                startActivity(new Intent(PeopleGalleryActivity.this,DetailsPageActivity.class));
+                    wd.dismiss();
+                startActivity(new Intent(PeopleGalleryActivity.this,DetailsPageActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         };
         waitDialog = new WaitDialog(PeopleGalleryActivity.this);
@@ -78,6 +81,7 @@ public class PeopleGalleryActivity extends BaseActivity {
         PeopleGallery_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                wd.show();
                 GsonRequest ppsRequest = new GsonRequest(URLINSER + PARTYDETAILS, RequestMethod.GET);
                 ppsRequest.add("KeyNo",psp.getUSERID());//psp.getUSERID()
                 ppsRequest.add("type",3);

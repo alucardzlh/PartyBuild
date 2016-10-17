@@ -17,9 +17,9 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/**党的章程一级界面
  * @author yusi
- *党的章程一级界面
+ *
  */
 public class TheConstitutionOfThePartyActivity extends BaseActivity {
     @ViewInject(R.id.returnT)
@@ -74,6 +74,7 @@ public class TheConstitutionOfThePartyActivity extends BaseActivity {
                 Intent intent1 = new Intent(TheConstitutionOfThePartyActivity.this,PartydisciplineActivity.class);
                 intent1.putExtra("i",i);
                 intent1.putExtra("b",b);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent1);
 
             }

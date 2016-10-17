@@ -2,6 +2,7 @@ package com.example.a25908.partybuild.Contacts;
 
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +83,7 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer
 		else
 			viewHolder.tvLetter.setVisibility(View.GONE);
 		try{
-			if(this.list.get(pos).img.equals("")){
+			if(TextUtils.isEmpty(this.list.get(pos).img)){
 				viewHolder.tvImg.setImageResource(R.mipmap.appicon);
 			}else{
 				viewHolder.tvImg.setImageBitmap(FileUtils.stringtoBitmap(this.list.get(pos).img));
@@ -96,6 +97,8 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer
 
 		return view;
 	}
+
+
 
 	final static class ViewHolder
 	{

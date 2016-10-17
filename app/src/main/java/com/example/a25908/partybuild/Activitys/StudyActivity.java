@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.a25908.partybuild.Adapters.StudyListAdapter;
+import com.example.a25908.partybuild.Dialogs.WaitDialog;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.Model.DataManager;
@@ -23,17 +24,13 @@ import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yolanda.nohttp.RequestMethod;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYDETAILS;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
 /**
- * @author yusi
  * 学习园地
+ * @author yusi
+ *
  */
 public class StudyActivity extends BaseActivity {
     @ViewInject(R.id.returnT)
@@ -44,6 +41,7 @@ public class StudyActivity extends BaseActivity {
     ListView listStudy;
     public static Handler handler;
     PartySharePreferences psp;
+    WaitDialog waitDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +49,7 @@ public class StudyActivity extends BaseActivity {
         ViewUtils.inject(this);
         psp=PartySharePreferences.getLifeSharedPreferences();
         title.setText("学习园地");
+        waitDialog = new WaitDialog(this);
         returnT.setVisibility(View.VISIBLE);
         returnT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +64,8 @@ public class StudyActivity extends BaseActivity {
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 0:
-                        startActivity(new Intent(StudyActivity.this,DetailsPageActivity.class));
+                        waitDialog.dismiss();
+                        startActivity(new Intent(StudyActivity.this,DetailsPageActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                         break;
                 }
             }
@@ -77,6 +77,7 @@ public class StudyActivity extends BaseActivity {
         listStudy.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                waitDialog.show();
                 GsonRequest Request = new GsonRequest(URLINSER +PARTYDETAILS, RequestMethod.GET);
                 Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
                 Request.add("KeyNo", psp.getUSERID());

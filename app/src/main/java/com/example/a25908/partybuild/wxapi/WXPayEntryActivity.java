@@ -45,9 +45,9 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     public void onResp(BaseResp baseResp) {
        if(baseResp.getType()== ConstantsAPI.COMMAND_PAY_BY_WX){
            if(baseResp.errCode==0){
-               Toast.show("支付成功");
+               Toast.show("微信支付成功");
            }else {
-               Toast.show("支付失败,请重试");
+               Toast.show("微信支付失败,请重试");
            }
            finish();
        }

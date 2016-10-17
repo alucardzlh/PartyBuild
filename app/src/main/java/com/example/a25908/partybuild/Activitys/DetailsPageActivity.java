@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,12 +15,15 @@ import android.os.Message;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.a25908.partybuild.Adapters.commListAdapter;
@@ -27,9 +32,9 @@ import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Services.CallServer;
-import com.example.a25908.partybuild.Utils.FileUtils;
 import com.example.a25908.partybuild.Utils.MD5;
 import com.example.a25908.partybuild.Utils.PartySharePreferences;
+import com.example.a25908.partybuild.Views.CommonVideoView;
 import com.example.a25908.partybuild.Views.ListenedScrollView;
 import com.example.a25908.partybuild.Views.MyListView;
 import com.example.a25908.partybuild.Views.Toast;
@@ -60,8 +65,8 @@ public class DetailsPageActivity extends BaseActivity {
     private ImageView returnT;
     @ViewInject(R.id.title)
     private TextView title;
-    @ViewInject(R.id.imageView_dp)
-    private ImageView imageView_dp;
+    @ViewInject(R.id.headzz)
+    private RelativeLayout headzz;
 
     @ViewInject(R.id.ptitle)
     private TextView ptitle;
@@ -71,10 +76,11 @@ public class DetailsPageActivity extends BaseActivity {
     private WebView pcontent;
     @ViewInject(R.id.dp_slv)
     private ListenedScrollView dp_slv;
-    @ViewInject(R.id.textView_dp)
-    private TextView textView_dp;
-    @ViewInject(R.id.dp_tip)
-    private TextView dp_tip;
+    @ViewInject(R.id.common_videoView)
+    private CommonVideoView videoView;
+    @ViewInject(R.id.dp_time)
+    private LinearLayout dp_time;
+
 
     @ViewInject(R.id.mylist_comm)
     private MyListView mylist_comm;//评论列表
@@ -108,30 +114,54 @@ public class DetailsPageActivity extends BaseActivity {
             }
         });
         intent = getIntent();
-        int flag = intent.getIntExtra("flag",0);
+        final int flag = intent.getIntExtra("flag",0);
         if (flag==1){
             fab1.setVisibility(View.GONE);
+            videoView.setVisibility(View.VISIBLE);
             ptitle.setText(DataManager.mypartyvideo.data.videoPage.title);
             ptime.setText(DataManager.mypartyvideo.data.videoPage.add_time);
-            imageView_dp.setVisibility(View.VISIBLE);
+//            imageView_dp.setVisibility(View.VISIBLE);
+            String str=DataManager.mypartyvideo.data.videoPage.content;
+//            dtr1=str.replaceAll("<img src=\"","<img  src=\""+IMGURL);
+            if(str.indexOf("http") == -1){
+                dtr1=str.replaceAll("src=\"","src=\""+IMGURL);
+            }else{
+                dtr1=str;
+            }
 //            try {
 //                BASE64Decoder decode = new BASE64Decoder();
 //                byte[] b = decode.decodeBuffer(DataManager.partyvideoList.data.videolistPage.get(intent.getIntExtra("i",0)).img);
-//                Glide.with(DetailsPageActivity.this).load(b).into(imageView_dp);
+//                //把字节数组的图片写到另一个地方
+//                File apple = new File(Environment.getExternalStorageDirectory() + "/PartyBuild/Cache/CarouselImg.jpg");
+//                FileOutputStream fos = new FileOutputStream(apple);
+//                fos.write(b);
+//                fos.flush();
+//                fos.close();
 //            } catch (IOException e) {
 //                e.printStackTrace();
 //            }
-//            Bitmap bitmap = intent.getBundleExtra("img");
-            imageView_dp.setImageBitmap(FileUtils.stringtoBitmap(DataManager.partyvideoList.data.videolistPage.get(intent.getIntExtra("i",0)).img));
-            textView_dp.setVisibility(View.VISIBLE);
-            dp_tip.setVisibility(View.VISIBLE);
-            textView_dp.setText(DataManager.mypartyvideo.data.videoPage.content);
-            imageView_dp.setOnClickListener(new View.OnClickListener() {
+//            imageView_dp.setImageBitmap(FileUtils.decodeBitmap(Environment.getExternalStorageDirectory() + "/PartyBuild/Cache/CarouselImg.jpg", 500, 500));
+//            imageView_dp.setImageBitmap(FileUtils.stringtoBitmap(DataManager.partyvideoList.data.videolistPage.get(intent.getIntExtra("i",0)).img));;
+//            videoView.start(URLconstant.IMGURL+DataManager.mypartyvideo.data.videoPage.path);
+            videoView.screenSwitchBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(DetailsPageActivity.this, WebVedioActivity.class).putExtra("url", DataManager.mypartyvideo.data.videoPage.path));
+                public void onClick(View view) {
+                    int  i = getResources().getConfiguration().orientation;
+                    if (i== Configuration.ORIENTATION_PORTRAIT){
+                        DetailsPageActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    }else if (i==Configuration.ORIENTATION_LANDSCAPE){
+                        DetailsPageActivity.this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    }
                 }
             });
+
+            WebSettings webSettings = pcontent.getSettings();
+            String cacheDirPath = Environment.getExternalStorageDirectory() + "/PartyBuild/Cache"; //缓存路径
+            webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);  //缓存模式
+            webSettings.setAppCachePath(cacheDirPath); //设置缓存路径
+            webSettings.setAppCacheEnabled(true); //开启缓存功能
+
+            pcontent.loadDataWithBaseURL(null,getNewContent(dtr1), "text/html", "utf-8", null);
         }else {
             ptitle.setText(DataManager.partyCommDetailsList.data.NewsList.title);
             ptime.setText(DataManager.partyCommDetailsList.data.NewsList.add_time);
@@ -217,12 +247,28 @@ public class DetailsPageActivity extends BaseActivity {
             public void onScrollStateChanged(ListenedScrollView view, int scrollState) {
                 //滑动状态改变
                 if (scrollState==0){
-                    fab1.setVisibility(View.VISIBLE);
+                    if (flag==1){
+                        fab1.setVisibility(View.GONE);
+                    }
+                    else {
+                        fab1.setVisibility(View.VISIBLE);
+                    }
+
                 }else if(scrollState==1) {
-                    fab1.setVisibility(View.GONE);
+                    if (flag==1){
+                        fab1.setVisibility(View.GONE);
+                    }
+                    else {
+                        fab1.setVisibility(View.GONE);
+                    }
                 }
                 else {
-                    fab1.setVisibility(View.GONE);
+                    if (flag==1){
+                        fab1.setVisibility(View.GONE);
+                    }
+                    else {
+                        fab1.setVisibility(View.GONE);
+                    }
                 }
             }
 
@@ -304,14 +350,14 @@ public class DetailsPageActivity extends BaseActivity {
      */
     public void showinit() {
         et = new EditText(DetailsPageActivity.this);
-        et.setPadding(20,50,0,0);
+//        et.setPadding(20,50,0,0);
         new AlertDialog.Builder(DetailsPageActivity.this)
                 .setTitle("评论")
                 .setView(et)
                 .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(!et.equals("")){
+                        if(!TextUtils.isEmpty(et.getText().toString())){
                             GsonRequest Request = new GsonRequest(URLINSER +PARTYDETAILSADDCOMN, RequestMethod.GET);
                             Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
                             Request.add("KeyNo", psp.getUSERID());
@@ -331,5 +377,24 @@ public class DetailsPageActivity extends BaseActivity {
                 .setCancelable(false)
                 .show();
     }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
+            headzz.setVisibility(View.GONE);
+            ptitle.setVisibility(View.GONE);
+            dp_time.setVisibility(View.GONE);
+            pcontent.setVisibility(View.GONE);
+            videoView.setFullScreen();
+        }else {
+            headzz.setVisibility(View.VISIBLE);
+            ptitle.setVisibility(View.VISIBLE);
+            dp_time.setVisibility(View.VISIBLE);
+            pcontent.setVisibility(View.VISIBLE);
+            videoView.setNormalScreen();
+        }
+    }
+
 
 }

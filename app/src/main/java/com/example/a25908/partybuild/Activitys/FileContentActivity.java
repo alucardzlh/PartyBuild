@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -121,7 +122,7 @@ public class FileContentActivity extends BaseActivity {
         DataManager.DucomentName=name;
         hz=ddr[ddr.length-1];
         fname.setText(name+"."+hz);
-        if(!path.equals("")){
+        if(!TextUtils.isEmpty(path)){
             pathText.setText(path);
         }else{
             pathText.setText("文件已损坏!");

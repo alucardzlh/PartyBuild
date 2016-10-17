@@ -14,6 +14,12 @@ import com.example.a25908.partybuild.Utils.FileUtils;
 
 import java.util.List;
 
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Action1;
+
+import static com.example.a25908.partybuild.Utils.FileUtils.stringtoBitmap;
+
 /**
  * @ClassName MultiImageView.java
  * @author weixuan
@@ -147,7 +153,7 @@ public class MultiImageView extends LinearLayout {
 			int rowCount = allCount / MAX_PER_ROW_COUNT
 					+ (allCount % MAX_PER_ROW_COUNT > 0 ? 1 : 0);// 行数
 			for (int rowCursor = 0; rowCursor < rowCount; rowCursor++) {
-				LinearLayout rowLayout = new LinearLayout(getContext());
+				final LinearLayout rowLayout = new LinearLayout(getContext());
 				rowLayout.setOrientation(LinearLayout.HORIZONTAL);
 
 				rowLayout.setLayoutParams(rowPara);
@@ -164,16 +170,28 @@ public class MultiImageView extends LinearLayout {
 
 				int rowOffset = rowCursor * MAX_PER_ROW_COUNT;// 行偏移
 				for (int columnCursor = 0; columnCursor < columnCount; columnCursor++) {
-					int position = columnCursor + rowOffset;
-					rowLayout.addView(createImageView(position, true));
+					final int position = columnCursor + rowOffset;
+
+					Observable.just(createImageView(position, true))
+							.subscribe(new Action1<ImageView>() {
+								@Override
+								public void call(ImageView imageView) {
+									rowLayout.addView(imageView);
+								}
+							});
+
+
+
 				}
+
 			}
+
 		}
 	}
 
 	private ImageView createImageView(int position, final boolean isMultiImage) {
-		String url = String.valueOf(imagesList.get(position).path);
-		ImageView imageView = new ColorFilterImageView(getContext());
+		final String url = String.valueOf(imagesList.get(position).path);
+		final ImageView imageView = new ColorFilterImageView(getContext());
 		if(isMultiImage){
 			imageView.setScaleType(ScaleType.CENTER_CROP);
 			imageView.setLayoutParams(position % MAX_PER_ROW_COUNT == 0 ?moreParaColumnFirst : morePara);
@@ -198,7 +216,10 @@ public class MultiImageView extends LinearLayout {
 //		}
 //		Glide.with(getContext()).load(FileUtils.stringtoBitmap(url)).asBitmap().diskCacheStrategy(DiskCacheStrategy.ALL).into(imageView);
 		imageView.setImageBitmap(bitmap);
+
+
 		return imageView;
+
 	}
 
 	private class ImageOnClickListener implements OnClickListener{
@@ -219,4 +240,7 @@ public class MultiImageView extends LinearLayout {
 	public interface OnItemClickListener{
 		public void onItemClick(View view, int position);
 	}
+
+
+
 }

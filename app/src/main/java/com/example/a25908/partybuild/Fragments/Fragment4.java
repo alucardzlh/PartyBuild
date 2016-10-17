@@ -1,7 +1,9 @@
 package com.example.a25908.partybuild.Fragments;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -12,7 +14,9 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -39,6 +43,7 @@ import com.example.a25908.partybuild.Utils.FileUtils;
 import com.example.a25908.partybuild.Utils.MD5;
 import com.example.a25908.partybuild.Utils.PartySharePreferences;
 import com.example.a25908.partybuild.Views.RoundImageView;
+import com.example.a25908.partybuild.Views.Toast;
 import com.yolanda.nohttp.RequestMethod;
 
 import java.io.ByteArrayOutputStream;
@@ -46,6 +51,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYPAY;
+import static com.example.a25908.partybuild.Utils.URLconstant.Quit;
 import static com.example.a25908.partybuild.Utils.URLconstant.UPDATEUSERDATEURL;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 import static com.example.a25908.partybuild.Utils.URLconstant.USERDATEDWBMURL;
@@ -112,14 +118,15 @@ public class Fragment4 extends Fragment {
                         Intent pickIntent = new Intent(Intent.ACTION_PICK, null);
                         // 如果朋友们要限制上传到服务器的图片类型时可以直接写如："image/jpeg 、 image/png等的类型"
                         pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                        startActivityForResult(pickIntent, REQUESTCODE_PICK);
+//                        getActivity().setResult(REQUESTCODE_PICK,pickIntent);
+                        Fragment4.this.startActivityForResult(pickIntent, REQUESTCODE_PICK);
                         break;
                     case "拍照":
                         Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         //下面这句指定调用相机拍照后的照片存储的路径
                         takeIntent.putExtra(MediaStore.EXTRA_OUTPUT,
                                 Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
-                        startActivityForResult(takeIntent, REQUESTCODE_TAKE);
+                            startActivityForResult(takeIntent, REQUESTCODE_TAKE);
                         break;
 
                     default:
@@ -164,6 +171,15 @@ public class Fragment4 extends Fragment {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.userimg://头像
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
+                                != PackageManager.PERMISSION_GRANTED) {
+                            //READ_EXTERNAL_STORAGE
+                            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA},
+                                    0);
+                            return;
+                        }
+                    }
                     AlertDialog dialog = builder.create();
                     dialog.show();
                     break;
@@ -174,6 +190,7 @@ public class Fragment4 extends Fragment {
                     startActivity(new Intent(getActivity(), tsteActivity.class));
                     break;
                 case R.id.my1://我的资料
+                    wd.show();
 //                    ?KeyNo=1&deviceId=123&token=2cfd4560539f887a5e420412b370b361
                     GsonRequest LoginRequest = new GsonRequest(URLINSER + USERDATEURL, RequestMethod.GET);
                     LoginRequest.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
@@ -199,11 +216,17 @@ public class Fragment4 extends Fragment {
                     startActivity(new Intent(getActivity(), OpinionActivity.class));
                     break;
                 case R.id.Outlogin://注销
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
                     getActivity().finish();
                     psp.putICONSTEAM("");
                     psp.putLoginStatus(false);
                     DataManager.PartyerList.data.UserlistPage.clear();
+                    GsonRequest Request= new GsonRequest(URLINSER +Quit, RequestMethod.GET);
+                    Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                    Request.add("KeyNo", psp.getUSERID());
+                    Request.add("deviceId", new Build().MODEL);
+                    Request.add("username",psp.getUSERNAME());
+                    CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x02999, true, false, true);
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
                     break;
             }
         }
@@ -284,5 +307,18 @@ public class Fragment4 extends Fragment {
             CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x0022, true, false, true);
             psp.putICONSTEAM(pic);
         }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode==0){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+            else {
+                Toast.show("权限获取失败，无法拍照，请到设置中开放存储权限");
+            }
+        }
+
     }
 }

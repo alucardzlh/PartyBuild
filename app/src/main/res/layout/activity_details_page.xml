@@ -43,6 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:id="@+id/dp_time"
                     android:orientation="horizontal">
                     <!--时间图片-->
                     <ImageView
@@ -59,34 +60,22 @@
                         android:text="08-27 17:56"
                         />
                 </LinearLayout>
-                <ImageView
+                <!--<ImageView
                     android:id="@+id/imageView_dp"
                     android:layout_margin="10dp"
+                    android:visibility="gone"
                     android:src="@mipmap/banner"
-                    android:visibility="gone"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-                <TextView
-                    android:id="@+id/dp_tip"
-                    android:text="tip：点击上方图片播放视频"
-                    android:textSize="13sp"
-                    android:visibility="gone"
+                    android:layout_height="match_parent" />-->
+                <com.example.a25908.partybuild.Views.CommonVideoView
+                    android:id="@+id/common_videoView"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/textView_dp"
-                    android:text="啊是大飒飒大苏打实打实大苏打实打实打算撒大苏打实打实大苏打萨达萨达萨达是撒大苏打上撒旦撒大苏打撒撒大苏打似的撒啊大撒旦撒阿斯顿撒"
-                    android:background="@drawable/maintop_shape3"
-                    android:layout_marginTop="10dp"
-                    android:padding="7dp"
                     android:visibility="gone"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="200dp" />
+
                 <WebView
                     android:id="@+id/pcontent"
                     android:layout_marginTop="15dp"

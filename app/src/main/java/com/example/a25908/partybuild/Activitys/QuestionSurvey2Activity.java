@@ -2,6 +2,7 @@ package com.example.a25908.partybuild.Activitys;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -60,6 +61,7 @@ public class QuestionSurvey2Activity extends BaseActivity {
     WaitDialog wd;
     PartySharePreferences psp;
     public static Handler handler;
+    Intent intent;
     Gson gson;
     int isiza=0;
     int ischeck=0;
@@ -81,6 +83,8 @@ public class QuestionSurvey2Activity extends BaseActivity {
         setContentView(R.layout.activity_question_survey2);
         ViewUtils.inject(this);
         gson = new Gson();
+
+        intent = getIntent();
         radioButtonList = new ArrayList<RadioButton>();
         checkBoxList = new ArrayList<CheckBox>();
         wd = new WaitDialog(this);
@@ -90,7 +94,11 @@ public class QuestionSurvey2Activity extends BaseActivity {
         returnT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if (intent.getIntExtra("fl",0)==110){
+                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                }else {
+                    finish();
+                }
             }
         });
         iniv();

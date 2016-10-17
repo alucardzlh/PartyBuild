@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.a25908.partybuild.Adapters.PartyVideoCAdpter;
+import com.example.a25908.partybuild.Dialogs.WaitDialog;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.Model.DataManager;
@@ -42,12 +43,14 @@ public class PartyVideoActivity extends BaseActivity {
     private PartyVideoCAdpter adpter;
     PartySharePreferences psp;
     public static Handler handler;
+    WaitDialog waitDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_party_video);
         ViewUtils.inject(this);
         title.setText("党建视频");
+        waitDialog = new WaitDialog(this);
         title.setVisibility(View.VISIBLE);
         back.setVisibility(View.VISIBLE);
         back.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +64,8 @@ public class PartyVideoActivity extends BaseActivity {
             @Override
             public void handleMessage(Message msg) {
                 if (msg.what==0){
-                    startActivity(new Intent(PartyVideoActivity.this,DetailsPageActivity.class).putExtra("flag",1).putExtra("i",item));
+                    waitDialog.dismiss();
+                    startActivity(new Intent(PartyVideoActivity.this,DetailsPageActivity2.class).putExtra("flag",1).putExtra("i",item).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 }
             }
         };
@@ -83,6 +87,7 @@ public class PartyVideoActivity extends BaseActivity {
 //                intent.putExtra("path",DataManager.partyvideoList.data.videolistPage.get(i).path);
 //                intent.putExtra("content",DataManager.partyvideoList.data.videolistPage.get(i).content);
 //                startActivity(intent);
+                waitDialog.show();
                 item = i;
                 GsonRequest Request3 = new GsonRequest(URLINSER +PARTYVIDEOCOMN, RequestMethod.GET);
                 Request3.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));

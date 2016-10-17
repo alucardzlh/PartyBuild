@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
+import com.example.a25908.partybuild.Views.FormatCurrentData;
 
 import java.io.IOException;
 import java.util.List;
@@ -71,7 +72,7 @@ public class SupportAdapter extends BaseAdapter {
             e.printStackTrace();
         }
 //        viewHolder.imageView.setImageBitmap(FileUtils.stringtoBitmap(list.get(i).title_img));
-        viewHolder.time.setText(list.get(i).add_time+"");
+        viewHolder.time.setText(FormatCurrentData.getTimeRange(list.get(i).add_time));
         viewHolder.title.setText(list.get(i).title+"");
         viewHolder.context.setText(list.get(i).describes+"");
         viewHolder.item_dt_dzan.setText("浏览 "+list.get(i).browse+"");

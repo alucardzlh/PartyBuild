@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,7 +63,7 @@ public class QuestionsActivity extends BaseActivity {
         tijiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(wentifaq233.getText().toString().equals("")){
+                if(TextUtils.isEmpty(wentifaq233.getText().toString())){
                     com.example.a25908.partybuild.Views.Toast.show("");
                 }else{
                     wd.show();
