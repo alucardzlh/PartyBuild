@@ -63,7 +63,7 @@ public class OpinionActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 //                new WaitDialog(OpinionActivity.this).show();
-                if (TextUtils.isEmpty(op_et.getText().toString())){
+                if (TextUtils.isEmpty(op_et.getText().toString().trim())){
                     Toast.show("请输入内容");
                 }else{
                     GsonRequest OpinionRequest = new GsonRequest(URLINSER + OPINION, RequestMethod.GET);

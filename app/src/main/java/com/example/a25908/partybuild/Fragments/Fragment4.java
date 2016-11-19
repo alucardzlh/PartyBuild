@@ -216,17 +216,32 @@ public class Fragment4 extends Fragment {
                     startActivity(new Intent(getActivity(), OpinionActivity.class));
                     break;
                 case R.id.Outlogin://注销
-                    getActivity().finish();
-                    psp.putICONSTEAM("");
-                    psp.putLoginStatus(false);
-                    DataManager.PartyerList.data.UserlistPage.clear();
-                    GsonRequest Request= new GsonRequest(URLINSER +Quit, RequestMethod.GET);
-                    Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
-                    Request.add("KeyNo", psp.getUSERID());
-                    Request.add("deviceId", new Build().MODEL);
-                    Request.add("username",psp.getUSERNAME());
-                    CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x02999, true, false, true);
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                    try {
+                        getActivity().finish();
+                        psp.putICONSTEAM("");
+                        psp.putLoginStatus(false);
+                        DataManager.PartyerList.data.UserlistPage.clear();
+                        GsonRequest Request= new GsonRequest(URLINSER +Quit, RequestMethod.GET);
+                        Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                        Request.add("KeyNo", psp.getUSERID());
+                        Request.add("deviceId", new Build().MODEL);
+                        Request.add("username",psp.getUSERNAME());
+                        CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x02999, true, false, true);
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                    }
+                    catch (NullPointerException e){
+                        getActivity().finish();
+                        psp.putICONSTEAM("");
+                        psp.putLoginStatus(false);
+                        GsonRequest Request= new GsonRequest(URLINSER +Quit, RequestMethod.GET);
+                        Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                        Request.add("KeyNo", psp.getUSERID());
+                        Request.add("deviceId", new Build().MODEL);
+                        Request.add("username",psp.getUSERNAME());
+                        CallServer.getInstance().add(getActivity(), Request, GsonCallBack.getInstance(), 0x02999, true, false, true);
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                    }
+
                     break;
             }
         }

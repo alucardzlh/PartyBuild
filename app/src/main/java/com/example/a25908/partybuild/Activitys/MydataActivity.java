@@ -254,7 +254,6 @@ public class MydataActivity extends BaseActivity {
                     Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
                     Request.add("KeyNo", psp.getUSERID());
                     Request.add("deviceId", new Build().MODEL);
-
                     Request.add("username", md_name.getText().toString());
                     if(md_sex.getText().toString().equals("男")){
                         Request.add("sex",0);
@@ -271,9 +270,19 @@ public class MydataActivity extends BaseActivity {
                     Request.add("department_name", md_bumeng.getText().toString());//部门（预留）
                     Request.add("position",md_zhiweu.getText().toString());//职务（预留）
                     Request.add("census_register", md_guxiang.getText().toString());//户籍
-                    Request.add("email", md_youxiang.getText().toString());//邮箱
+                    if (md_youxiang.getText().toString().equals(DataManager.MyDataList.data.partyMemberlist.EMAIL)){
+
+                    }else {
+                        Request.add("email", md_youxiang.getText().toString());//邮箱
+                    }
                     Request.add("phone", md_mphone.getText().toString());//电话
-                    Request.add("mobile", md_sphone.getText().toString());//手机号
+                    if (md_sphone.getText().toString().equals(DataManager.MyDataList.data.partyMemberlist.PHONE)){
+
+                    }
+                    else {
+                        Request.add("mobile", md_sphone.getText().toString());//手机号
+                    }
+
                     Request.add("home_address",md_address.getText().toString());//现家庭住址
 
 //                           ================ 可不传】=====================
@@ -415,7 +424,7 @@ public class MydataActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         fileclear.setVisibility(View.VISIBLE);
-                        if(!TextUtils.isEmpty(str)){
+                        if(!TextUtils.isEmpty(str.trim())){
                             tv.setText(str+"");
                         }else{
                             tv.setText(con[0]+"");

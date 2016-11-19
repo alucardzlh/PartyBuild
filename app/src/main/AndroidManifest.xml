@@ -16,7 +16,6 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <!-- 拨打电话权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
     <uses-permission android:name="android.permission.CAMERA" />
     <!-- 个推SDK权限配置开始 -->
     <!-- 读取电话状态	访问电话状态 -->
@@ -66,8 +65,8 @@
         <!-- <activity android:name=".Activitys.BaseActivity"></activity> -->
         <activity
             android:name=".Activitys.MainActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|screenSize|screenLayout"/>
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activitys.LoginActivity"
             android:screenOrientation="portrait" />
@@ -82,12 +81,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activitys.DetailsPageActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|screenSize|screenLayout"/>
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activitys.DetailsPageActivity2"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|screenSize|screenLayout"/>
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activitys.SupportActivity"
             android:screenOrientation="portrait" />
@@ -129,8 +128,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activitys.PartyVideoActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|screenSize|screenLayout"/>
+            android:configChanges="orientation|screenSize|screenLayout"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activitys.PartyPayActivity"
             android:screenOrientation="portrait" />
@@ -167,7 +166,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".Activitys.PayDetailsActivity" />
         <activity android:name=".Activitys.QuestionSurvey2Activity" />
-        <activity android:name=".Activitys.OrganizationalActivity"></activity>
+        <activity android:name=".Activitys.OrganizationalActivity" />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
@@ -186,17 +185,23 @@
             android:name=".QRCode_app.PreferencesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <!--支付宝配置-->
+        <!-- 支付宝配置 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind" />
         <activity
             android:name="com.alipay.sdk.auth.AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
-            android:screenOrientation="behind"></activity>
+            android:screenOrientation="behind" />
+        <activity
+            android:name=".Activitys.viewPagerActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+        <activity android:name=".Activitys.RemindActivity"></activity>
     </application>
 
 </manifest>

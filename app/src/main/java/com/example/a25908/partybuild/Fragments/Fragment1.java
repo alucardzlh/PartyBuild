@@ -1,6 +1,8 @@
 package com.example.a25908.partybuild.Fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,8 +29,10 @@ import com.example.a25908.partybuild.Adapters.MyGridAdapter;
 import com.example.a25908.partybuild.Dialogs.WaitDialog;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
+import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Services.CallServer;
+import com.example.a25908.partybuild.Utils.FileUtils;
 import com.example.a25908.partybuild.Utils.MD5;
 import com.example.a25908.partybuild.Utils.PartySharePreferences;
 import com.example.a25908.partybuild.Utils.URLconstant;
@@ -40,10 +44,10 @@ import com.yolanda.nohttp.RequestMethod;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.a25908.partybuild.Dialogs.TipDialog.builder;
 import static com.example.a25908.partybuild.Utils.FileUtils.FileNewsExists;
 import static com.example.a25908.partybuild.Utils.URLconstant.DOCUMENTROOM;
 import static com.example.a25908.partybuild.Utils.URLconstant.FAQ;
+import static com.example.a25908.partybuild.Utils.URLconstant.IMGURL;
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYCOMM;
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYVIDEO;
 import static com.example.a25908.partybuild.Utils.URLconstant.SURVEY;
@@ -63,7 +67,7 @@ public class Fragment1 extends Fragment {
     int[] imgs={R.mipmap.item1,R.mipmap.item2,R.mipmap.item1,R.mipmap.item3,R.mipmap.item4,
             R.mipmap.item5,R.mipmap.item6,R.mipmap.item7,R.mipmap.item8,
             R.mipmap.item9};
-    String[] text1={"党委通知","掌上党校","支部活动","党费缴纳","党建视频",
+    String[] text1={"党的声音","掌上党校","支部活动","党费缴纳","党建视频",
             "学习园地","在线答疑","党员扶持","文档中心",
             "问卷调查"};
 
@@ -75,6 +79,7 @@ public class Fragment1 extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.activity_fragment1, container, false);
         ViewUtils.inject(getActivity());
+        MyNewVersion();
         wd=new WaitDialog(getActivity());
         psp=PartySharePreferences.getLifeSharedPreferences();
         FileNewsExists();
@@ -109,7 +114,7 @@ public class Fragment1 extends Fragment {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 switch (msg.what){
-                    case 0://党委通知
+                    case 0://党的声音
                         wd.dismiss();
                         startActivity(new Intent(getActivity(), PartyCommitteeActivity.class));
                         break;
@@ -148,14 +153,14 @@ public class Fragment1 extends Fragment {
                         wd.dismiss();
 
                             startActivity(new Intent(getActivity(), QuestionSurvey2Activity.class));
-//                        break;
+                        break;
                     case 9://问卷调查
                         wd.dismiss();
-                        builder = new AlertDialog.Builder(getActivity());
-                            builder.setTitle("提示");
-                            builder.setMessage("您已经回答过了");
-                            builder.setPositiveButton("确认", null);
-                        builder.show();
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
+                            builder1.setTitle("提示");
+                            builder1.setMessage("您已经回答过了");
+                            builder1.setPositiveButton("确认", null);
+                        builder1.show();
                         break;
                     case 10://支部活动
                         wd.dismiss();
@@ -180,7 +185,7 @@ public class Fragment1 extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GsonRequest Request;
                 switch (position){
-                    case 0://党委通知
+                    case 0://党的声音
                         wd.show();
                         Request = new GsonRequest(URLINSER +PARTYCOMM, RequestMethod.GET);
                         Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
@@ -279,6 +284,43 @@ public class Fragment1 extends Fragment {
                 }
             }
         });
+    }
+
+    /**
+     * 版本更新
+     */
+    public void MyNewVersion(){
+        try {
+            if (DataManager.newVersion.message.equals("success")){
+                double myVersion = Double.parseDouble(FileUtils.getVersionName(getActivity()));//当前版本号
+                double newVersion = Double.parseDouble(DataManager.newVersion.data.App.version);//最新版本号
+                if (newVersion>myVersion){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("最新版本");
+                    builder.setMessage("是否更新最新版本?!");
+                    builder.setPositiveButton("现在更新", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Uri uri = Uri.parse(IMGURL+DataManager.newVersion.data.App.path);
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                        }
+                    });
+                    builder.setNegativeButton("退出", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            System.exit(0);
+                        }
+                    });
+                    builder.setCancelable(false);
+                    builder.show();
+
+                }
+            }
+        }catch (Exception e){
+            Toast.show("网络异常无法获取最新版本!");
+        }
+
     }
 
 }

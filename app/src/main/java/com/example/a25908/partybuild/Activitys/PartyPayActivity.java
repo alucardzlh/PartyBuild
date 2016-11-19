@@ -22,7 +22,7 @@ import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.yolanda.nohttp.RequestMethod;
 
-import static com.example.a25908.partybuild.Utils.URLconstant.PARTYPAY;
+import static com.example.a25908.partybuild.Utils.URLconstant.PAYMORE;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
 /**
@@ -78,11 +78,11 @@ public class PartyPayActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 wd.show();
-                GsonRequest PartyPayRequest = new GsonRequest(URLINSER + PARTYPAY, RequestMethod.GET);
+                GsonRequest PartyPayRequest = new GsonRequest(URLINSER + PAYMORE, RequestMethod.GET);
                 PartyPayRequest.add("token", MD5.MD5s(1 + new Build().MODEL));
                 PartyPayRequest.add("deviceId", new Build().MODEL);
                 PartyPayRequest.add("mobile", pay_num.getText().toString());
-                PartyPayRequest.add("KeyNo", pay_name.getText().toString());
+                PartyPayRequest.add("username", pay_name.getText().toString());
                 PartyPayRequest.add("KeyNo", 1);
                 CallServer.getInstance().add(PartyPayActivity.this, PartyPayRequest, GsonCallBack.getInstance(), 0x104, true, false, true);
             }

@@ -32,7 +32,7 @@ import static com.example.a25908.partybuild.Utils.URLconstant.PARTYDETAILS;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
 /**
- * 党委通知
+ * 党的声音
  * @author weixuan
  */
 public class PartyCommitteeActivity extends BaseActivity {
@@ -61,7 +61,7 @@ public class PartyCommitteeActivity extends BaseActivity {
         if (intent.getIntExtra("fl",0)==10){
             title.setText("支部活动");
         }else {
-            title.setText("党委通知");
+            title.setText("党的声音");
         }
 
         title.setVisibility(View.VISIBLE);

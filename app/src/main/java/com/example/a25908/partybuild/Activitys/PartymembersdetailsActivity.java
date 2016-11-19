@@ -44,6 +44,7 @@ import java.util.ArrayList;
 
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYRTLISTEWM;
 import static com.example.a25908.partybuild.Utils.URLconstant.PARTYRTNOTESURL;
+import static com.example.a25908.partybuild.Utils.URLconstant.PAYMORE;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
 /**党员详情
@@ -76,6 +77,8 @@ public class PartymembersdetailsActivity extends BaseActivity {
     private TextView pbd_zhiwu;
     @ViewInject(R.id.pbd_setNotes)
     private LinearLayout pbd_setNotes;//设置备注
+    @ViewInject(R.id.pbd_dangfei)
+    private LinearLayout pbd_dangfei;
     @ViewInject(R.id.pbd_Notes)
     private TextView pbd_Notes;//备注
     @ViewInject(R.id.pmd_img)
@@ -192,6 +195,10 @@ public class PartymembersdetailsActivity extends BaseActivity {
                         builder233.setOnCancelListener(null);
                         builder233.show();
                         break;
+                    case 17:
+                        wd.dismiss();
+                        startActivity(new Intent(PartymembersdetailsActivity.this,MyPartyPayActivity.class).putExtra("falg",2).putExtra("name",name));
+                        break;
                 }
 
             }
@@ -233,7 +240,7 @@ public class PartymembersdetailsActivity extends BaseActivity {
                 pbd_zhiwu.setText("职务："+DataManager.PartyerList.data.UserlistPage.get(i).POSITION);
             }
         }
-
+        pbd_dangfei.setOnClickListener(listener);
         pbd_setNotes.setOnClickListener(listener);
         btn_phone.setOnClickListener(listener);
         btn_send.setOnClickListener(listener);
@@ -278,6 +285,16 @@ public class PartymembersdetailsActivity extends BaseActivity {
                     break;
                 case R.id.btn_Addt:
                     dialog3.show();
+                    break;
+                case R.id.pbd_dangfei:
+                    wd.show();
+                    GsonRequest PartyPayRequest = new GsonRequest(URLINSER + PAYMORE, RequestMethod.GET);
+                    PartyPayRequest.add("token", MD5.MD5s(1 + new Build().MODEL));
+                    PartyPayRequest.add("deviceId", new Build().MODEL);
+                    PartyPayRequest.add("mobile", phone);
+                    PartyPayRequest.add("username", name);
+                    PartyPayRequest.add("KeyNo", 1);
+                    CallServer.getInstance().add(PartymembersdetailsActivity.this, PartyPayRequest, GsonCallBack.getInstance(), 0x105, true, false, true);
                     break;
             }
         }

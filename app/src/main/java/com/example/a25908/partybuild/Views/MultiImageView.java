@@ -3,6 +3,7 @@ package com.example.a25908.partybuild.Views;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -15,10 +16,7 @@ import com.example.a25908.partybuild.Utils.FileUtils;
 import java.util.List;
 
 import rx.Observable;
-import rx.Subscriber;
 import rx.functions.Action1;
-
-import static com.example.a25908.partybuild.Utils.FileUtils.stringtoBitmap;
 
 /**
  * @ClassName MultiImageView.java
@@ -120,8 +118,9 @@ public class MultiImageView extends LinearLayout {
 
 		onePicPara = new LayoutParams(wrap, wrap);
 
-		moreParaColumnFirst = new LayoutParams(pxMoreWandH, pxMoreWandH);
-		morePara = new LayoutParams(pxMoreWandH, pxMoreWandH);
+		moreParaColumnFirst = new LayoutParams(wrap, wrap);
+		morePara = new LayoutParams(wrap, wrap);
+		morePara.gravity = Gravity.CENTER;
 		morePara.setMargins(pxImagePadding, 0, 0, 0);
 
 		rowPara = new LayoutParams(match, wrap);
@@ -146,7 +145,7 @@ public class MultiImageView extends LinearLayout {
 		} else {
 			int allCount = imagesList.size();
 			if(allCount == 4){
-				MAX_PER_ROW_COUNT = 2;
+				MAX_PER_ROW_COUNT = 3;
 			}else{
 				MAX_PER_ROW_COUNT = 3;
 			}

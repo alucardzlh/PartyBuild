@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.a25908.partybuild.Dialogs.WaitDialog;
@@ -34,13 +34,13 @@ public class PalmPartySchoolActivity extends BaseActivity {
     private ImageView back;
     @ViewInject(R.id.title)
     private TextView title;
+    @ViewInject(R.id.ib_1)
+    private ImageButton ib_1;
+    @ViewInject(R.id.ib_2)
+    private ImageButton ib_2;
+    @ViewInject(R.id.ib_3)
+    private ImageButton ib_3;
 
-    @ViewInject(R.id.pps1)
-    private RelativeLayout pps1;
-    @ViewInject(R.id.pps2)
-    private RelativeLayout pps2;
-    @ViewInject(R.id.pps3)
-    private RelativeLayout pps3;
     public static Handler handler;
     PartySharePreferences psp;
     private WaitDialog waitDialog;
@@ -60,10 +60,10 @@ public class PalmPartySchoolActivity extends BaseActivity {
                 finish();
             }
         });
-        pps1.setOnClickListener(listener);
-        pps2.setOnClickListener(listener);
-        pps3.setOnClickListener(listener);
         psp = PartySharePreferences.getLifeSharedPreferences();
+        ib_1.setOnClickListener(listener);
+        ib_2.setOnClickListener(listener);
+        ib_3.setOnClickListener(listener);
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -89,7 +89,7 @@ public class PalmPartySchoolActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.pps1://人物长廊
+                case R.id.ib_1://人物长廊
                     waitDialog.show();
                     GsonRequest ppsRequest = new GsonRequest(URLINSER + PALMPARTY, RequestMethod.GET);
                     ppsRequest.add("KeyNo",psp.getUSERID());//psp.getUSERID()
@@ -99,15 +99,15 @@ public class PalmPartySchoolActivity extends BaseActivity {
                     CallServer.getInstance().add(PalmPartySchoolActivity.this,ppsRequest, GsonCallBack.getInstance(),0x201,true,false,true);
 
                     break;
-                case R.id.pps2://党的章程
+                case R.id.ib_2://党的章程
                     waitDialog.show();
                     GsonRequest TCTPRequest = new GsonRequest(URLINSER + TCOP, RequestMethod.GET);
                     TCTPRequest.add("KeyNo",0);
                     TCTPRequest.add("deviceId",new Build().MODEL);
-                    TCTPRequest.add("token",MD5.MD5s(0+new  Build().MODEL));
+                    TCTPRequest.add("token", MD5.MD5s(0+new  Build().MODEL));
                     CallServer.getInstance().add(PalmPartySchoolActivity.this,TCTPRequest, GsonCallBack.getInstance(),0x202,true,false,true);
                     break;
-                case R.id.pps3:
+                case R.id.ib_3:
                     waitDialog.show();
                     GsonRequest TCTPRequest2 = new GsonRequest(URLINSER + TCOP, RequestMethod.GET);
                     TCTPRequest2.add("KeyNo",1);

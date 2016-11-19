@@ -137,7 +137,23 @@ public class MyFilesActivity extends BaseActivity {
                         i=getPptFileIntent(list2.get(position));
                         startActivity(i);
                         break;
+                    case "pptx":
+                        i=getPptFileIntent(list2.get(position));
+                        startActivity(i);
+                        break;
                     case "xls":
+                        i=getExcelFileIntent(list2.get(position));
+                        startActivity(i);
+                        break;
+                    case "xlsx":
+                        i=getExcelFileIntent(list2.get(position));
+                        startActivity(i);
+                        break;
+                    case "docx":
+                        i=getExcelFileIntent(list2.get(position));
+                        startActivity(i);
+                        break;
+                    case "pdf":
                         i=getExcelFileIntent(list2.get(position));
                         startActivity(i);
                         break;

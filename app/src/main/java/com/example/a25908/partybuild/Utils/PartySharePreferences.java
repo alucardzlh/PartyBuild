@@ -56,22 +56,36 @@ public class PartySharePreferences {
     }
     }
     /**
-     * 保存问卷提交状态
+     * 保存cid
      */
-    public void putQSA(Boolean b){
+    public void putCid(String b){
         if(sp!=null){
             SharedPreferences.Editor editor = sp.edit();
-            editor.putBoolean("QuestionSurvey", b);
+            editor.putString("Cid", b);
             editor.commit();}
     }
-    public boolean getQSA() {
+    public String getCid() {
         if(sp!=null) {
-            return sp.getBoolean("QuestionSurvey", false);
+            return sp.getString("Cid",null);
         }else{
-            return false;
+            return null;
         }
     }
-
+    /**
+     * 保存是否第一次进入app
+     */
+    public void putAppStatus(Boolean b){
+        if(sp!=null){
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putBoolean("AppStatus", b);
+            editor.commit();}
+    }
+    public Boolean getAppStatus(){
+        if(sp!=null) {
+            return sp.getBoolean("AppStatus", false);
+        }
+        return false;
+    }
 
     /**
      * 保存是否登录状态

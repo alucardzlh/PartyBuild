@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -20,17 +21,20 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.a25908.partybuild.Adapters.MyGridAdapterClaim2;
 import com.example.a25908.partybuild.Dialogs.WaitDialog;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
+import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Services.CallServer;
 import com.example.a25908.partybuild.Utils.MD5;
@@ -43,11 +47,16 @@ import com.yolanda.nohttp.RequestMethod;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
+import rx.functions.Action1;
+
 import static com.example.a25908.partybuild.Utils.URLconstant.DONGTAIFABU;
+import static com.example.a25908.partybuild.Utils.URLconstant.PARTYRTLISTURL;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
 /**
@@ -66,6 +75,10 @@ public class HairDynamicActivity extends BaseActivity {
     private EditText dt_et_con;//内容
     @ViewInject(R.id.myGridViewtc)
     private MyGridView myGridViewtc;//图片
+    @ViewInject(R.id.tixing)
+    private LinearLayout tixing;//提醒
+    @ViewInject(R.id.tixing_tx)
+    private TextView tixing_tx;//提醒列表
     public static WaitDialog wd;
 
     public static HairDynamicActivity instance = null;
@@ -75,6 +88,9 @@ public class HairDynamicActivity extends BaseActivity {
     private static final int REQUESTCODE_PICK = 0;		// 相册选图标记
     private static final int REQUESTCODE_TAKE = 1;		// 相机拍照标记
     private static final int REQUESTCODE_CUTTING = 2;	// 图片裁切标记
+
+    private static final String IMAGE_FILE_LOCATION = "file:///sdcard/temp.jpg";//temp file
+    Uri imageUri = Uri.parse(IMAGE_FILE_LOCATION);//The Uri to store the big bitmap
 
     AlertDialog.Builder builder;
     public Drawable[] imgs1; //九张图片数组
@@ -102,6 +118,10 @@ public class HairDynamicActivity extends BaseActivity {
                     Toast.show("发布成功");
                     finish();
                 }
+                else if(msg.what==2){
+                    wd.dismiss();
+                    startActivity(new Intent(HairDynamicActivity.this,RemindActivity.class));
+                }
                 else {
                     Toast.show("返回为空");
                 }
@@ -124,10 +144,38 @@ public class HairDynamicActivity extends BaseActivity {
                 finish();
             }
         });
+        tixing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    if(DataManager.PartyerList.data.UserlistPage.size()>0 && DataManager.PartyerList.data.UserlistPage!=null){
+                        handler.sendEmptyMessage(2);
+                    }else{
+                        wd.show();
+                        GsonRequest Request = new GsonRequest(URLINSER +PARTYRTLISTURL, RequestMethod.GET);
+                        Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                        Request.add("KeyNo", psp.getUSERID());
+                        Request.add("deviceId", new Build().MODEL);
+                        Request.add("udid", "");
+                        CallServer.getInstance().add(HairDynamicActivity.this, Request, GsonCallBack.getInstance(), 0x0033, true, false, true);
+                    }
+                }catch (NullPointerException e){
+                    e.printStackTrace();
+                    wd.show();
+                    GsonRequest Request = new GsonRequest(URLINSER +PARTYRTLISTURL, RequestMethod.POST);
+                    Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
+                    Request.add("KeyNo", psp.getUSERID());
+                    Request.add("udid", "");
+                    Request.add("deviceId", new Build().MODEL);
+                    CallServer.getInstance().add(HairDynamicActivity.this, Request, GsonCallBack.getInstance(), 0x0033, true, false, true);
+                }
+
+            }
+        });
         fileclear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(dt_et_con.getText())&myList.isEmpty()){
+                if (TextUtils.isEmpty(dt_et_con.getText().toString().trim())&myList.isEmpty()){
                     Toast.show("请输入内容或选择照片");
                 }
                 else if(!TextUtils.isEmpty(dt_et_con.getText())&myList.isEmpty()){
@@ -183,7 +231,14 @@ public class HairDynamicActivity extends BaseActivity {
                 // TODO Auto-generated method stub
                 ImageView bg= (ImageView)view.findViewById(R.id.ivc_items);
                 if(!isShowDelete){
-                    onThumbnailClick(bg);
+                    Observable.just(myList.get(position))
+                            .subscribe(new Action1<Drawable>() {
+                                @Override
+                                public void call(Drawable drawable) {
+                                    onThumbnailClick(drawable);
+                                }
+                            });
+
                 }else{
                     delete(position);
                     adapters=new MyGridAdapterClaim2(HairDynamicActivity.this,myList);
@@ -285,15 +340,30 @@ public class HairDynamicActivity extends BaseActivity {
                 } catch (NullPointerException e) {
                     e.printStackTrace();// 用户点击取消操作
                 }
+//                Observable.just(decodeUriAsBitmap(data.getData()))
+//                        .subscribe(new Action1<Bitmap>() {
+//                                       @Override
+//                                       public void call(Bitmap bitmap) {
+//                                           setPicToView2(bitmap);
+//                                       }
+//                                   }
+//                        );
+
                 break;
             case REQUESTCODE_TAKE:// 调用相机拍照
                 File temp = new File(Environment.getExternalStorageDirectory() + "/" + IMAGE_FILE_NAME);
                 startPhotoZoom(Uri.fromFile(temp));
                 break;
             case REQUESTCODE_CUTTING:// 取得裁剪后的图片
-                if (data != null) {
-                    setPicToView(data);
-                }
+//                if (data != null) {
+////                    setPicToView(data);
+//                    setPicToView2(decodeUriAsBitmap(data.getData()));
+//                    Log.e("sssa",data+"");
+//                }
+                if(imageUri != null){
+                    Bitmap bitmap = decodeUriAsBitmap(imageUri);//decode bitmap
+                    setPicToView2(bitmap);
+                    }
                 break;
         }
 
@@ -309,15 +379,17 @@ public class HairDynamicActivity extends BaseActivity {
     public void startPhotoZoom(Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
-        // crop=true是设置在开启的Intent中设置显示的VIEW可裁剪
         intent.putExtra("crop", "true");
-        // aspectX aspectY 是宽高的比例
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", 300);
-        intent.putExtra("outputY", 300);
-        intent.putExtra("return-data", true);
+        intent.putExtra("aspectX", 600);
+        intent.putExtra("aspectY", 600);
+        intent.putExtra("outputX", 600);
+        intent.putExtra("outputY", 600);
+        intent.putExtra("scale", true);
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("noFaceDetection", true); // no face detection
+//        startActivityForResult(intent, CHOOSE_BIG_PICTURE);
         startActivityForResult(intent, REQUESTCODE_CUTTING);
     }
 
@@ -328,6 +400,7 @@ public class HairDynamicActivity extends BaseActivity {
      */
     private void setPicToView(Intent picdata) {
         Bundle extras = picdata.getExtras();
+        Log.e("ex",extras+"");
         if (extras != null) {
             // 取得SDCard图片路径做显示
             Bitmap photo = extras.getParcelable("data");
@@ -337,12 +410,29 @@ public class HairDynamicActivity extends BaseActivity {
             myGridViewtc.setAdapter(adapters);
         }
     }
+    private void setPicToView2(Bitmap bitmap) {
+            Drawable drawable = new BitmapDrawable(null, bitmap);
+            myList.add(drawable);
+            adapters = new MyGridAdapterClaim2(HairDynamicActivity.this, myList);
+            myGridViewtc.setAdapter(adapters);
+    }
+
+    private Bitmap decodeUriAsBitmap(Uri uri){
+        Bitmap bitmap = null;
+        try {
+             bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+            } catch (FileNotFoundException e) {
+            e.printStackTrace();
+             return null;
+            }
+        return bitmap;
+    }
 
     /**
      * 显示大图
      * @param img
      */
-    public void onThumbnailClick(ImageView img) {
+    public void onThumbnailClick(Drawable img) {
         final Dialog dialog = new Dialog(HairDynamicActivity.this, android.R.style.Theme_Black_NoTitleBar);
         ImageView imgView = getView(img);
         dialog.setContentView(imgView);
@@ -361,10 +451,10 @@ public class HairDynamicActivity extends BaseActivity {
      * @param img
      * @return
      */
-    private ImageView getView(ImageView img) {
+    private ImageView getView(Drawable img) {
         ImageView imgView = new ImageView(HairDynamicActivity.this);
         imgView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        imgView.setImageDrawable(img.getDrawable());
+        imgView.setImageDrawable(img);
         return imgView;
     }
 

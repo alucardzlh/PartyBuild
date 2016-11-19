@@ -12,17 +12,25 @@ public class URLconstant {
     /**
      * //所有接口前缀
      */
-    public static final String URLINSER = "http://192.168.10.44:7070/zhirong.partybuild/Interface/";
+//        public static final String URLINSER = "http://192.168.10.44:7070/zhirong.partybuild/Interface/";
 
-    public static final String IMGURL = "http://192.168.10.44:7070";//富文本图片前缀
+//    public static final String IMGURL = "http://192.168.10.44:7070";//富文本图片前缀
 
+//    public static final String URLINSER = "http://192.168.10.117:8080/zhirong.partybuild/Interface/";
+//
 //    public static final String IMGURL = "http://192.168.10.117:8080";//富文本图片前缀
 
-//    public static final String URLINSER = "http://192.168.100.170:8080/zhirong.partybuild/Interface/";
+    public static final String IMGURL = "http://101.201.211.27:8282";//富文本图片前缀
+
+    public static final String URLINSER = "http://101.201.211.27:8282/zhirong.partybuild/Interface/";
 
     /**
      * Fragment 1 主界面
      */
+
+    public static final String NewVer = "apUploadControllerInterface/appload";//版本更新
+
+    public static final String RSA = "secretKeyControllerInterface/querySecretKey";//支付密钥
 
     public static final String PARTYCOMM = "newsController/queryNews";//党委通知,党员扶持,学习园地
 
@@ -49,6 +57,8 @@ public class URLconstant {
 
     public static final String  FAQADD="onlineAnswerControllerInterface/saveOnlineAnswer";// 在线答疑之想组织提问
 
+    public static final String PAYMORE = "partyMembershipDuesController/querypartyMember";//党费查询
+
     /**
      * Fragment 2 主界面
      */
@@ -74,7 +84,7 @@ public class URLconstant {
 
     public static final String DONGTAIPRSISE = "praiseController/savePraise";//动态点赞
 
-    public static final String DONGTAIUPDATE = "praiseController/updatePraise";//动态取消点赞
+    public static final String IMAGEID = "dynamicImgControllerInterfaced/queryDyImg";//动态取消点赞
 
 
     /**

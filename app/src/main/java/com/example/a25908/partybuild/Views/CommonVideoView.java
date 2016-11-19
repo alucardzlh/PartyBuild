@@ -126,7 +126,7 @@ public class CommonVideoView extends FrameLayout implements MediaPlayer.OnPrepar
 
     public void setNormalScreen(){
         touchStatusImg.setImageResource(R.mipmap.iconfont_enter_32);
-        LinearLayout.LayoutParams ls = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,400);
+        LinearLayout.LayoutParams ls = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,0,1.0f);
         ls.leftMargin=10;
         ls.rightMargin=10;
         this.setLayoutParams(ls);

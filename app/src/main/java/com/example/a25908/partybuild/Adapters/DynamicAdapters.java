@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.a25908.partybuild.Fragments.Fragment3;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.Model.DataManager;
@@ -38,6 +39,7 @@ import java.util.List;
 import static com.example.a25908.partybuild.Utils.URLconstant.DONGTAIDELETE;
 import static com.example.a25908.partybuild.Utils.URLconstant.DONGTAIPLFB;
 import static com.example.a25908.partybuild.Utils.URLconstant.DONGTAIPRSISE;
+import static com.example.a25908.partybuild.Utils.URLconstant.IMAGEID;
 import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
 /**
@@ -58,6 +60,9 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
     }
     public void setDataList(List<DataManager.Mydynamic.DataBean.DynamiclistPageBean> ComplainList){
         this.list=ComplainList;
+    }
+    public void getImage(){
+        onThumbnailClick(FileUtils.stringtoBitmap(String.valueOf(DataManager.myimageid.data.DynamicImg.path)));
     }
     public void setScrolling(boolean scrollState) {
         this.scrollState = scrollState;
@@ -95,7 +100,7 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
                 public void onClick(View view) {
                     String pinlun = viewHolder.item_dt_pinglun.getText().toString();
 
-                    if (!pinlun.equals("")){
+                    if (!pinlun.trim().equals("")){
                         GsonRequest PLRequest = new GsonRequest(URLINSER + DONGTAIPLFB, RequestMethod.GET);
                         PLRequest.add("KeyNo",psp.getUSERID());
                         PLRequest.add("content",pinlun);
@@ -137,7 +142,7 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
                             @Override
                             public void onClick(View view) {
                                 String pinlun1 = viewHolder.item_dt_pinglun.getText().toString();
-                                if (!pinlun1.equals("")){
+                                if (!pinlun1.trim().equals("")){
                                     GsonRequest PLRequest = new GsonRequest(URLINSER + DONGTAIPLFB, RequestMethod.GET);
                                     PLRequest.add("KeyNo",psp.getUSERID());
                                     PLRequest.add("content",pinlun1);
@@ -227,7 +232,7 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
             @Override
             public void onClick(View view) {
                 if(System.currentTimeMillis()-mLasttime<700) {//防止快速点击操作
-                    com.example.a25908.partybuild.Views.Toast.show("不要点太快");
+                    com.example.a25908.partybuild.Views.Toast.show("您点击太快，请稍后...");
                     return;
                 }
                 mLasttime = System.currentTimeMillis();
@@ -288,7 +293,14 @@ public class DynamicAdapters extends BaseRecycleViewAdapter {
                         @Override
                         public void onItemClick(View view, int iposition) {
                             //点击查看大图
-                            onThumbnailClick(FileUtils.stringtoBitmap(String.valueOf(list.get(position).imglist.get(iposition).path)));
+                            Fragment3.waitDialog.show();
+                            GsonRequest DELETERequest6 = new GsonRequest(URLINSER + IMAGEID, RequestMethod.GET);
+                            DELETERequest6.add("KeyNo",list.get(position).dynamicid);
+                            DELETERequest6.add("deviceId",new Build().MODEL);
+                            DELETERequest6.add("token", MD5.MD5s(list.get(position).dynamicid + new  Build().MODEL));
+                            DELETERequest6.add("pictureid",list.get(position).imglist.get(iposition).pictureid);
+                            CallServer.getInstance().add(context,DELETERequest6, GsonCallBack.getInstance(),0x305,true,false,true);
+//                            onThumbnailClick(FileUtils.stringtoBitmap(String.valueOf(list.get(position).imglist.get(iposition).path)));
                         }
                     });
                 } else {

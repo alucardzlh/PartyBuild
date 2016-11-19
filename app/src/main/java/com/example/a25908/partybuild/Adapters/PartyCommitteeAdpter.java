@@ -20,7 +20,7 @@ import java.util.List;
 import Decoder.BASE64Decoder;
 
 /**
- * 党委通知 和 党建视频 的adapter
+ * 党的声音 和 党建视频 的adapter
  * Created by WEIXUAN on 2016/8/29.
  */
 

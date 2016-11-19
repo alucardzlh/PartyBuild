@@ -24,11 +24,14 @@ public class MyPartyPayListAdapter extends BaseAdapter {
     private Context context;
     private List<DataManager.MyPartyPay.DataBean.PartyMemberlistBean> list1;
     private int Allmoney = 0;
+    private int Body;
 
     public int getAllmoney(){
         return Allmoney;
     }
-
+    public int getBody(){
+        return Body;
+    }
     public MyPartyPayListAdapter(Context context, List<DataManager.MyPartyPay.DataBean.PartyMemberlistBean> list1) {
         this.context = context;
         this.list1 = list1;
@@ -74,10 +77,12 @@ public class MyPartyPayListAdapter extends BaseAdapter {
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     if (b){
                         Allmoney = Allmoney + Integer.parseInt(list1.get(position).MONEY);
+                        Body = position;
                         MyPartyPayActivity.handler.sendEmptyMessage(0);
                     }
                     else {
                         Allmoney = Allmoney - Integer.parseInt(list1.get(position).MONEY);
+                        Body = position;
                         MyPartyPayActivity.handler.sendEmptyMessage(0);
                     }
                 }

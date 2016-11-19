@@ -23,6 +23,7 @@ import com.example.a25908.partybuild.Fragments.Fragment4;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.Receivers.GetuiReceiver;
 import com.example.a25908.partybuild.Utils.PartySharePreferences;
+import com.example.a25908.partybuild.Views.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yolanda.nohttp.rest.Response;
@@ -50,11 +51,15 @@ public class GsonCallBack implements HttpCallBack {
     @Override
     public void onSucceed(int what, Response response) {
         gson = new Gson();
+
         switch (what) {
             case 0x001://登陆
                 jsonString = (String) response.get();
                 DataManager.userlist=gson.fromJson(jsonString,DataManager.User.class);
-                if(DataManager.userlist.message.equals("success")){
+                if (DataManager.userlist == null){
+                    LoginActivity.handler.sendEmptyMessage(3);
+                }
+                else if(DataManager.userlist.message.equals("success")){
                     psp.putLoginStatus(true);
                     psp.putUser(DataManager.userlist);
                     psp.getEMAIL();
@@ -63,6 +68,7 @@ public class GsonCallBack implements HttpCallBack {
                 else if(DataManager.userlist.message.equals("账号或密码错误")){
                     LoginActivity.handler.sendEmptyMessage(2);
                 }
+
                 else{
                     LoginActivity.handler.sendEmptyMessage(1);
                 }
@@ -76,6 +82,10 @@ public class GsonCallBack implements HttpCallBack {
                 jsonString = (String) response.get();
                 DataManager.MyDataList=gson.fromJson(jsonString,DataManager.MyData.class);
                 if( DataManager.MyDataList.message.equals("success")){
+                    if (DataManager.MyDataList.status.equals("mobile_error")){
+                        Toast.show("手机号码格式不支持");
+                        MydataActivity.handler.sendEmptyMessage(0);
+                    }
                     MydataActivity.handler.sendEmptyMessage(0);
                 }else{
                     MydataActivity.handler.sendEmptyMessage(1);
@@ -100,6 +110,14 @@ public class GsonCallBack implements HttpCallBack {
                 jsonString = (String) response.get();
                 DataManager.PartyerList=gson.fromJson(jsonString,DataManager.Partyer.class);
                 Fragment2.handler.sendEmptyMessage(0);
+                break;
+            /**
+             * //党员名册（）
+             */
+            case 0x0033:
+                jsonString = (String) response.get();
+                DataManager.PartyerList=gson.fromJson(jsonString,DataManager.Partyer.class);
+                HairDynamicActivity.handler.sendEmptyMessage(2);
                 break;
             /**
              * //党员名册(以部门为主)
@@ -339,6 +357,12 @@ public class GsonCallBack implements HttpCallBack {
                 }
 
                 break;
+            case 0x105://党费查询（党员名册）
+                jsonString = (String) response.get();
+                DataManager.myPartyPaylist = gson.fromJson(jsonString,DataManager.MyPartyPay.class);
+                if (DataManager.myPartyPaylist.message.equals("success")){
+                    PartymembersdetailsActivity.handler.sendEmptyMessage(17);
+                }
 
             case 0x02999://退出
                 jsonString = (String) response.get();
@@ -426,6 +450,27 @@ public class GsonCallBack implements HttpCallBack {
                 map = gson.fromJson(jsonString,new TypeToken<Map<String, Object>>(){}.getType());
                 if (map.get("message").equals("success")){
                     Fragment3.handler.sendEmptyMessage(3);
+                }
+                break;
+            case 0x305://动态图片获取
+                jsonString = (String) response.get();
+                DataManager.myimageid = gson.fromJson(jsonString,DataManager.Imageid.class);
+                if (DataManager.myimageid.message.equals("success")){
+                    Fragment3.handler.sendEmptyMessage(7);
+                }
+                break;
+            case 0x251://版本更新
+                jsonString = (String) response.get();
+                DataManager.newVersion=gson.fromJson(jsonString,DataManager.NewVersion.class);
+                break;
+            case 0x250://支付宝密钥
+                jsonString = (String) response.get();
+                DataManager.myzhifubao=gson.fromJson(jsonString,DataManager.zhifubao.class);
+                if (DataManager.myzhifubao == null){
+                    Toast.show("网络异常，支付宝组件无法使用，请调试网络环境！");
+                }
+                else if(!DataManager.myzhifubao.message.equals("success")){
+                    Toast.show("系统异常，支付宝组件无法使用！");
                 }
                 break;
             case 0x500://微信支付实体类

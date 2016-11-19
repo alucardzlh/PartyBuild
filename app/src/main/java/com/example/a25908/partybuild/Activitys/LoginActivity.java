@@ -93,6 +93,7 @@ public class LoginActivity extends BaseActivity {
                     LoginRequest.add("KeyNo", login_user.getText().toString());
                     LoginRequest.add("deviceId", new Build().MODEL);
                     LoginRequest.add("password", MD5.MD5s(login_pwd.getText().toString()));
+                    LoginRequest.add("cid", psp.getCid());
                     CallServer.getInstance().add(LoginActivity.this, LoginRequest, GsonCallBack.getInstance(), 0x001, true, false, true);
                 }
             }
@@ -115,6 +116,9 @@ public class LoginActivity extends BaseActivity {
                         break;
                     case 2:
                         Toast.show("账号或密码错误");
+                        break;
+                    case 3:
+                        Toast.show("服务器已关闭,APP无法使用!");
                         break;
                 }
             }

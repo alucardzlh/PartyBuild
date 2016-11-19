@@ -14,10 +14,13 @@ import android.widget.TextView;
 import com.example.a25908.partybuild.Adapters.MyPartyPayListAdapter;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
+import com.example.a25908.partybuild.Utils.PartySharePreferences;
+import com.example.a25908.partybuild.Views.Toast;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,17 +41,32 @@ public class MyPartyPayActivity extends BaseActivity {
     Button paypay;
     @ViewInject(R.id.qiam_pay)
     TextView qiam_pay;
+    Intent intent;
     MyPartyPayListAdapter adapter;
+    PartySharePreferences psp;
     List<DataManager.MyPartyPay.DataBean.PartyMemberlistBean> list1;
+    private List<String> liststr;
     public static android.os.Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_party_pay);
         ViewUtils.inject(this);
-        Intent intent = getIntent();
+        liststr = new ArrayList<>();
+        psp = new PartySharePreferences();
+        intent = getIntent();
         if (intent.getIntExtra("falg",0)==1){
             title.setText("查询缴费");
+            returnT.setVisibility(View.VISIBLE);
+            returnT.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
+        else if(intent.getIntExtra("falg",0)==2){
+            title.setText("查询缴费("+intent.getStringExtra("name")+")");
             returnT.setVisibility(View.VISIBLE);
             returnT.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -74,6 +92,24 @@ public class MyPartyPayActivity extends BaseActivity {
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 0:
+                        if (liststr.size()!=0){
+                            for (int i = 0; i < liststr.size(); i++){
+                                if(liststr.get(i).equals(list1.get(adapter.getBody()).PERIOD_OF_TIME)){
+                                    liststr.remove(i);
+                                    break;
+                                }
+                                else if (liststr.size()-1==i){
+                                    liststr.add(list1.get(adapter.getBody()).PERIOD_OF_TIME);
+                                    break;
+                                }
+                            }
+                        }
+                        else {
+                            liststr.add(list1.get(adapter.getBody()).PERIOD_OF_TIME);
+                        }
+
+
+//                        Toast.show(liststr.toString());
 //                        Toast.show(adapter.getAllmoney()+"");
                         qiam_pay.setText(adapter.getAllmoney()+" ");
                         if (adapter.getAllmoney()==0){
@@ -105,7 +141,24 @@ public class MyPartyPayActivity extends BaseActivity {
         paypay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MyPartyPayActivity.this,PayDetailsActivity.class).putExtra("pay",adapter.getAllmoney()));
+                Collections.sort(liststr);
+                if (intent.getIntExtra("falg",0)==1||intent.getIntExtra("falg",0)==2){
+                    DataManager.myzfbinfo.body = intent.getStringExtra("name")+"的"+liststr.toString()+"党费";
+                }else {
+                    DataManager.myzfbinfo.body = psp.getUSERNAME()+"的"+liststr.toString()+"党费";
+                }
+
+                DataManager.myzfbinfo.total_amount = adapter.getAllmoney();
+                if (DataManager.myzhifubao==null){
+                    Toast.show("获取支付宝密钥失败，请检查网络");
+                }
+                else if (!DataManager.myzhifubao.message.equals("success")){
+                    Toast.show("服务器异常");
+                }
+                else {
+                    startActivity(new Intent(MyPartyPayActivity.this,PayDetailsActivity.class).putExtra("pay",adapter.getAllmoney()));
+                }
+
             }
         });
 

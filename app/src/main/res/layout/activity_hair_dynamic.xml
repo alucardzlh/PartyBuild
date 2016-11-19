@@ -74,6 +74,31 @@
             android:verticalSpacing="5dp"
             />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/tixing"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:background="#fff"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:background="@mipmap/ic_launcher"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+            <TextView
+                android:textSize="17sp"
+                android:gravity="center"
+                android:text="提醒谁看  "
+                android:layout_width="wrap_content"
+                android:layout_height="50dp" />
+            <TextView
+                android:id="@+id/tixing_tx"
+                android:text="cese"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
 
     </LinearLayout>

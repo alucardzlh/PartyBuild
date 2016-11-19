@@ -8,6 +8,7 @@ public class SortModel
 	public String name;
 	public String info;
 	public String sortLetters;
+	public boolean checked;
 
 	public SortModel() {
 		super();

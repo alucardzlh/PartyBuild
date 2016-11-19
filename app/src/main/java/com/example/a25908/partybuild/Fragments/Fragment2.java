@@ -3,7 +3,6 @@ package com.example.a25908.partybuild.Fragments;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -77,6 +77,8 @@ public class Fragment2 extends Fragment implements ExpandableListView.OnGroupExp
     private SortAdapter adapter;
 
     private TextView text;
+    private ImageView im;
+    private LinearLayout lin_hv;
 
     private View headerView;
     private View headerView2;
@@ -104,6 +106,7 @@ public class Fragment2 extends Fragment implements ExpandableListView.OnGroupExp
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_fragment2, container, false);
         ViewUtils.inject(getActivity());
+        cx=false;
         waitDialog = new WaitDialog(getActivity());
         psp=PartySharePreferences.getLifeSharedPreferences();
         mSearchEditText = (SearchEditText) v.findViewById(R.id.txt_filter_edit);
@@ -119,12 +122,11 @@ public class Fragment2 extends Fragment implements ExpandableListView.OnGroupExp
         //模糊查询
         headerView2 = LayoutInflater.from(getActivity()).inflate(R.layout.headview,null);
         text = (TextView) headerView2.findViewById(R.id.headview2);
-        Drawable drawable= getResources().getDrawable(R.drawable.ic_search_black_24dp);
-/// 这一步必须要做,否则不会显示.
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        text.setCompoundDrawables(drawable,null,null,null);
+        im = (ImageView) headerView2.findViewById(R.id.hv_im);
+        lin_hv = (LinearLayout) headerView2.findViewById(R.id.lin_hv);
+        im.setImageResource(R.drawable.ic_search_black_24dp);
         text.setText("模糊查询");
-        text.setOnClickListener(new View.OnClickListener() {
+        lin_hv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sideBar.setVisibility(View.VISIBLE);
@@ -136,12 +138,11 @@ public class Fragment2 extends Fragment implements ExpandableListView.OnGroupExp
         //结构查询
         headerView = LayoutInflater.from(getActivity()).inflate(R.layout.headview,null);
         text = (TextView) headerView.findViewById(R.id.headview2);
-        Drawable drawable2 = getResources().getDrawable(R.mipmap.zuzhichaxun);
-/// 这一步必须要做,否则不会显示.
-        drawable2.setBounds(0, 0, drawable2.getMinimumWidth(), drawable2.getMinimumHeight());
-        text.setCompoundDrawables(drawable2,null,null,null);
+        im = (ImageView) headerView.findViewById(R.id.hv_im);
+        lin_hv = (LinearLayout) headerView.findViewById(R.id.lin_hv);
+        im.setImageResource(R.mipmap.zuzhichaxun);
         text.setText("结构查询");
-        text.setOnClickListener(new View.OnClickListener() {
+        lin_hv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (cx){

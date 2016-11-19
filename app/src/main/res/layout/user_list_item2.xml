@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:gravity="center_vertical"
+	android:id="@+id/lin_tx"
+	android:orientation="vertical" >
+
+	<TextView
+		android:id="@+id/txt_catalog"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:paddingBottom="5dp"
+		android:paddingTop="5dp"
+		android:text="A"
+		android:background="#F0F0F0"
+		android:textColor="#0861B1"
+		/>
+
+	<RelativeLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content">
+
+		<ImageView
+			android:id="@+id/user_head"
+			android:layout_width="35dp"
+			android:layout_height="35dp"
+			android:layout_marginLeft="12dp"
+			android:layout_marginTop="6dp"
+			android:layout_centerVertical="true"
+			android:layout_marginBottom="6dp" />
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@id/user_head"
+			android:background="#ffffff"
+			android:layout_centerVertical="true"
+			android:orientation="horizontal">
+			<TextView
+				android:id="@+id/txt_user_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="#A1A1A1"
+				android:gravity="center_vertical"
+				android:layout_marginLeft="10dp"
+				android:textSize="18sp"
+				android:text="Jeff Lee"/>
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:paddingRight="10dp"
+				android:gravity="center|right">
+				<CheckBox
+					android:id="@+id/pay_cb"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginRight="10dp"/>
+			</LinearLayout>
+
+			<TextView
+				android:id="@+id/txt_user_list_info"
+				android:layout_width="wrap_content"
+				android:layout_height="30dp"
+				android:textSize="12sp"
+				android:visibility="gone"
+				android:layout_marginLeft="10dp"
+				android:text="IT部门    信息科"
+				android:textColor="#808080" />
+
+		</LinearLayout>
+		<TextView
+			android:id="@+id/txt_user_id"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="#336598"
+			android:visibility="gone"
+			android:text="1"/>
+	</RelativeLayout>
+
+</LinearLayout>

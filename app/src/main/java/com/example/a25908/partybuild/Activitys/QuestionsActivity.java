@@ -63,8 +63,8 @@ public class QuestionsActivity extends BaseActivity {
         tijiao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(TextUtils.isEmpty(wentifaq233.getText().toString())){
-                    com.example.a25908.partybuild.Views.Toast.show("");
+                if(TextUtils.isEmpty(wentifaq233.getText().toString().trim())){
+                    com.example.a25908.partybuild.Views.Toast.show("内容不能为空");
                 }else{
                     wd.show();
                     GsonRequest Request = new GsonRequest(URLINSER +FAQADD, RequestMethod.GET);

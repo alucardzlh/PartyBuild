@@ -109,7 +109,6 @@ public class QuestionSurvey2Activity extends BaseActivity {
                 switch (msg.what){
                     case 0:
                         Toast.show("提交成功");
-                        psp.putQSA(true);
                         finish();
                         break;
                 }

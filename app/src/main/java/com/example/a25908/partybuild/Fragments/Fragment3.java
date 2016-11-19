@@ -1,5 +1,7 @@
 package com.example.a25908.partybuild.Fragments;
 
+import android.app.Dialog;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,14 +14,17 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.a25908.partybuild.Activitys.HairDynamicActivity;
 import com.example.a25908.partybuild.Adapters.DynamicAdapters;
+import com.example.a25908.partybuild.Dialogs.WaitDialog;
 import com.example.a25908.partybuild.Http.GsonCallBack;
 import com.example.a25908.partybuild.Http.GsonRequest;
 import com.example.a25908.partybuild.Model.DataManager;
 import com.example.a25908.partybuild.R;
 import com.example.a25908.partybuild.Services.CallServer;
+import com.example.a25908.partybuild.Utils.FileUtils;
 import com.example.a25908.partybuild.Utils.MD5;
 import com.example.a25908.partybuild.Utils.PartySharePreferences;
 import com.example.a25908.partybuild.Views.Toast;
@@ -45,9 +50,12 @@ public class Fragment3 extends Fragment{
     public static List<DataManager.Mydynamic.DataBean.DynamiclistPageBean> list_dy;
     PartySharePreferences psp;
     public static Handler handler;
+    public static WaitDialog waitDialog;
     protected boolean isVisible;
 
     private boolean touthis = false;//禁止滚动判定
+
+    private boolean toastis = true;//判断滚到低端
 
     private boolean scrolled=false;//判断是否有滚动位移
     /**
@@ -75,6 +83,7 @@ public class Fragment3 extends Fragment{
 		View v=inflater.inflate(R.layout.activity_fragment3, container,false);
         recyclerView = (SuperRecyclerView) v.findViewById(R.id.recyclerView);
         psp = new PartySharePreferences();
+        waitDialog = new WaitDialog(getActivity());
         list_dy = new ArrayList<>();
         handler = new Handler(){
             @Override
@@ -108,6 +117,10 @@ public class Fragment3 extends Fragment{
                         Toast.show("发布成功,请等待审核通过");
                         addData2(psp);
                         break;
+                    case 7:
+                        Fragment3.waitDialog.dismiss();
+                        onThumbnailClick(FileUtils.stringtoBitmap(String.valueOf(DataManager.myimageid.data.DynamicImg.path)));
+                        break;
                 }
             }
         };
@@ -121,6 +134,7 @@ public class Fragment3 extends Fragment{
      * 初始化RecyclerView(网络数据)
      */
     private void rvinit(){
+        toastis = true;
         list_dy = DataManager.mydynamic.data.DynamiclistPage;
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);//创建默认的线性LayoutManager
@@ -166,7 +180,12 @@ public class Fragment3 extends Fragment{
                 }
                 else {
                     recyclerView.hideMoreProgress();
-                    Toast.show("没有动态了");
+                    if(toastis){
+                        Toast.show("没有动态了");
+                        toastis = false;
+                    }
+
+
                 }
             }
         },1);
@@ -192,16 +211,16 @@ public class Fragment3 extends Fragment{
                     case RecyclerView.SCROLL_STATE_IDLE: // The RecyclerView is not currently scrolling.
                         if (adapters.getScrolling()&&scrolled) {
                             //对于滚动不加载图片
-                            adapters.setScrolling(false);
+//                            adapters.setScrolling(false);
                             adapters.notifyDataSetChanged();
                         }
                         scrolled=false;
                         break;
                     case RecyclerView.SCROLL_STATE_DRAGGING: // The RecyclerView is currently being dragged by outside input such as user touch input.
-                        adapters.setScrolling(false);
+//                        adapters.setScrolling(false);
                         break;
                     case RecyclerView.SCROLL_STATE_SETTLING: // The RecyclerView is currently animating to a final position while not under
-                        adapters.setScrolling(true);
+//                        adapters.setScrolling(true);
                         break;
                 }
             }
@@ -236,5 +255,31 @@ public class Fragment3 extends Fragment{
         TCTPRequest.add("PageIndex", 1);
         CallServer.getInstance().add(getActivity(),TCTPRequest, GsonCallBack.getInstance(),0x3021,true,false,true);
     }
+
+    /**
+     * 显示大图
+     */
+    public void onThumbnailClick(Bitmap img) {
+        final Dialog dialog = new Dialog(getActivity(), android.R.style.Theme_Black_NoTitleBar);
+        ImageView imgView = getView(img);
+        dialog.setContentView(imgView);
+        dialog.show();
+        // 点击图片消失
+        imgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private ImageView getView(Bitmap img) {
+        ImageView imgView = new ImageView(getActivity());
+        imgView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        imgView.setImageBitmap(img);
+        return imgView;
+    }
+
 
 }

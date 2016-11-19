@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,25 +28,16 @@ import com.example.a25908.partybuild.Services.CallServer;
 import com.example.a25908.partybuild.Utils.AuthResult;
 import com.example.a25908.partybuild.Utils.OrderInfoUtil2_0;
 import com.example.a25908.partybuild.Utils.PayResult;
-import com.example.a25908.partybuild.Utils.SignUtils;
 import com.example.a25908.partybuild.Views.Toast;
 import com.example.a25908.partybuild.wxapi.Constants;
-import com.example.a25908.partybuild.wxapi.WXPayEntryActivity;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.tencent.mm.sdk.constants.Build;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.yolanda.nohttp.RequestMethod;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * 支付详情页
@@ -75,9 +67,9 @@ public class PayDetailsActivity extends BaseActivity {
     //APPID
     public static final String APPID = "2016101202114397";
     // 商户收款账号
-    public static final String TARGET_ID ="13979151616"; //"13979151616@139.com";
-    // 商户私钥，pkcs8格式
-    public static final String RSA_PRIVATE = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAKhbK1zVwtyg9gxr+zg4BmV7Rza3WxzAxroTKedZRZPd+JioK43goy10hTAV15e9hXZVsf2bCssY4/t5RKkI5/HNd6Jc0LsMMMtCJmQ3K5GqSQTxa2GxrWvV4RBKjZ3Yc89JaNdrHmDV9eG6ukJhowWUz3nyq+iV8WMZjsmw3R3/AgMBAAECgYAFMRKMQVdKAHi191p+6FNiK8QNbugTYep+8HpZVQptPeodown8zRGbJD27NuE4H7MO7COaA374tmLJbXrtj4W/hVlStLEF/t2x8Zy6dgWoWz1yV4HPDUKhhcnJAyV61K7dwjPnk6A/WKfPUBtiX+8Fyc+FuGPD8HvVx0MHMIyE6QJBANqXqlnMwxViGHotjWrus2U/zsAWYhOvBZNg8rhcAH7+J6cRVwTJM8Na9d26jYwX7Dj9Hl4K4jb2eQUUdmJR5QUCQQDFKrJ31unq8IsYMhWoYAjX/4LVeisu0VUbMZr7pcYd1h8TP1Xl6WIo4Rm6dNCpSQM2airzUQ3wjXA2EeRlwuYzAkBnEhibGzfpf0W3Zn9GKqOgXEPqwyMf0Ok6Iv6P+6GoP8MGveBgO1cTCHLiSDKyGh2iiYemJE+iRvmtcYaYubDZAkAsKJHsETA2tEUS2DTNjySr68gLs970D2I2QvfpIImsqQYws2Czq3+WlEPE5ODO6VFU4JZaBG9Qzvywv3Ud7XbNAkEAuixHH7PyedKfhwyi+svzS/TbZWSApDoB4lcVOLIv4d8DRnKmlcs33S2SPN80GeIANvG9vXBBLPvVBx2uoG7nFw==";
+    public static final String TARGET_ID ="13979151616"; //
+    //支付宝密钥
+    public static  String RSA_PRIVATE;
     // 支付宝公钥
     public static final String RSA_PUBLIC = "";//可不填
     private static final int SDK_PAY_FLAG = 1;//支付宝支付判定
@@ -89,6 +81,8 @@ public class PayDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay_details);
         ViewUtils.inject(this);
+        String stt = new String(Base64.decode(DataManager.myzhifubao.data.SecretKeyList.ali_name.getBytes(), Base64.DEFAULT));
+        RSA_PRIVATE = stt+"=";
         intent = getIntent();
         title.setText("支付详情");
         returnT.setVisibility(View.VISIBLE);
@@ -110,9 +104,10 @@ public class PayDetailsActivity extends BaseActivity {
                         break;
                     case R.id.rb_wx://微信
                         type = 1;
-                        IWXAPI api = WXAPIFactory.createWXAPI(getApplicationContext(), Constants.APP_ID);
-                        boolean isPaySupported = api.getWXAppSupportAPI() >= Build.PAY_SUPPORTED_SDK_INT;
-                        android.widget.Toast.makeText(PayDetailsActivity.this, String.valueOf(isPaySupported), android.widget.Toast.LENGTH_SHORT).show();
+                        Toast.show("开发中...");
+//                        IWXAPI api = WXAPIFactory.createWXAPI(getApplicationContext(), Constants.APP_ID);
+//                        boolean isPaySupported = api.getWXAppSupportAPI() >= Build.PAY_SUPPORTED_SDK_INT;
+//                        android.widget.Toast.makeText(PayDetailsActivity.this, String.valueOf(isPaySupported), android.widget.Toast.LENGTH_SHORT).show();
                         break;
 
                 }
@@ -130,9 +125,10 @@ public class PayDetailsActivity extends BaseActivity {
                     case 0://支付宝
                         //pay(view);
                         payV2(view);
+
                         break;
                     case 1://微信
-                        weChatPay();
+                        //weChatPay();
                         break;
                 }
             }

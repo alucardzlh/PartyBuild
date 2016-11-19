@@ -57,7 +57,7 @@ import static com.example.a25908.partybuild.Utils.URLconstant.URLINSER;
 
 
 /**
- * 党委通知，学习园地，党员扶持的详情页
+ * 党的声音，学习园地，党员扶持的详情页
  * @author 数据 yusi
  */
 public class DetailsPageActivity extends BaseActivity {
@@ -196,7 +196,7 @@ public class DetailsPageActivity extends BaseActivity {
             Request.add("token", MD5.MD5s(DataManager.partyCommDetailsList.data.NewsList.newsid + new Build().MODEL));
             Request.add("KeyNo", DataManager.partyCommDetailsList.data.NewsList.newsid);
             Request.add("deviceId", new Build().MODEL);
-            Request.add("type", 0);//评论内容类型 ( 0 查询党委通知、学习园地、党员扶持评论)
+            Request.add("type", 0);//评论内容类型 ( 0 查询党的声音、学习园地、党员扶持评论)
 //                Request.add("PageIndex", 1);
 //                Request.add("PageSize", 10);
             CallServer.getInstance().add(DetailsPageActivity.this, Request, GsonCallBack.getInstance(), 0x007, true, false, true);
@@ -351,13 +351,14 @@ public class DetailsPageActivity extends BaseActivity {
     public void showinit() {
         et = new EditText(DetailsPageActivity.this);
 //        et.setPadding(20,50,0,0);
+
         new AlertDialog.Builder(DetailsPageActivity.this)
                 .setTitle("评论")
                 .setView(et)
                 .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(!TextUtils.isEmpty(et.getText().toString())){
+                        if(!TextUtils.isEmpty(et.getText().toString().trim())){
                             GsonRequest Request = new GsonRequest(URLINSER +PARTYDETAILSADDCOMN, RequestMethod.GET);
                             Request.add("token", MD5.MD5s(psp.getUSERID() + new Build().MODEL));
                             Request.add("KeyNo", psp.getUSERID());
@@ -367,8 +368,9 @@ public class DetailsPageActivity extends BaseActivity {
                             Request.add("content", et.getText().toString());
                             Request.add("username", psp.getUSERNAME());
                             CallServer.getInstance().add(DetailsPageActivity.this, Request, GsonCallBack.getInstance(), 0x0071, true, false, true);
-                        }else{
-                            Toast.show("评论内容不能为空!!!");
+                        }
+                        else{
+                            Toast.show("评论内容不能为空!");
                         }
 
                     }
