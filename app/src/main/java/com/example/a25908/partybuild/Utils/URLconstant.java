@@ -20,9 +20,9 @@ public class URLconstant {
 //
 //    public static final String IMGURL = "http://192.168.10.117:8080";//富文本图片前缀
 
-    public static final String IMGURL = "http://101.201.211.27:8282";//富文本图片前缀
+    public static final String IMGURL = "http://:8282";//富文本图片前缀
 
-    public static final String URLINSER = "http://101.201.211.27:8282/zhirong.partybuild/Interface/";
+    public static final String URLINSER = "http://:8282/zhirong.partybuild/Interface/";
 
     /**
      * Fragment 1 主界面
